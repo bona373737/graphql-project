@@ -51,7 +51,7 @@ const MallProduct = ({ userData }) => {
   const history = useHistory();
   const { data } = useQuery(GET_MALL_PRODUCT, {
     variables: {
-      nickName: "인포플라",
+      nickName: userData.getAdmin[0].nick_name,
     },
   });
 
@@ -69,6 +69,8 @@ const MallProduct = ({ userData }) => {
   } else {
     console.log(deleteResult.error);
   }
+
+  console.log(userData.getAdmin[0].nick_name);
 
   return (
     <>
