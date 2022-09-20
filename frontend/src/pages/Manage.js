@@ -85,6 +85,12 @@ export default function Manage() {
 
   const [deleteProduct] = useMutation(DELETE_PRODUCT);
 
+  React.useEffect(() => {}, []);
+
+  if (profit) {
+    console.log("user", user);
+  }
+
   // const dddddddddddd = await deleteProduct({
   //   variables,
   //   onCompleted: (d) => {
@@ -93,28 +99,32 @@ export default function Manage() {
   // })
   return (
     <>
-      {data && profit && user ? (
+      {data ? (
         <>
           <Nav userData={location.state} />
           <Base>
-            <Container>
-              <Box>
-                <Title>총 상품 수</Title>
-                <Score>
-                  {profit.data.getAllProductProfit[0].total_count}개
-                </Score>
-              </Box>
-              <Box>
-                <Title>수익</Title>
-                <Score>
-                  {profit.data.getAllProductProfit[0].total_profit}원
-                </Score>
-              </Box>
-              <Box>
-                <Title>사용자 수</Title>
-                <Score>{user.data.getCountUser[0].user_count}명</Score>
-              </Box>
-            </Container>
+            {!profit.loading && !user.loading ? (
+              <Container>
+                <Box>
+                  <Title>총 상품 수</Title>
+                  <Score>
+                    {profit.data.getAllProductProfit[0].total_count}개
+                  </Score>
+                </Box>
+                <Box>
+                  <Title>수익</Title>
+                  <Score>
+                    {profit.data.getAllProductProfit[0].total_profit}원
+                  </Score>
+                </Box>
+                <Box>
+                  <Title>사용자 수</Title>
+                  <Score>{user.data.getCountUser[0].user_count}명</Score>
+                </Box>
+              </Container>
+            ) : (
+              console.log("로딩")
+            )}
             <Section>각 상품 수익</Section>
             <GridContainer>
               {data.getShowProduct.map((data) => (
