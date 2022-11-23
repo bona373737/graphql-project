@@ -1,17 +1,18 @@
 /**
  * @description 
  */
+import dbExe from '../db/dbExe.js';
 
 const resolvers ={
     Query:{
-        allMembersAdmin(){
-            console.log("안녕");
-            return null;
+        getAllMember: async()=>{
+            //데이터베이스에 접근하여 데이터 가져오기
+            let result = await dbExe.getAllMember();
+            return result; 
         },
-        memberAdmin(){
-            //데이터베이스에 접근하여 특정 SQL코드를 실행시키는 동작
-            return null;
 
+        ping(){
+            return"pong"
         }
     }
 }

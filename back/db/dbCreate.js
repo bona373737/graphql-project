@@ -11,11 +11,11 @@ const pool = mariadb.createPool({
     port:3307
 });
 
-module.exports ={
+export default {
     exe: async function(queryStatement) {
         let conn;
         let result;
-
+        
         try {
             try{
                 conn = await this.getPoolConnection();
