@@ -4,6 +4,7 @@ import { ApolloServer, gql } from "apollo-server";
 import {ApolloServerPluginLandingPageLocalDefault} from 'apollo-server-core'; 
 import typeDefs from './gql/gql_schemas.js';
 import resolvers from './gql/resolvers.js';
+import context from './gql/context.js';
 
 // 외부설정파일 불러오기-> "process.env.환경변수이름"형태로 사용할 수 있음.
 // dotenv.config({path:""})
@@ -19,7 +20,8 @@ import resolvers from './gql/resolvers.js';
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers 
+    resolvers,
+    // context,
 });
 
 server.listen().then(({url})=>{
