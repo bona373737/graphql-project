@@ -1,12 +1,15 @@
+import login from "../auth/login.js";
 
-const context =({req})=>{
+const context = ({req})=>{
+//  console.log(req.body);
+
  const token = req.headers.authorization || '';
 
- const user = sgetUer(token);
+ const member = login.checkAuth(token);
 
- if (!user) throw new AuthenticationError('you must be logged in');
+ if (!member) throw new AuthenticationError('you must be logged in');
 
- return { user };
-};
+ return {member}
+}
 
 export default context;

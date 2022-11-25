@@ -11,6 +11,7 @@ export default {
         try{
             let queryString = "select * from members";
             let result = await db.exe(queryString);
+            // console.log(result);
             return result;
         }catch(err){
             console.error("getAllMember 오류");
@@ -20,8 +21,6 @@ export default {
     // Mutation----------------------------------------------
     createMemberExe: async function (newMemberData) {
     let conn;
-
-    const nowDate = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
     const hashedPassword=(password)=>{
         const salt ="12345"

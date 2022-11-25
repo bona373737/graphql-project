@@ -2,6 +2,7 @@
  * @description 
  */
 import dbExe from '../db/dbExe.js';
+import login from '../auth/login.js';
 
 const resolvers ={
     Query:{
@@ -10,10 +11,12 @@ const resolvers ={
             let result = await dbExe.getAllMemberExe();
             return result; 
         },
-
-        ping(){
-            return"pong"
-        }
+        loginMember: async(_,{
+            id,password
+        })=>{
+            let result = await login.loginMemberExe(id,password);
+            return result; 
+        },
     },
     Mutation:{
         //resolver 기본제공? argument
@@ -41,7 +44,6 @@ const resolvers ={
             }
         }
     }
-    
 }
 
 export default resolvers;

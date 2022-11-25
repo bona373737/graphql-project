@@ -1,48 +1,66 @@
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 import db from "../db/dbCreate.js";
 // const logger = require('../Logger/winston');
 // const log = (msg) => logger.info(msg);
-const SECRET_KEY = "SeCrEtKeY1234";
+const TOKEN_SECRET_KEY = "SeCrEtKeY1234";
 
 export default {
-    loginExe: async function (id,password){
+    /**
+     * 
+     * @param {*} id 
+     * @param {*} password 
+     * @returns 
+     * @description
+     * 사용자입력값 id,password
+     * 
+     * 
+     */
+    loginMemberExe: async function(id,password){
         let conn;
+        
+        const hashedPassword=(password)=>{
+            const salt ="12345"
+            return crypto.createHmac("sha512",salt).update(password).digest("base64");        
+        }
+
         try {
             conn = await db.getPoolConnection();
-                
+    
             // pool.escape()
             // In order to avoid SQL Injection attacks, you should always escape any user provided data before using it inside a SQL query.
             // https://www.linkedin.com/pulse/escaping-query-values-node-js-qasim-niaxi
             const queryString =
                 "select * from members " +
                 "where id = " + conn.escape(id) + 
-                " and password = md5(" + conn.escape(password) + ")";
+                " and password = " + conn.escape(hashedPassword(password));
 
             const result = await conn.query(queryString);
-            console.log('loginExe result : ' + JSON.stringify(result));
+            // console.log(result);
             // log('loginExe result : ' + JSON.stringify(result));
-            
+
             if(result.length == 0) {
-                throw new Error("No such id");
+                throw new Error("아이디 또는 비밀번호가 잘못되었습니다.");
             }
 
-            // 배열에서 필요한 정보만 빼기
-            let employee = result.shift();
+            // result값 배열의 첫번째값 : 회원정보객체 
+            let memberData = result.shift();
             
+            // 등록된 사용자인것이 확인된 경우 token 발행
             const token = jwt.sign({
-                employeeId : employee.employeeId,
-                name : employee.name,
-            },SECRET_KEY,{
+                id : memberData.id,
+                name : memberData.name,
+            },TOKEN_SECRET_KEY,{
                 expiresIn: '7d'
             });
 
             return {
                 token,
-                employee
+                memberData
             };
         } catch (error) {
             // log(`loginExe erorr : ${error}`);
-            console.log(`loginExe erorr : ${error}`);
+            console.log(`loginMemberExe erorr : ${error}`);
         }
         finally{
             if(conn) db.endPoolConnection(conn);
@@ -57,7 +75,8 @@ export default {
             if (!token) throw new Error('Please Sign in.');
 
             try {
-                const decoded = jwt.verify(token, SECRET_KEY);
+                //token 복호화
+                const decoded = jwt.verify(token, TOKEN_SECRET_KEY);
                 console.log('통과?')
                 console.log(decoded);
                 return decoded;  
@@ -73,6 +92,4 @@ export default {
             throw error;
         }
     }
-
-
 }
