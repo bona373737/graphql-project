@@ -7,7 +7,7 @@ const resolvers ={
     Query:{
         getAllMember: async()=>{
             //데이터베이스에 접근하여 데이터 가져오기
-            let result = await dbExe.getAllMember();
+            let result = await dbExe.getAllMemberExe();
             return result; 
         },
 
@@ -31,7 +31,9 @@ const resolvers ={
                     password : password
                 }
                 const result = await dbExe.createMemberExe(newMemberData);
-                console.log(result)
+                // result = { affectedRows: 1, insertId: 3n, warningStatus: 0 }
+                console.log(`affectedRows: ${result.affectedRows}`);
+                return "회원가입완료";
 
             } catch (error) {
                 console.log(`createMember Error: ${error}`);

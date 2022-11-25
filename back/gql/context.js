@@ -2,7 +2,7 @@
 const context =({req})=>{
  const token = req.headers.authorization || '';
 
- const user = getUser(token);
+ const user = sgetUer(token);
 
  if (!user) throw new AuthenticationError('you must be logged in');
 

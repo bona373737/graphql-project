@@ -7,7 +7,7 @@ import db from './dbCreate.js';
 
 export default {
     // Query------------------------------------------------
-    getAllMember: async function(){
+    getAllMemberExe: async function(){
         try{
             let queryString = "select * from members";
             let result = await db.exe(queryString);
@@ -33,15 +33,18 @@ export default {
 
         //Null관련함수_nullif,isnull...
         //https://moonpiechoi.tistory.com/107
+
+        // pool.escape()
+        // In order to avoid SQL Injection attacks, you should always escape any user provided data before using it inside a SQL query.
+        // https://www.linkedin.com/pulse/escaping-query-values-node-js-qasim-niaxi
         let queryString =
-            "insert into members (role_no, company_no, name, id, password, reg_date, isavailable) " +
-            "value (" + conn.escape(newMemberData['role_no']) +
-                    ", NULLIF(" + conn.escape(newMemberData['company_no']) + ", null), " +
+            "insert into members (role_no, company_no, name, id, password,isavailable) " +
+            "values (" + conn.escape(newMemberData['role_no']) +
+                    ", NULLIF(" + conn.escape(newMemberData['company_no']) + ", null)" +
                     "," + conn.escape(newMemberData['name']) +
                     "," + conn.escape(newMemberData['id']) +
                     "," + conn.escape(hashedPassword(newMemberData['password'])) +
-                    "," + nowDate() +
-                    ",1"+
+                    ", 1"+
                     ")";
         const result = conn.query(queryString);
         console.log("query statement : " + queryString);
