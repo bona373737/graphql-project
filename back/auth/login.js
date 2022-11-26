@@ -68,17 +68,14 @@ export default {
     },
 
     checkAuth: async function (token) {
+
         try {
-            console.log('checkAuth data : ' + token);
+            // console.log('checkAuth data : ' + token);
             // log('checkAuth data : ' + token);
-
-            if (!token) throw new Error('Please Sign in.');
-
             try {
                 //token 복호화
                 const decoded = jwt.verify(token, TOKEN_SECRET_KEY);
-                console.log('통과?')
-                console.log(decoded);
+                // console.log(decoded);
                 return decoded;  
             } catch (error) {
                 console.log(`invalid token error : ${error}`);

@@ -4,10 +4,8 @@ import { gql } from "apollo-server";
 const typeDefs = gql`
     type Query{
         getAllMember : [Member]
-        loginMember(
-            id:String!
-            password:String!
-        ): Auth
+
+        loginMember(id:String!,password:String!): Auth
     }
     type Auth {
         token:String!

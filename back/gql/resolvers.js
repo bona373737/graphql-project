@@ -3,6 +3,7 @@
  */
 import dbExe from '../db/dbExe.js';
 import login from '../auth/login.js';
+import { AuthenticationError, ForbiddenError } from 'apollo-server-core';
 
 const resolvers ={
     Query:{
@@ -19,7 +20,7 @@ const resolvers ={
         },
     },
     Mutation:{
-        //resolver 기본제공? argument
+        //resolver 기본 매개변수
         //ex) createMember: async(parent,args,context,info)=>{}
         //https://www.apollographql.com/docs/apollo-server/v3/data/resolvers
         createMember: async(_,{
@@ -42,7 +43,7 @@ const resolvers ={
                 console.log(`createMember Error: ${error}`);
                 throw error;
             }
-        }
+        },      
     }
 }
 
