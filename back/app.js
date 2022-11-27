@@ -21,15 +21,15 @@ import context from './gql/context.js';
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    // introspection: true,
-    // playground: true,
+    context,
+    introspection: "production",
+    playground: true,
     playground:{
         //playground로 테스트시 context 함수 무한실행되는 증상 off-->근데.. 왜...
         settings:{
             "schema.polling.enable": false
         }
     },
-    context,
 });
 
 server.listen().then(({url})=>{

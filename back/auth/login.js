@@ -68,24 +68,15 @@ export default {
     },
 
     checkAuth: async function (token) {
-
         try {
-            // console.log('checkAuth data : ' + token);
-            // log('checkAuth data : ' + token);
-            try {
-                //token 복호화
-                const decoded = jwt.verify(token, TOKEN_SECRET_KEY);
-                // console.log(decoded);
-                return decoded;  
-            } catch (error) {
-                console.log(`invalid token error : ${error}`);
-                // log(`invalid token error : ${error}`);
-                throw error;
-            }
-             
+            //token 복호화
+            //Synchronously verify given token using a secret or a public key to get a decoded token
+            const decoded = jwt.verify(token, TOKEN_SECRET_KEY);
+            // console.log(decoded);
+            return decoded;  
         } catch (error) {
-            console.log(`no token error : ${error}`);
-            // log(`no token error : ${error}`);
+            console.log(`invalid token error : ${error}`);
+            // log(`invalid token error : ${error}`);
             throw error;
         }
     }
