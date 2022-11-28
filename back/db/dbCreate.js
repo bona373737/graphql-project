@@ -21,13 +21,13 @@ export default {
                 conn = await this.getPoolConnection();
             }
             catch(err){
-                // log('connection error : ' + err);
+                console.log('connection error : ' + err);
                 throw err;
             }
 
             try{
                 result = await conn.query(queryStatement);
-                // log('query statement : ' + queryStatement );
+                console.log('query statement : ' + queryStatement );
                 return result;
             }catch(err){
                 // log('conn.query error : ' + err);

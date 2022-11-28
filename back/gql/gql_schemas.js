@@ -54,7 +54,7 @@ const typeDefs = gql`
     type Member {
         member_no:Int!
         role_no:Int!
-        company_no:Int
+        company_no:Company
         id: ID!
         name: String!
         reg_date:String!
@@ -64,6 +64,7 @@ const typeDefs = gql`
     type Company{
         company_no:Int!
         company_name:String!
+
     }
 
     type Device {

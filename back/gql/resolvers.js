@@ -49,6 +49,23 @@ const resolvers ={
             return result;
         },
     },
+    //
+    Member: {
+        company_no: async ({
+            company_no
+        }) => {
+            try {
+                let result;
+                result = await dbExe.getAllCompanyExe();
+                console.log(result)
+                return result[0];
+            } catch (error) {
+                log("Member error is + " + error);
+                throw error;
+            }
+        }
+    },
+
     Mutation:{
         createMember: async(_,{
             role_no,company_no,name,id,password
