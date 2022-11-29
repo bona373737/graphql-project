@@ -3,6 +3,7 @@
  */
 import dbExe from '../db/dbExe.js';
 import login from '../auth/login.js';
+import {ValidationError, UserInputError} from 'apollo-server';
 
 const resolvers ={
     //resolver 기본 매개변수
@@ -16,15 +17,23 @@ const resolvers ={
             return result; 
         },
         getAllMember: async()=>{
-            //데이터베이스에 접근하여 데이터 가져오기
-            let result = await dbExe.getAllMemberExe();
-            return result; 
+            try {
+                let result = await dbExe.getAllMemberExe();
+                return result; 
+            } catch (error) {
+                
+            }
         },
         getAllAdminMember: async()=>{
             let result = await dbExe.getAllAdminMemberExe();
             return result;
         },
         getAllMemberByRole: async(_,{role})=>{
+            //args 유효성 검사_role은 세 종류
+            //사이트관리자:1, 기업관리자:2, 사용자:3
+            if(role != 2 && role != 1 && role != 3){
+                throw new UserInputError('Invalid argument value',{argumentName: 'id'});
+            }
             let result = await dbExe.getAllMemberByRoleExe(role);
             return result;
         },
@@ -50,21 +59,21 @@ const resolvers ={
         },
     },
     //
-    Member: {
-        company_no: async ({
-            company_no
-        }) => {
-            try {
-                let result;
-                result = await dbExe.getAllCompanyExe();
-                console.log(result)
-                return result[0];
-            } catch (error) {
-                log("Member error is + " + error);
-                throw error;
-            }
-        }
-    },
+    // Member: {
+    //     company_no: async ({
+    //         company_no
+    //     }) => {
+    //         try {
+    //             let result;
+    //             result = await dbExe.getAllCompanyExe();
+    //             console.log(result)
+    //             return result[0];
+    //         } catch (error) {
+    //             log("Member error is + " + error);
+    //             throw error;
+    //         }
+    //     }
+    // },
 
     Mutation:{
         createMember: async(_,{
