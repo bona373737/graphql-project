@@ -1,5 +1,4 @@
-import {useQuery, gql} from '@apollo/client';
-import { Routes, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import LoginPage from './pages/LoginPage';
 import Home from "./pages/Home";
@@ -10,11 +9,11 @@ function App() {
 
   return (
     <div>
-      <Routes>
-        <Route path='/' exact element={<Home/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/main' element={<Main/>}/>
-      </Routes>
+      <Switch>
+        <Route path='/' exact component={Home}/>
+        <Route path='/login' component={LoginPage}/>
+        <Route path='/main' component={Main}/>
+      </Switch>
     </div>
   ); 
 }
