@@ -11,3 +11,11 @@ yarn add react-router-dom@5
 ### useQuery,useMutaion 실행시점
 Whenever this component renders, the useQuery hook automatically executes our query    
 and returns a result object containing loading, error, and data properties:
+
+### Authentication vs Authorization
+- https://baek.dev/post/24/
+- https://escape.tech/blog/9-graphql-security-best-practices/
+
+- https://www.digitalocean.com/community/tutorials/react-simple-authorization
+
+## history객체, location 객체
