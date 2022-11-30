@@ -5,9 +5,12 @@ export const GET_LOGINMEMBER = gql`
       loginMember(id: $id, password: $password) {
         token
         memberData {
-          id
           member_no
+          id
           name
+          role_no
+          company_no
+          reg_date
         }
       }
     }
@@ -25,3 +28,19 @@ export const GET_ALLDEVICE  = gql`
     }
   }
 `;
+
+export const GET_ALLMEMBERBYROLE = gql`
+  query getAllMemberByRole($role:Int!) {
+    getAllMemberByRole(role:$role){
+      member_no
+      role_no
+      company_no
+      id
+      name
+      reg_date
+      isavailable
+    }
+  }
+`;
+
+

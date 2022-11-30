@@ -15,19 +15,18 @@ if (graphQLErrors)
 if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-// const authCheckLink = new ApolloLink((operation,forword)=>{
-//     operation.setContext(({headers})=>(
-//         {headers:{ 
-//             ...headers,
-//             authorization:localStorage.getItem("login-token")
-//         }}
-//     ));
-//     return forword(operation);
-// });
+const authCheckLink = new ApolloLink((operation,forword)=>{
+    operation.setContext(({headers})=>(
+        {headers:{ 
+            ...headers,
+            authorization:localStorage.getItem("login-token")
+        }}
+    ));
+    return forword(operation);
+});
 
 const client = new ApolloClient({
-    // link: from([errorLink,httpLink,authCheckLink]),
-    link: from([errorLink,httpLink]),
+    link: from([errorLink,authCheckLink,httpLink]),
     cache: new InMemoryCache(),
 });
 
