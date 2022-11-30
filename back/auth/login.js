@@ -6,16 +6,6 @@ import db from "../db/dbCreate.js";
 const TOKEN_SECRET_KEY = "SeCrEtKeY1234";
 
 export default {
-    /**
-     * 
-     * @param {*} id 
-     * @param {*} password 
-     * @returns 
-     * @description
-     * 사용자입력값 id,password
-     * 
-     * 
-     */
     loginMemberExe: async function(id,password){
         let conn;
         
@@ -79,5 +69,14 @@ export default {
             // log(`invalid token error : ${error}`);
             throw error;
         }
-    }
+    },
+
+    // Authentication middleware
+    // https://escape.tech/blog/9-graphql-security-best-practices/
+    authMiddleware : (next) => (parent, args, context) => {
+        if(!context.user) {
+            throw new Error("Unauthenticated")
+        }
+        return next(parent, args, context)
+    },
 }

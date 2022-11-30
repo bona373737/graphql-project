@@ -15,11 +15,14 @@ const context = ({req})=>{
     //     variables: {},
     //     operationName: 'Query'
     // }
-
+    
+    // console.log(req.body)
     if(req.body.operationName !== "loginMember"){
+        
         //token이 없는 경우
-        if (!req.headers.authorization)
-        throw new AuthenticationError("mssing token");
+        if (!req.headers.authorization){
+            throw new AuthenticationError("mssing token");
+        }
         
         //token이 유효하지 않은 경우
         const token = req.headers.authorization; 

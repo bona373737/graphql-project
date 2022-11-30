@@ -22,7 +22,8 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context,
-    introspection: "production",
+    // introspection: "production",
+    // introspection: process.env.NODE_ENV !== 'production',
     playground: true,
     playground:{
         //playground로 테스트시 context 함수 무한실행되는 증상 off-->근데.. 왜...
