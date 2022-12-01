@@ -4,6 +4,10 @@ import reset from "styled-reset";
 const GlobalStyles = createGlobalStyle`
     ${reset}
 
+    :root{
+        --gray:#E0E0E0;
+    }
+
     html { 
         height: 100vh;
         font-family: ‘SUIT’, sans-serif;

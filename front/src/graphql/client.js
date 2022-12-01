@@ -19,7 +19,7 @@ const authCheckLink = new ApolloLink((operation,forword)=>{
     operation.setContext(({headers})=>(
         {headers:{ 
             ...headers,
-            authorization:localStorage.getItem("login-token")
+            authorization:localStorage.getItem("loginToken")
         }}
     ));
     return forword(operation);

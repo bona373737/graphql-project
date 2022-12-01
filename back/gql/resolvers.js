@@ -57,23 +57,43 @@ const resolvers ={
             let result = await dbExe.getAllDeviceExe();
             return result;
         },
+        getAllDeviceByCompany: async()=>{
+            let result = await dbExe.getAllCompanyExe();
+            return result;
+        },
     },
-    //
-    // Member: {
-    //     company_no: async ({
-    //         company_no
-    //     }) => {
-    //         try {
-    //             let result;
-    //             result = await dbExe.getAllCompanyExe();
-    //             console.log(result)
-    //             return result[0];
-    //         } catch (error) {
-    //             log("Member error is + " + error);
-    //             throw error;
-    //         }
-    //     }
-    // },
+    
+    Member: {
+        company_no: async ({
+            company_no
+        }) => {
+            try {
+                let result;
+                result = await dbExe.getAllCompanyExe();
+                console.log(result)
+                return result[0];
+            } catch (error) {
+                log("Member error is + " + error);
+                throw error;
+            }
+        }
+    },
+
+    DeviceByCompany:{
+        company_no: async({
+            company_no
+        })=>{
+            try {
+                let result;
+                result = await dbExe.getAllDeviceByCompanyExe(_,{company_no});
+                console.log(result)
+                return result;
+            } catch (error) {
+                log("getAllDeviceByCompanyExe + " + error);
+                throw error;
+            }
+        }
+    },
 
     Mutation:{
         createMember: async(_,{

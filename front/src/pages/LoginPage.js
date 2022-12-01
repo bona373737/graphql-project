@@ -1,7 +1,32 @@
 
+import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
-import {useLazyQuery} from '@apollo/client';
+import {useLazyQuery, makeVar, useReactiveVar, makeReference} from '@apollo/client';
 import {GET_LOGINMEMBER} from '../graphql/query';
+
+const LoginContainer = styled.div`
+  box-sizing: border-box;
+  width: 300px;
+  margin: auto;
+  padding: 0 30px;
+  background-color: gray;
+
+  .login_form{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+    .login_title{
+      margin: 20px 0;
+    }
+
+    input{
+      margin: 5px 0;
+    }
+  }
+`;
+
+export const makeVarTest = makeVar();
 
 const LoginPage=()=>{
     const history = useHistory();
@@ -9,12 +34,12 @@ const LoginPage=()=>{
 
     const [login, {loading,error,data}] = useLazyQuery(GET_LOGINMEMBER,{
       onCompleted:data=>{
+        //로그인성공시 token->로컬스토리지에 저장, memberData->전역변수로 저장
         localStorage.setItem("loginToken", data.loginMember.token);
-        localStorage.setItem("nowMemberRole", data.loginMember.memberData.role_no)
-        // console.log(data.loginMember.memberData.role_no)
+        makeVarTest([data.loginMember.memberData])
       }
     });
-
+    
     const onSubmitLogin=async(e)=>{
       e.preventDefault();
       try {
@@ -24,33 +49,24 @@ const LoginPage=()=>{
         
       } catch (error) {
         
-      }
-      
-      // console.log(nowMember.data);
-      //login성공시 Main페이지로 이동
-      history.push({pathname:"/main",state:nowMember.data})
-
-
-
-      // useLazyQuery 실행성공시 반환받은 token값 localstorage에 저장   
-      //https://stackoverflow.com/questions/65100383/how-to-get-uselazyquery-hooks-data-after-calling-a-function
-      //useLazyQuery isn't return a promise, you should use onCompleted function parameter instead
-      // console.log(data.loginMember.token);
-      // localStorage.setItem("login-token", data?.loginMember.token);  
+      }      
+      history.push({pathname:"/main"})
     };
-      // React.useEffect(() => {
-        // localStorage.setItem("login-token", data?.loginMember.token);  
-      // }, [data])
+    
+    // React.useEffect(() => {
+      // localStorage.setItem("login-token", data?.loginMember.token);  
+    // }, [data])
 
     return(
-        <div>
-            <p>로그인</p>
-            <form onSubmit={onSubmitLogin}>
+        <LoginContainer>
+            <h1 className='login_title'>ITOMS</h1>
+            <form className='login_form' onSubmit={onSubmitLogin}>
               <input id="id" type="text" ></input>
               <input id="password" type="password" ></input>
               <button>로그인</button>
             </form>
-        </div>
+        </LoginContainer>
     )
 }
+
 export default LoginPage;

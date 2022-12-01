@@ -96,6 +96,17 @@ export default {
             return err;
         }
     },
+    getAllDeviceByCompanyExe:async(company_no)=>{
+        try{
+            let queryString = `select * from devices where company_no=${company_no}  `;
+            let result = await db.exe(queryString);
+            // console.log(result);
+            return result;
+        }catch(err){
+            console.error("getAllDeviceGroupByCompanyExe 오류");
+            return err;
+        }
+    },
 
     // Mutation-----------------------------------------------------
     createMemberExe: async (newMemberData)=>{

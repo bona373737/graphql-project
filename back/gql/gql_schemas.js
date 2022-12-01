@@ -13,6 +13,7 @@ const typeDefs = gql`
         getAllCompany:[Company]
         getCountDevice: Int
         getAllDevice: [Device]
+        getAllDeviceByCompany : [DeviceByCompany]
     }
     type Mutation {
         createMember(
@@ -64,7 +65,7 @@ const typeDefs = gql`
     type Company{
         company_no:Int!
         company_name:String!
-
+        business_number:String!
     }
 
     type Device {
@@ -74,6 +75,13 @@ const typeDefs = gql`
         os:String!
         device_name:String!
         reg_date:String!
+        device_group:Int
+    }
+
+    type DeviceByCompany {
+        company_name
+        business_number
+        company_no : [Device]
     }
 `;
 
