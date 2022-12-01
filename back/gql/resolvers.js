@@ -85,11 +85,11 @@ const resolvers ={
         })=>{
             try {
                 let result;
-                result = await dbExe.getAllDeviceByCompanyExe(_,{company_no});
+                result = await dbExe.getAllDeviceExe();
                 console.log(result)
                 return result;
             } catch (error) {
-                log("getAllDeviceByCompanyExe + " + error);
+                log("getAllDeviceExe error : + " + error);
                 throw error;
             }
         }

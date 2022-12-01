@@ -17,10 +17,7 @@ const CorpManager=()=>{
     
     // const [role, setRole] = useState("");
     const {loading,data,error} = useQuery(GET_ALLMEMBERBYROLE,{
-        variables:{role:2},
-        onCompleted:(data)=>{
-        
-        }
+        variables:{role:2}
     })
 
 

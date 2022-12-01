@@ -43,4 +43,21 @@ export const GET_ALLMEMBERBYROLE = gql`
   }
 `;
 
+export const getAllDeviceByCompany =gql`
+  query getAllDeviceByCompany {
+    getAllDeviceByCompany {
+      company_name
+      business_number
+      company_no{
+        device_no
+        device_name
+        member_no
+        os
+        reg_date
+        device_group
+      }
+  }
+}
+`;
+
 

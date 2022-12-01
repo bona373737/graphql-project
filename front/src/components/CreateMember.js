@@ -8,9 +8,11 @@ const CreateMemberContainer=styled.div`
 
 `;
 
-const CreateMember=()=>{
+const CreateMember=({setModalOpen})=>{
     return(
+
         <CreateMemberContainer>
+                <button onClick={()=>{setModalOpen(false)}}>창닫기</button>
                 <h1>계정 생성</h1>
                 <form>
                     <div className="input_wrap">

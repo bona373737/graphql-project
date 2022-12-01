@@ -1,6 +1,5 @@
 import { gql } from "apollo-server";
 
-
 //graphQL 시키마 정의
 const typeDefs = gql`
     type Query{
@@ -13,7 +12,7 @@ const typeDefs = gql`
         getAllCompany:[Company]
         getCountDevice: Int
         getAllDevice: [Device]
-        getAllDeviceByCompany : [DeviceByCompany]
+        getAllDeviceByCompany: [DeviceByCompany]
     }
     type Mutation {
         createMember(
@@ -79,9 +78,9 @@ const typeDefs = gql`
     }
 
     type DeviceByCompany {
-        company_name
-        business_number
-        company_no : [Device]
+        company_name:String!
+        business_number:String!
+        company_no: [Device]
     }
 `;
 

@@ -3,10 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import Home from "./pages/Home";
 import Main from './pages/Main';
-import DashBoard from './components/DashBoard';
-import CorpManager from './components/CorpManager';
-import UserManager from './components/UserManager';
-import DeviceManager from './components/DeviceManager';
 
 
 function App() {
