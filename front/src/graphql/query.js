@@ -1,5 +1,11 @@
 import { gql } from '@apollo/client';
 
+export const GET_NOWMEMBER = gql`
+  query nowMember {
+    nowMember @client
+  }
+`;
+
 export const GET_LOGINMEMBER = gql`
   query loginMember($id: String!, $password: String!) {
       loginMember(id: $id, password: $password) {
@@ -9,8 +15,12 @@ export const GET_LOGINMEMBER = gql`
           id
           name
           role_no
-          company_no
           reg_date
+          company_no{
+            company_no
+            company_name
+            business_number
+          }
         }
       }
     }
@@ -34,11 +44,15 @@ export const GET_ALLMEMBERBYROLE = gql`
     getAllMemberByRole(role:$role){
       member_no
       role_no
-      company_no
       id
       name
       reg_date
       isavailable
+      company_no{
+        company_no
+        company_name
+        business_number
+      }
     }
   }
 `;
@@ -48,16 +62,45 @@ export const getAllDeviceByCompany =gql`
     getAllDeviceByCompany {
       company_name
       business_number
-      company_no{
+      company_no {
+        company_no
         device_no
         device_name
         member_no
         os
         reg_date
-        device_group
       }
   }
 }
 `;
 
+// ===================================================
+
+export const M_CREATEMEMBER = gql`
+  mutation createMember(
+    $role_no: Int!
+    $company_no: Int!
+    $name: String!
+    $id: String!
+    $password: String!
+  ) {
+    createMember(
+      role_no:$role_no
+      company_no:$company_no
+      name:$name
+      id:$id
+      password:$password
+    ){
+      member_no
+      role_no
+      id
+      name
+      reg_date
+      isavailable
+      company_no{
+        company_name
+      }
+    }
+  }
+`;
 

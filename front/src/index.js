@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
 
-import client from './graphql/client';
+import {client} from './graphql/client';
 import GlobalStyles from "./GlobalStyles";
 import App from './App';
 

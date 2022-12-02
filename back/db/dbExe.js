@@ -74,12 +74,34 @@ export default {
             return err;
         }
     },
+    getCompanyByCompanyNoExe:async(companyNo)=>{
+        try{
+            let queryString = `select * from company where company_no=${companyNo}`;
+            let result = await db.exe(queryString);
+            // console.log(result);
+            return result;
+        }catch(err){
+            console.error("getCompanyByCompanyNoExe 오류");
+            return err;
+        }
+    },
     getCountDeviceExe : async()=>{
         try{
             let queryString = "select count(*) as total from devices";
             let result = await db.exe(queryString);
             // console.log(result);
             return Number(result[0].total);
+        }catch(err){
+            console.error("getCountDeviceExe 오류");
+            return err;
+        }
+    },
+    getDeviceByCompanyExe: async(companyNo)=>{
+        try{
+            let queryString = `select * from devices where company_no=${companyNo}`;
+            let result = await db.exe(queryString);
+            // console.log(result);
+            return result;
         }catch(err){
             console.error("getCountDeviceExe 오류");
             return err;

@@ -1,9 +1,9 @@
-import { useReactiveVar } from '@apollo/client';
-import { useEffect } from 'react';
-import {Link,useLocation } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 import styled from "styled-components"
+import { nowMemberInVar } from '../makeVar';
 import Contents from "../components/Contents";
-import { makeVarTest } from './LoginPage';
+import { useQuery, useReactiveVar } from '@apollo/client';
+import {GET_NOWMEMBER } from "../graphql/query";
 
 const MainContainer = styled.div`
     box-sizing: border-box;
@@ -24,27 +24,15 @@ const MainContainer = styled.div`
 `;
  
 const Main =()=>{
-    const makeVar = makeVarTest();
-    // const nowMember = makeVar? makeVar[0]: "";
-    // console.log(makeVar)
-    // const ddd = useReactiveVar(nowMember)
-    // console.log(ddd);
-    
-    //이 방법...뒤로가기,앞으로가기 해도 location객체에 로그인정보가 계속남아있게 되는.. 
-    //+ main의 하위컴포넌트ex)/main/dashboard로 이동시 Main컴포넌트의 location객체 정보 바뀌면서 오류발생..
-    // const location = useLocation()
-    // console.log(location)
-    // const locationData = location.state.loginMember.memberData;
+    // const nowMember = nowMemberInVar();
+    const nowMember = useReactiveVar(nowMemberInVar);
+    console.log(nowMember);
+
+    const {data} = useQuery(GET_NOWMEMBER);
+    console.log(data);
 
 
-    // useEffect(()=>{
-    //     if(location.state){
-    //         setUser()
-    //     }
-    // },[location.state])
-    // const nowMemberRole=localStorage.getItem("nowMemberRole");
-
-    return(            
+    return(
             <MainContainer>
                 <aside>
                     <p>사이드바</p>
@@ -84,7 +72,13 @@ const Main =()=>{
                     </ul>
                 </aside>
                 <main>
-                    {/* <h1>접속자 : {makeVar[0].name}</h1> */}
+                    {
+                        nowMember[0] &&
+                        <>
+                        <div>접속자 : {nowMember[0].name}</div>
+                        <div>아이디 : {nowMember[0].id}</div>
+                        </>
+                    }
                     <hr/>
                     <Contents/>
                 </main>

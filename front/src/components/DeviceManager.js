@@ -14,9 +14,7 @@ const DeviceManager=()=>{
             {
                 data? (
                     data.getAllDevice.map((item,index)=>{
-                        return(
-                            <DeviceCard item={item} key={index}/>
-                        )
+                        return <DeviceCard item={item} key={index}/>
                     })
                 ):(
                     <p>등록된 장치가 없습니다.</p>

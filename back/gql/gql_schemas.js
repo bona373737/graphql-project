@@ -10,7 +10,9 @@ const typeDefs = gql`
         getMemberByCompanyName(companyName:String!): [Member]
         getMemberByMemberName(memberName:String!):[Member]
         getAllCompany:[Company]
+        getCompanyByCompanyNo(companyNo:Int!) : Company
         getCountDevice: Int
+        getDeviceByCompany : [Device]
         getAllDevice: [Device]
         getAllDeviceByCompany: [DeviceByCompany]
     }
@@ -54,7 +56,7 @@ const typeDefs = gql`
     type Member {
         member_no:Int!
         role_no:Int!
-        company_no:Int
+        company_no:Company
         id: ID!
         name: String!
         reg_date:String!
@@ -74,7 +76,6 @@ const typeDefs = gql`
         os:String!
         device_name:String!
         reg_date:String!
-        device_group:Int
     }
 
     type DeviceByCompany {

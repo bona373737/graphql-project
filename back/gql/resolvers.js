@@ -49,8 +49,16 @@ const resolvers ={
             let result = await dbExe.getAllCompanyExe();
             return result;
         },
+        getCompanyByCompanyNo:async(_,{companyNo})=>{
+            let result = await dbExe.getCompanyByCompanyNoExe();
+            return result;
+        },
         getCountDevice: async()=>{
             let result = await dbExe.getCountDeviceExe();
+            return result;
+        },
+        getDeviceByCompany:async(_,{companyNo})=>{
+            let result = await dbExe.getDeviceByCompanyExe(companyNo);
             return result;
         },
         getAllDevice: async()=>{
@@ -70,7 +78,6 @@ const resolvers ={
             try {
                 let result;
                 result = await dbExe.getAllCompanyExe();
-                console.log(result)
                 return result[0];
             } catch (error) {
                 log("Member error is + " + error);
@@ -85,8 +92,7 @@ const resolvers ={
         })=>{
             try {
                 let result;
-                result = await dbExe.getAllDeviceExe();
-                console.log(result)
+                result = await dbExe.getDeviceByCompanyExe(company_no);
                 return result;
             } catch (error) {
                 log("getAllDeviceExe error : + " + error);

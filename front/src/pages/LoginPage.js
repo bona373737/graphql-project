@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import {useLazyQuery, makeVar, useReactiveVar, makeReference} from '@apollo/client';
 import {GET_LOGINMEMBER} from '../graphql/query';
+import { useCallback, useEffect, useState } from 'react';
+// import { nowMemberInVar } from '../makeVar';
+import {cache} from '../graphql/client';
 
 const LoginContainer = styled.div`
   box-sizing: border-box;
@@ -48,38 +51,32 @@ const LoginContainer = styled.div`
   }
 `;
 
-export const makeVarTest = makeVar();
-
 const LoginPage=()=>{
     const history = useHistory();
+    // localStorage.removeItem("loginToken");
 
     const [login, {loading,error,data}] = useLazyQuery(GET_LOGINMEMBER,{
       onCompleted:(data)=>{
-        //로그인성공시 token->로컬스토리지에 저장, memberData->전역변수로 저장
-        localStorage.setItem("loginToken", data.loginMember.token);
-        makeVarTest([data.loginMember.memberData])
-        console.log(data.loginMember.token)
+          //useLazyQuery execute성공시 token->localStorage에 저장, memberData->전역변수로 저장
+          console.log(data)
+          console.log("onComleted!!!!!!!")
+          localStorage.setItem("loginToken", data.loginMember.token);
+          cache.nowMemberInVar([data.loginMember.memberData])   
       }
     });
-    
+      
     const onSubmitLogin=async(e)=>{
       e.preventDefault();
       try {
         //useLazyQuery executes 
         const inputData ={id:e.target.id.value, password:e.target.password.value};
-        const result = await login({variables:inputData})
-        
+        await login({variables:inputData})
+        history.push({pathname:"/main"})
       } catch (error) {
         alert("아이디 또는 비밀번호 오류 입니다.");
         throw error;
-        return;
-      }      
-      history.push("/main")
+      }    
     };
-    
-    // React.useEffect(() => {
-      // localStorage.setItem("login-token", data?.loginMember.token);  
-    // }, [data])
 
     return(
         <LoginContainer>
