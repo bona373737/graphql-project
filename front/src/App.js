@@ -1,9 +1,7 @@
 import { Switch, Route } from 'react-router-dom';
-
 import LoginPage from './pages/LoginPage';
 import Home from "./pages/Home";
 import Main from './pages/Main';
-
 
 function App() {
 

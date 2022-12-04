@@ -7,18 +7,23 @@ const GlobalStyles = createGlobalStyle`
     :root{
         --gray:#E0E0E0;
     }
+    
+    html, body, #root {
+        height: 100%
+    }
 
     html { 
-        height: 100vh;
         font-family: ‘SUIT’, sans-serif;
-        body{
-            min-height: 100vh;
-            a{
-                color:black;  
-                text-decoration: none;
-            }
-        }
     };
-    
+    body{
+
+    }
+    a{
+        color:black;  
+        text-decoration: none;
+    }
+    button{
+        border-radius: 2px;
+    }
 `;
 export default GlobalStyles;

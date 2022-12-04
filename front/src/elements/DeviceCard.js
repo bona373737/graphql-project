@@ -11,33 +11,20 @@ const DeviceCardContainer = styled.div`
         width: 200px;
         height: 120px;
         background-color: var(--gray);
-
     }
-
-
 `;
 
 const DeviceCard =({device})=>{
-
-
     return(
         <DeviceCardContainer>
             {
-                device? (
-                    device.map((item,index)=>{
-                        return(
-                            <div className="card_wrap" key={index}>
-                                <h1>장비번호 : {item.device_no}</h1>
-                                <h1>장비명 : {item.device_name}</h1>
-
-                            </div>
-                        )
-                    })
-                ):(
-                    <h1>등록된 장비가 없습니다</h1>
+                device && (
+                    <div className="card_wrap" >
+                        <h1>장비번호 : {device.device_no}</h1>
+                        <h1>장비명 : {device.device_name}</h1>
+                    </div>
                 )
             }
-            {/* <p>{JSON.stringify(device)}</p> */}
         </DeviceCardContainer>
     )
 }

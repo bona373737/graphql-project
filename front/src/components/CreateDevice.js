@@ -4,7 +4,7 @@ import {M_CREATEMEMBER} from '../graphql/query';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
-const CreateMemberContainer=styled.div`
+const CreateDeviceContainer=styled.div`
     position: absolute;
     z-index: 2;
     top: 50%;
@@ -29,9 +29,9 @@ const CreateMemberContainer=styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
-
+        
         .input_wrap{
-            margin: 14px 0;
+            margin: 20px 0;
             label{
                 display: inline-block;
                 text-align: center;
@@ -47,62 +47,59 @@ const CreateMemberContainer=styled.div`
                 }
             }
         }
-        button{ 
+        button{
             width: 100px;
+            
         }
     }
 `;
 
-const CreateMember=({setModalOpen})=>{
+const CreateDevice=({setModalOpen})=>{
 
-    const [createMember, {loading, data, error}]= useMutation(M_CREATEMEMBER);
+    // const [createMember, {loading, data, error}]= useMutation(M_CREATEMEMBER);
 
     const onSubmit =async(e)=>{
         e.preventDefault();
 
         const current = e.target        
-        await createMember({variables:{
-            role_no:Number(current.role_no.value),
-            company_no:Number(current.company_no.value),
-            name:current.name.value,
-            id:current.id.value,
-            password:current.password.value
-        }})
+        // await createMember({variables:{
+        //     role_no:Number(current.role_no.value),
+        //     company_no:Number(current.company_no.value),
+        //     name:current.name.value,
+        //     id:current.id.value,
+        //     password:current.password.value
+        // }})
 
         //input창 입력값 삭제
         e.target.reset();
     };
 
     return(
-        <CreateMemberContainer>
+        <CreateDeviceContainer>
                 <button className="close_button" onClick={()=>{setModalOpen(false)}}>
                     <FontAwesomeIcon icon={faX} />
                 </button>
                 <form onSubmit={onSubmit}>
-                    <h1>계정 등록</h1>
+                    <h1>장비 등록</h1>
                     <div className="input_wrap">
-                        <label htmlFor="role_no">권한</label>
-                        <input id="role_no" type="text" required></input>
+                        <label htmlFor="role_no">기업명</label>
+                        <input id="role_no" type="text" defaultValue="기업번호" disabled></input>
                     </div>
                     <div className="input_wrap">
-                        <label htmlFor="company_no">회사번호</label>
-                        <input id="company_no" type="text" required></input>
+                        <label htmlFor="company_no">장비명</label>
+                        <input id="device_name" type="text" required></input>
                     </div>
                     <div className="input_wrap">
-                        <label htmlFor="name">성명</label>
-                        <input id="name" type="text" required></input>
+                        <label htmlFor="name">OS</label>
+                        <input id="os" type="text" required></input>
                     </div>
                     <div className="input_wrap">
-                        <label htmlFor="id">아이디</label>
-                        <input id="id" type="text" required></input>
-                    </div>
-                    <div className="input_wrap">
-                        <label htmlFor="password">비밀번호</label>
-                        <input id="password" type="password" required></input>
+                        <label htmlFor="device_user">담당사용자</label>
+                        <input id="device_user" type="text" required></input>
                     </div>
                     <button>등록</button>
                 </form>
-        </CreateMemberContainer>
+        </CreateDeviceContainer>
     )
 };
-export default CreateMember;
+export default CreateDevice;

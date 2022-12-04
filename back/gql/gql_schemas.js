@@ -12,7 +12,7 @@ const typeDefs = gql`
         getAllCompany:[Company]
         getCompanyByCompanyNo(companyNo:Int!) : Company
         getCountDevice: Int
-        getDeviceByCompany : [Device]
+        getDeviceByCompany: [Device]
         getAllDevice: [Device]
         getAllDeviceByCompany: [DeviceByCompany]
     }

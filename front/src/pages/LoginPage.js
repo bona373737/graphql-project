@@ -4,8 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import {useLazyQuery, makeVar, useReactiveVar, makeReference} from '@apollo/client';
 import {GET_LOGINMEMBER} from '../graphql/query';
 import { useCallback, useEffect, useState } from 'react';
-// import { nowMemberInVar } from '../makeVar';
-import {cache} from '../graphql/client';
+import { nowMemberInVar } from '../makeVar';
 
 const LoginContainer = styled.div`
   box-sizing: border-box;
@@ -53,7 +52,6 @@ const LoginContainer = styled.div`
 
 const LoginPage=()=>{
     const history = useHistory();
-    // localStorage.removeItem("loginToken");
 
     const [login, {loading,error,data}] = useLazyQuery(GET_LOGINMEMBER,{
       onCompleted:(data)=>{
@@ -61,7 +59,7 @@ const LoginPage=()=>{
           console.log(data)
           console.log("onComleted!!!!!!!")
           localStorage.setItem("loginToken", data.loginMember.token);
-          cache.nowMemberInVar([data.loginMember.memberData])   
+          nowMemberInVar([data.loginMember.memberData])   
       }
     });
       

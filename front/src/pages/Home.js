@@ -17,6 +17,7 @@ const HomeContainer=styled.div`
         .logo_wrap{
             display: flex;
             align-items: center;
+            cursor: pointer;
         }
         .login_btn_wrap{
             display: flex;
