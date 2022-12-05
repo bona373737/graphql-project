@@ -41,12 +41,12 @@ export default {
             return err;
         }
     },
-    getAllMemberByRoleAndCorpExe:async(role,companyNo)=>{
+    getAllMemberByRoleAndCorpExe:async(role,companyName)=>{
         try{
             let queryString = `select m.member_no, m.id, m.name, m.reg_date, m.company_no, m.isavailable from members as m 
                                 left join company as c on m.company_no = c.company_no 
                                 where m.role_no=${role} 
-                                and c.company_no like "%${companyName}%";`;
+                                and c.company_name like "%${companyName}%";`;
             console.log(queryString)
             let result = await db.exe(queryString);
             console.log(result);
@@ -155,6 +155,24 @@ export default {
             console.error("getCountDeviceExe 오류");
             return err;
         }
+    },
+    getAllDeviceByParamsExe:async(params)=>{
+        try{
+            console.log(params)
+            let queryString = "select * from devices"
+
+            if(params.company_no){
+                queryString += ` where company_no=${params.company_no}; `
+            }else if(params.member_no){
+                queryString += ` where member_no=${params.member_no}; `
+            }
+            let result = await db.exe(queryString);
+            // console.log(result);
+            return result;
+        }catch(err){
+            console.error("getAllDeviceByParamsExe 오류");
+            return err;
+        }   
     },
 
 

@@ -102,7 +102,6 @@ const CorpManager=()=>{
 
         searchQuery({variables:{role:2,companyName:searchKeword},
         onCompleted:(_,data) => {
-            console.log(_,data)
             setRenderData(_.getAllMemberByRoleAndCorp)
         }
         })

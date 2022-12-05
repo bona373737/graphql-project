@@ -1,5 +1,5 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
-import {getDeviceByCorpAndMember} from "../graphql/query";
+import {GET_GetAllDeviceByParams} from "../graphql/query";
 import DeviceCard from "../elements/DeviceCard";
 import CreateDevice from "./CreateDevice";
 import { useEffect, useState } from "react";
@@ -16,7 +16,6 @@ const DeviceManagerContainer = styled.div`
     margin: 30px 20px;
     font-size: 20px;
 }
-
 .device_wrap{
     margin: 20px 10px;
     display: flex;
@@ -27,7 +26,6 @@ const DeviceManagerContainer = styled.div`
 
     }
 }
-
 .dimmed{
     /* display: none; */
     position: fixed;
@@ -55,22 +53,30 @@ const AddDeviceCard = styled.div`
         text-align: center;
 `;
 
-
 const DeviceManager=()=>{
     const [modalOpen, setModalOpen] = useState(false);
-    const [getDevice,{loading,data,error}] = useLazyQuery(getDeviceByCorpAndMember);
-
-    
+    const [getDevice,{loading,data,error}] = useLazyQuery(GET_GetAllDeviceByParams);
     
     useEffect(()=>{
         //localStorage에 저장된 로그인한 사용자 정보....수정필요 
         const loginUser =  JSON.parse(localStorage.getItem("loginUser"));
-        console.log(loginUser.company_no.company_no);
-        console.log(loginUser.member_no)
-        //로그인된 계정의 company_no, member_no기준으로 
+        const roleNo = loginUser.role_no;
+        const params={};
+
+        if(roleNo===2){
+            params.company_no = loginUser.company_no.company_no;
+        }else if(roleNo===3){
+            params.member_no = loginUser.member_no;
+        }
+        // const params = {
+        //     company_no:loginUser.company_no.company_no,
+        //     member_no:loginUser.member_no
+        // }
+        console.log(params)
+
         //기업관리자가 로그인했을때-->company_no기준으로 device 전체조회, CreateDevice컴포넌트 렌더링
         //사용자가 로그인했을때--> member_no기분으로 device 전체조회  
-        getDevice({variables:{companyNo:loginUser.company_no.company_no,memberNo:loginUser.member_no}})
+        getDevice({variables:{params:params}})
     },[])
 
     const handelModalOpen=()=>{
@@ -84,11 +90,11 @@ const DeviceManager=()=>{
             <h1 className="title"> [ 장비 관리 ]</h1>
             <div className="device_wrap">
                 <AddDeviceCard onClick={handelModalOpen} >
-                  <FontAwesomeIcon icon={faPlus} />
+                  <FontAwesomeIcon icon={faPlus}/>
                 </AddDeviceCard>
             {
-                data?.getDeviceByCorpAndMember.length>0? (
-                    data.getDeviceByCorpAndMember.map((item,index)=>{
+                data?.getAllDeviceByParams?.length>0? (
+                    data.getAllDeviceByParams.map((item,index)=>{
                         return <DeviceCard device={item} getDevice={getDevice} key={index}/>
                     })
                     ):(

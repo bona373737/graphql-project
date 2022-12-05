@@ -81,7 +81,12 @@ const resolvers ={
         getDeviceByCorpAndMember: async(_,{companyNo,memberNo})=>{
             let result = await dbExe.getDeviceByCorpAndMemberExe(companyNo,memberNo);
             return result;
-        }
+        },
+        getAllDeviceByParams:async(_,{params})=>{
+            console.log(params)
+            let result = await dbExe.getAllDeviceByParamsExe(params);
+            return result;
+        },
     },
     
     Member: {

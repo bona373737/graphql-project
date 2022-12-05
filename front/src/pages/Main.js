@@ -55,7 +55,6 @@ const Main =()=>{
 
     //localStorage사용..로그인정보저장
     const loginUser = JSON.parse(localStorage.getItem("loginUser"));
-    console.log(loginUser)
 
     return(
             <MainContainer>

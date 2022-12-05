@@ -129,6 +129,20 @@ query getDeviceByCorpAndMember($companyNo:Int!,$memberNo:Int!){
 }
 `;
 
+export const GET_GetAllDeviceByParams=gql`
+query GetAllDeviceByParams($params: Params) {
+  getAllDeviceByParams(params: $params) {
+    company_no
+    device_name
+    device_no
+    member_no
+    os
+    reg_date
+  }
+}
+`;
+
+
 // ===================================================
 
 export const M_CREATEMEMBER = gql`
@@ -180,6 +194,4 @@ export const M_CREATEDEVICE= gql`
     reg_date
   }
 }
-
-
-`
+`;
