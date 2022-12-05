@@ -7,12 +7,15 @@ const typeDefs = gql`
         getAllMember: [Member]
         getAllAdminMember: [Member]
         getAllMemberByRole(role:Int!): [Member]
+        getAllMemberByRoleAndCorp(role:Int!,companyName:String!): [Member]
+        getAllMemberByRoleAndCorpNo(role:Int!,companyNo:Int!): [Member]
         getMemberByCompanyName(companyName:String!): [Member]
         getMemberByMemberName(memberName:String!):[Member]
         getAllCompany:[Company]
         getCompanyByCompanyNo(companyNo:Int!) : Company
         getCountDevice: Int
         getDeviceByCompany: [Device]
+        getDeviceByCorpAndMember(companyNo:Int!,memberNo:Int!): [Device]
         getAllDevice: [Device]
         getAllDeviceByCompany: [DeviceByCompany]
     }

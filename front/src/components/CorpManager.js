@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { GET_ALLMEMBERBYROLE } from "../graphql/query";
-import { useQuery } from "@apollo/client";
+import {getAllMemberByRoleAndCorp} from "../graphql/query";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import MemberTr from "../elements/MemberTr";
 import CreateMember from "./CreateMember";
@@ -78,13 +79,33 @@ const CorpManager=()=>{
     const [modalOpen, setModalOpen] = useState(false);
     const column = ['계정번호','기업명','아이디','이름','계정생성일','계정유효상태']
 
-    const {loading,data,error} = useQuery(GET_ALLMEMBERBYROLE,{
-        variables:{role:2}
-    });
+    // const [getAllAdmin,{loading,data,error}] = useLazyQuery(GET_ALLMEMBERBYROLE);
+    const [getAllAdmin,{loading,data:AllData,error}] = useLazyQuery(GET_ALLMEMBERBYROLE);
+    const [searchQuery,{data:searchData}] = useLazyQuery(getAllMemberByRoleAndCorp);
+    let [renderData, setRenderData] = useState([]);
 
+
+    //컴포넌트 마운트될때 role_no가 2번인 계정 전체조회
+    useEffect(()=>{
+        getAllAdmin({
+            variables:{role:2},
+            onCompleted:(_,data)=>{
+                setRenderData(_.getAllMemberByRole)
+            }
+        })
+    },[])
+
+    //검색버튼 클릭시 role_no가 2번인 계정 중 기업이름으로 계정조회
     const handleSearch=(e)=>{
         e.preventDefault();
-        //useLazyQuery__GET_ALLMEMBERBYCOMPANYNAME
+        const searchKeword = e.target.search_input.value;
+
+        searchQuery({variables:{role:2,companyName:searchKeword},
+        onCompleted:(_,data) => {
+            console.log(_,data)
+            setRenderData(_.getAllMemberByRoleAndCorp)
+        }
+        })
     };
 
     return(
@@ -99,7 +120,7 @@ const CorpManager=()=>{
             <button className="create_member_btn" onClick={()=>{setModalOpen(true)}}>계정등록</button>
             </div>
             {
-                data?.getAllMemberByRole &&
+                renderData?.length>0 &&
                 <table>
                     <colgroup>
                         <col width="10%"></col>
@@ -120,7 +141,7 @@ const CorpManager=()=>{
                     </thead>
                     <tbody>
                             {
-                                data.getAllMemberByRole.map((item,index)=>{ 
+                                renderData.map((item,index)=>{ 
                                     return <MemberTr key={index} memberData={item}></MemberTr>
                                 })
                             }

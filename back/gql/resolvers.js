@@ -37,6 +37,14 @@ const resolvers ={
             let result = await dbExe.getAllMemberByRoleExe(role);
             return result;
         },
+        getAllMemberByRoleAndCorp:async(_,{role,companyName})=>{
+            let result = await dbExe.getAllMemberByRoleAndCorpExe(role,companyName);
+            return result;
+        },
+        getAllMemberByRoleAndCorpNo:async(_,{role,companyNo})=>{
+            let result = await dbExe.getAllMemberByRoleAndCorpNoExe(role,companyNo);
+            return result;
+        },
         getMemberByCompanyName:async(_,{companyName})=>{
             let result = await dbExe.getMemberByCompanyNameExe(companyName);
             return result;
@@ -69,6 +77,11 @@ const resolvers ={
             let result = await dbExe.getAllCompanyExe();
             return result;
         },
+        //기업의 특정 사용자가 담당하는 장비목록
+        getDeviceByCorpAndMember: async(_,{companyNo,memberNo})=>{
+            let result = await dbExe.getDeviceByCorpAndMemberExe(companyNo,memberNo);
+            return result;
+        }
     },
     
     Member: {

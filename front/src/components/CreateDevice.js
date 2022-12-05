@@ -1,8 +1,11 @@
-import { useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import styled from "styled-components";
 import {M_CREATEMEMBER} from '../graphql/query';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import {M_CREATEDEVICE} from "../graphql/query";
+import {GET_getAllMemberByRoleAndCorpNo} from "../graphql/query";
+import { useEffect, useState } from "react";
 
 const CreateDeviceContainer=styled.div`
     position: absolute;
@@ -45,6 +48,14 @@ const CreateDeviceContainer=styled.div`
                 :focus{
                     outline: none;
                 }
+                .os{
+                    width: 500px;
+                    option{
+                        width: 300px;
+                        line-height: 30px;
+                        text-indent: 5px;
+                    }
+                }
             }
         }
         button{
@@ -54,21 +65,45 @@ const CreateDeviceContainer=styled.div`
     }
 `;
 
-const CreateDevice=({setModalOpen})=>{
+const CreateDevice=({setModalOpen,getDevice})=>{
 
-    // const [createMember, {loading, data, error}]= useMutation(M_CREATEMEMBER);
+    const [companyNo, setCompanyNo] = useState();
+    const [memberNo, setMemberNo] = useState();
+    const [companyName, setCompanyName] = useState();
+    const osArr = ["Linux","Window32","Window64"];
+    const [createDevice, {loading, data, errror}] = useMutation(M_CREATEDEVICE);
+
+    //특정기업의 사용자목록조회(role_no:3, company_no)
+    const [getUsers,{data:userData}] = useLazyQuery(GET_getAllMemberByRoleAndCorpNo);
+
+    useEffect(()=>{
+        const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+        setCompanyName(loginUser?.company_no.company_name);
+        setCompanyNo(loginUser?.company_no.company_no);
+        setMemberNo(loginUser?.member_no);
+        const companyNo = loginUser?.company_no.company_no;
+
+        getUsers({variables:{
+            role:3,
+            companyNo:companyNo
+        }})
+
+    },[])
 
     const onSubmit =async(e)=>{
         e.preventDefault();
-
-        const current = e.target        
-        // await createMember({variables:{
-        //     role_no:Number(current.role_no.value),
-        //     company_no:Number(current.company_no.value),
-        //     name:current.name.value,
-        //     id:current.id.value,
-        //     password:current.password.value
-        // }})
+            
+        createDevice({
+            variables:{
+            company_no:companyNo,
+            device_name:e.target.device_name.value,
+            os:e.target.os.value,
+            member_no:memberNo
+            },
+            onCompleted:(companyNo,memberNo)=>{
+                getDevice({variables:{companyNo:companyNo,memberNo:memberNo}})
+            }
+        })
 
         //input창 입력값 삭제
         e.target.reset();
@@ -82,20 +117,32 @@ const CreateDevice=({setModalOpen})=>{
                 <form onSubmit={onSubmit}>
                     <h1>장비 등록</h1>
                     <div className="input_wrap">
-                        <label htmlFor="role_no">기업명</label>
-                        <input id="role_no" type="text" defaultValue="기업번호" disabled></input>
+                        <label htmlFor="company_name">기업명</label>
+                        <input id="company_name" type="text" defaultValue={companyName} disabled></input>
                     </div>
                     <div className="input_wrap">
-                        <label htmlFor="company_no">장비명</label>
+                        <label htmlFor="device_name">장비명</label>
                         <input id="device_name" type="text" required></input>
                     </div>
                     <div className="input_wrap">
-                        <label htmlFor="name">OS</label>
-                        <input id="os" type="text" required></input>
+                        <label htmlFor="os">OS</label>
+                        <select id="os" className="os" required>
+                            {osArr.map((item,index)=>{
+                                return <option value={item} key={index}>{item}</option>
+                            })}
+                        </select>
                     </div>
                     <div className="input_wrap">
                         <label htmlFor="device_user">담당사용자</label>
-                        <input id="device_user" type="text" required></input>
+                        <select id="device_user">
+                          <option value="">사용자미정</option>
+                        {
+                            userData?.getAllMemberByRoleAndCorpNo.length>0 &&
+                            userData.getAllMemberByRoleAndCorpNo.map((item,index)=>{
+                                return <option value={item.company_no.company_no} key={index}>{item.name}</option>
+                            })
+                        }
+                        </select>
                     </div>
                     <button>등록</button>
                 </form>

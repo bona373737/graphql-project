@@ -60,7 +60,10 @@ const LoginPage=()=>{
           console.log("onComleted!!!!!!!")
           localStorage.setItem("loginToken", data.loginMember.token);
           nowMemberInVar([data.loginMember.memberData])   
-      }
+
+          //memberData... localStorage에 저장... 이부분 수정필요
+          localStorage.setItem("loginUser", JSON.stringify(data.loginMember.memberData));
+        }
     });
       
     const onSubmitLogin=async(e)=>{

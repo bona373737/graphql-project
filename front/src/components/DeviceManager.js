@@ -1,8 +1,8 @@
-import { useQuery } from "@apollo/client";
-import { GET_ALLDEVICE } from "../graphql/query";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import {getDeviceByCorpAndMember} from "../graphql/query";
 import DeviceCard from "../elements/DeviceCard";
 import CreateDevice from "./CreateDevice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +21,11 @@ const DeviceManagerContainer = styled.div`
     margin: 20px 10px;
     display: flex;
     flex-wrap: wrap;
+
+    .no_device_msg{
+        margin: 10px;
+
+    }
 }
 
 .dimmed{
@@ -53,30 +58,41 @@ const AddDeviceCard = styled.div`
 
 const DeviceManager=()=>{
     const [modalOpen, setModalOpen] = useState(false);
-    const {loading,data,error} = useQuery(GET_ALLDEVICE);
+    const [getDevice,{loading,data,error}] = useLazyQuery(getDeviceByCorpAndMember);
+
+    
+    
+    useEffect(()=>{
+        //localStorage에 저장된 로그인한 사용자 정보....수정필요 
+        const loginUser =  JSON.parse(localStorage.getItem("loginUser"));
+        console.log(loginUser.company_no.company_no);
+        console.log(loginUser.member_no)
+        //로그인된 계정의 company_no, member_no기준으로 
+        //기업관리자가 로그인했을때-->company_no기준으로 device 전체조회, CreateDevice컴포넌트 렌더링
+        //사용자가 로그인했을때--> member_no기분으로 device 전체조회  
+        getDevice({variables:{companyNo:loginUser.company_no.company_no,memberNo:loginUser.member_no}})
+    },[])
 
     const handelModalOpen=()=>{
         setModalOpen(true);
-
     }
-
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error : {error.message}</p>;
         return(
         <DeviceManagerContainer>
-            <h1 className="title"> [ 장비 관리(기업관리자) ]</h1>
+            <h1 className="title"> [ 장비 관리 ]</h1>
             <div className="device_wrap">
                 <AddDeviceCard onClick={handelModalOpen} >
                   <FontAwesomeIcon icon={faPlus} />
                 </AddDeviceCard>
             {
-                data? (
-                    data.getAllDevice.map((item,index)=>{
-                        return <DeviceCard device={item} key={index}/>
+                data?.getDeviceByCorpAndMember.length>0? (
+                    data.getDeviceByCorpAndMember.map((item,index)=>{
+                        return <DeviceCard device={item} getDevice={getDevice} key={index}/>
                     })
                     ):(
-                        <p>등록된 장치가 없습니다.</p>
+                        <p className="no_device_msg">등록된 장치가 없습니다.</p>
                         )
                     }
 

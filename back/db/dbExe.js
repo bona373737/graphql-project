@@ -41,6 +41,33 @@ export default {
             return err;
         }
     },
+    getAllMemberByRoleAndCorpExe:async(role,companyNo)=>{
+        try{
+            let queryString = `select m.member_no, m.id, m.name, m.reg_date, m.company_no, m.isavailable from members as m 
+                                left join company as c on m.company_no = c.company_no 
+                                where m.role_no=${role} 
+                                and c.company_no like "%${companyName}%";`;
+            console.log(queryString)
+            let result = await db.exe(queryString);
+            console.log(result);
+            return result;
+        }catch(err){
+            console.error("getAllMemberByRoleAndCorpExe 오류");
+            return err;
+        }
+    },
+    getAllMemberByRoleAndCorpNoExe:async(role,companyNo)=>{
+        try{
+            let queryString = `select * from members where role_no=${role} and company_no=${companyNo}`;
+            console.log(queryString)
+            let result = await db.exe(queryString);
+            console.log(result);
+            return result;
+        }catch(err){
+            console.error("getAllMemberByRoleAndCorpNoExe 오류");
+            return err;
+        }
+    },
     getMemberByCompanyNameExe:async(companyName)=>{
         try{
             let queryString = `select * from members where company_no=(select company_no from company where company_name=${JSON.stringify(companyName)})`;
@@ -118,6 +145,18 @@ export default {
             return err;
         }
     },
+    getDeviceByCorpAndMemberExe: async(companyNo,memberNo)=>{
+        try{
+            let queryString = `select * from devices where company_no=${companyNo} and member_no=${memberNo}`;
+            let result = await db.exe(queryString);
+            // console.log(result);
+            return result;
+        }catch(err){
+            console.error("getCountDeviceExe 오류");
+            return err;
+        }
+    },
+
 
     // Mutation-----------------------------------------------------
     createMemberExe: async (newMemberData)=>{

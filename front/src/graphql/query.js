@@ -57,6 +57,46 @@ export const GET_ALLMEMBERBYROLE = gql`
   }
 `;
 
+export const getAllMemberByRoleAndCorp=gql`
+query getAllMemberByRoleAndCorp($role:Int!, $companyName:String!){
+  getAllMemberByRoleAndCorp(
+    role:$role,
+    companyName:$companyName){
+      member_no
+      id
+      name
+      reg_date
+      isavailable
+      company_no{
+        company_no
+        company_name
+        business_number
+      }
+
+    }
+}
+`;
+
+export const GET_getAllMemberByRoleAndCorpNo=gql`
+query getAllMemberByRoleAndCorpNo($role:Int!,$companyNo:Int!){
+  getAllMemberByRoleAndCorpNo(
+    role:$role,
+    companyNo:$companyNo){
+      member_no
+      id
+      name
+      reg_date
+      isavailable
+      company_no{
+        company_no
+        company_name
+        business_number
+      }
+    }
+}
+`;
+
+
 export const getAllDeviceByCompany =gql`
   query getAllDeviceByCompany {
     getAllDeviceByCompany {
@@ -71,6 +111,21 @@ export const getAllDeviceByCompany =gql`
         reg_date
       }
   }
+}
+`;
+
+export const getDeviceByCorpAndMember=gql`
+query getDeviceByCorpAndMember($companyNo:Int!,$memberNo:Int!){
+  getDeviceByCorpAndMember(
+    companyNo:$companyNo,
+    memberNo:$memberNo){
+      device_no
+      company_no
+      member_no
+      os
+      device_name
+      reg_date
+    }
 }
 `;
 
@@ -104,3 +159,27 @@ export const M_CREATEMEMBER = gql`
   }
 `;
 
+export const M_CREATEDEVICE= gql`
+  mutation createDevice(
+    $company_no:Int!
+    $member_no:Int!
+    $os:String!
+    $device_name:String!
+){
+  createDevice(
+    company_no:$company_no
+    member_no:$member_no
+    os:$os
+    device_name:$device_name
+  ){
+    device_no
+    company_no
+    member_no
+    os
+    device_name
+    reg_date
+  }
+}
+
+
+`

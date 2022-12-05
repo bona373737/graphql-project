@@ -12,7 +12,8 @@ const MainContainer = styled.div`
     display:flex;
     
     aside{
-        min-width: 20%;
+        min-width: 200px;
+        width: 20%;
         background-color: var(--gray); 
         h1{
             margin: 30px 0;
@@ -41,7 +42,6 @@ const MainContainer = styled.div`
     }
     main{
         width: 80%;
-        
         .now_user_info{
             min-height: 60px;
         }
@@ -49,45 +49,36 @@ const MainContainer = styled.div`
 `;
  
 const Main =()=>{
-    // const nowMember = nowMemberInVar();
-    // const nowMember = useReactiveVar(nowMemberInVar);
-    // console.log(nowMember);
+    //makeVar사용..로그인정보저장..새로고침시 reset되는 상태
     const {data:nowMember} = useQuery(GET_NOWMEMBER);
     console.log(nowMember);
 
-    const {loading,error,data} = useQuery(GET_NOWMEMBER);
-
+    //localStorage사용..로그인정보저장
+    const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+    console.log(loginUser)
 
     return(
             <MainContainer>
                 <aside>
                     <h1>OJT_ITOMS</h1>
                     <ul className='menu_list'>
-                    <li><NavLink to="/main/dashboard" >ITOMS 운영현황 (사이트관리자)</NavLink></li>
-                    <li><NavLink to="/main/corpmanager">기업관리자 계정관리 (사이트관리자)</NavLink></li>
-                    <li><NavLink to="/main/usermanager">사용자 계정관리 (기업) </NavLink></li>
-                    <li><NavLink to="/main/devicemanager">장비현황  (기업,사용자)</NavLink></li>
-
-                        {/* { role_no &&
-                            role_no === 1? (
+                        { loginUser?.role_no &&
+                            loginUser?.role_no === 1? (
                                 <>
-                                <li><Link to={{pathname:"/main/corpmanager"}}>기업관리자 계정관리 (사이트관리자)</Link></li>
+                                <li><NavLink to="/main/dashboard" >ITOMS 운영현황</NavLink></li>
+                                <li><NavLink to={{pathname:"/main/corpmanager"}}>기업관리자 계정관리</NavLink></li>
                                 </>
-                            ): role_no ===2? (
+                            ): loginUser?.role_no ===2? (
                                 <>
-                                <li><Link to={{pathname:"/main/usermanager"}}>사용자 계정관리 (기업) </Link></li>
-                                <li><Link to={{pathname:"/main/devicemanager"}}>장비현황  (기업,사용자)</Link></li>
+                                <li><NavLink to={{pathname:"/main/usermanager"}}>사용자 계정관리 (기업) </NavLink></li>
+                                <li><NavLink to={{pathname:"/main/devicemanager"}}>장비현황  (기업,사용자)</NavLink></li>
                                 </>
                                 ) : (
                                     <>
-                                    <li><Link to={{pathname:"/main/devicemanager"}}>장비현황  (기업,사용자)</Link></li>
+                                    <li><NavLink to={{pathname:"/main/devicemanager"}}>장비현황  (기업,사용자)</NavLink></li>
                                     </>
                                     )
-                                } */}
-                            
-                            
-                    
-                            
+                                }
                             {   
                                 //react-router-dom V5
                                 // location.state.loginMember && <li><Link to={{pathname:"/main/dashboard"}} >ITOMS 운영현황 (사이트관리자) </Link></li>
@@ -102,7 +93,7 @@ const Main =()=>{
                         <div className='now_user_info'>
                             <div>접속자 : {nowMember.nowMember[0].name}</div>
                             <div>접속아이디 : {nowMember.nowMember[0].id}</div>
-                            <div>아이디 : {nowMember.nowMember[0].company_no.company_name}</div>
+                            <div>기업명 : {nowMember.nowMember[0].company_no.company_name}</div>
                             <hr/>
                         </div>
                     }
