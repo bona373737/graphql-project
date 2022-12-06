@@ -10,6 +10,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 
 import BottomTab from "./src/navigation/BottomTab";
+import LoginPage from "./src/pages/LoginPage";
 
 const Stack = createStackNavigator();
 
@@ -31,11 +32,15 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
-              name="start"
-              component={BottomTab}
+              name="login"
+              component={LoginPage}
               options={{
                 headerShown: false,
               }}
+            />
+            <Stack.Screen
+              name="main"
+              component={}
             />
           </Stack.Navigator>
         </NavigationContainer>

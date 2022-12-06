@@ -44,7 +44,6 @@ const CorpManagerContainer=styled.div`
                 background-color: white;
             }
         }
-
     }
     table{
         width: 70%;
@@ -100,11 +99,13 @@ const CorpManager=()=>{
         e.preventDefault();
         const searchKeword = e.target.search_input.value;
 
-        searchQuery({variables:{role:2,companyName:searchKeword},
-        onCompleted:(_,data) => {
-            setRenderData(_.getAllMemberByRoleAndCorp)
+        if(searchKeword){
+            searchQuery({variables:{role:2,companyName:searchKeword},
+                onCompleted:(_,data) => {
+                    setRenderData(_.getAllMemberByRoleAndCorp)
+                }
+            })
         }
-        })
     };
 
     return(

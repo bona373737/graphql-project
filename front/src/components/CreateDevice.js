@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import {M_CREATEDEVICE} from "../graphql/query";
 import {GET_getAllMemberByRoleAndCorpNo} from "../graphql/query";
+import {GET_GetAllDeviceByParams} from "../graphql/query";
 import { useEffect, useState } from "react";
 
 const CreateDeviceContainer=styled.div`
@@ -65,46 +66,58 @@ const CreateDeviceContainer=styled.div`
     }
 `;
 
-const CreateDevice=({setModalOpen,getDevice})=>{
+//기업사용자만 장비등록가능
+const CreateDevice=({setModalOpen})=>{
 
     const [companyNo, setCompanyNo] = useState();
     const [memberNo, setMemberNo] = useState();
     const [companyName, setCompanyName] = useState();
     const osArr = ["Linux","Window32","Window64"];
-    const [createDevice, {loading, data, errror}] = useMutation(M_CREATEDEVICE);
+    const [createDevice, {loading, data, errror}] = useMutation(M_CREATEDEVICE,{
+        refetchQueries:[
+            {query :GET_GetAllDeviceByParams,
+            variables:{params:{company_no:companyNo}}
+            }
+        ]
+    });
+    const [getDevice] = useLazyQuery(GET_GetAllDeviceByParams);
 
-    //특정기업의 사용자목록조회(role_no:3, company_no)
+
+    //담당사용자 셀렉트 옵션 --- 특정기업의 사용자목록조회(role_no:3, company_no)
     const [getUsers,{data:userData}] = useLazyQuery(GET_getAllMemberByRoleAndCorpNo);
 
     useEffect(()=>{
         const loginUser = JSON.parse(localStorage.getItem("loginUser"));
         setCompanyName(loginUser?.company_no.company_name);
         setCompanyNo(loginUser?.company_no.company_no);
-        setMemberNo(loginUser?.member_no);
-        const companyNo = loginUser?.company_no.company_no;
-
+        // const companyNo = loginUser?.company_no.company_no;
         getUsers({variables:{
             role:3,
             companyNo:companyNo
         }})
-
     },[])
 
     const onSubmit =async(e)=>{
         e.preventDefault();
+
+        const params={};
+        params.company_no=Number(e.target.company_no.value)
             
         createDevice({
             variables:{
-            company_no:companyNo,
+            company_no:Number(e.target.company_no.value),
             device_name:e.target.device_name.value,
             os:e.target.os.value,
-            member_no:memberNo
+            member_no:Number(e.target.device_user.value)
             },
-            onCompleted:(companyNo,memberNo)=>{
-                getDevice({variables:{companyNo:companyNo,memberNo:memberNo}})
+            onCompleted:(data)=>{
+                alert(`장비 ${data.createDevice.device_name} 등록완료`)
+                //mutation완료후 refetch함수 실행이 미동작,,, mutaion에 refetchQueries옵션으로 설정해서 refetch진행
+                //https://dinn.github.io/development/apollo-client-refetch/
+                // getDevice({variables:{params:params}})
+                setModalOpen(false)
             }
         })
-
         //input창 입력값 삭제
         e.target.reset();
     };
@@ -117,15 +130,19 @@ const CreateDevice=({setModalOpen,getDevice})=>{
                 <form onSubmit={onSubmit}>
                     <h1>장비 등록</h1>
                     <div className="input_wrap">
-                        <label htmlFor="company_name">기업명</label>
+                        <label htmlFor="company_no"><span>*</span>기업번호</label>
+                        <input id="company_no" type="text" defaultValue={companyNo} disabled></input>
+                    </div>
+                    <div className="input_wrap">
+                        <label htmlFor="company_name"><span>*</span>기업명</label>
                         <input id="company_name" type="text" defaultValue={companyName} disabled></input>
                     </div>
                     <div className="input_wrap">
-                        <label htmlFor="device_name">장비명</label>
+                        <label htmlFor="device_name"><span>*</span>장비명</label>
                         <input id="device_name" type="text" required></input>
                     </div>
                     <div className="input_wrap">
-                        <label htmlFor="os">OS</label>
+                        <label htmlFor="os"><span>*</span>OS</label>
                         <select id="os" className="os" required>
                             {osArr.map((item,index)=>{
                                 return <option value={item} key={index}>{item}</option>

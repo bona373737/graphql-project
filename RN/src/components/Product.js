@@ -44,6 +44,7 @@ const Product = ({ nick_name }) => {
   }, [isFocused]);
 
   return (
+
     <ScrollView>
       <Container>
         {data

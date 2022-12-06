@@ -8,6 +8,17 @@ import {ValidationError, UserInputError} from 'apollo-server';
 
 export default {
     // Query-----------------------------------------------------
+    getAllRoleExe:async()=>{
+        try{
+            let queryString = "select * from role";
+            let result = await db.exe(queryString);
+            // console.log(result);
+            return result;
+        }catch(err){
+            console.error("getAllRoleExe 오류");
+            return err;
+        }
+    },
     getAllMemberExe: async ()=>{
         try{
             let queryString = "select * from members";

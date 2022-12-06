@@ -69,12 +69,12 @@ const Main =()=>{
                                 </>
                             ): loginUser?.role_no ===2? (
                                 <>
-                                <li><NavLink to={{pathname:"/main/usermanager"}}>사용자 계정관리 (기업) </NavLink></li>
-                                <li><NavLink to={{pathname:"/main/devicemanager"}}>장비현황  (기업,사용자)</NavLink></li>
+                                <li><NavLink to={{pathname:"/main/usermanager"}}>사용자 계정관리 </NavLink></li>
+                                <li><NavLink to={{pathname:"/main/devicemanager"}}>장비현황 </NavLink></li>
                                 </>
                                 ) : (
                                     <>
-                                    <li><NavLink to={{pathname:"/main/devicemanager"}}>장비현황  (기업,사용자)</NavLink></li>
+                                    <li><NavLink to={{pathname:"/main/devicemanager"}}>장비현황 </NavLink></li>
                                     </>
                                     )
                                 }

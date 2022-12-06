@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "@emotion/native";
 import { useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery,useLazyQuery } from "@apollo/client";
 import { LOGINUSER } from "../graphql/query";
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 import { ScrollView } from "react-native";
+///////////////
+import {GET_loginMember} from "../graphql/query";
+
+
 
 const Base = styled.View`
   flex: 1;
@@ -44,34 +48,57 @@ function Login() {
   const [password, setPassword] = useState("");
   // const name = useRef();
 
-  const onLogin = async (e) => {
-    if (data) {
-      refetch();
-      console.log(data.loginUser.user.address);
-      // name.current.focus();
-      await SecureStore.setItemAsync("login-token", data.loginUser.token);
-      await SecureStore.setItemAsync(
-        "nick_name",
-        data.loginUser.user.nick_name
-      );
-      await SecureStore.setItemAsync("address", data.loginUser.user.address);
-      navigation.navigate("home");
-    } else {
-      alert("회원정보가 없습니다.");
-    }
+  // const { data, refetch } = useQuery(LOGINUSER, {
+  //   variables: {
+  //     loginUserId: id,
+  //     password: password,
+  //   },
+  //   pollInterval: 500,
+  // });
+
+  // const [login, {loading, data, error}] = useLazyQuery(GET_loginMember);
+
+
+  // const onLogin = async (e) => {
+  //   if (data) {
+  //     refetch();
+  //     // name.current.focus();
+  //     await SecureStore.setItemAsync("login-token", data.loginUser.token);
+  //     await SecureStore.setItemAsync(
+  //       "nick_name",
+  //       data.loginUser.user.nick_name
+  //     );
+  //     await SecureStore.setItemAsync("address", data.loginUser.user.address);
+  //     navigation.navigate("home");
+  //   } else {
+  //     alert("회원정보가 없습니다.");
+  //   }
+  // };
+
+  const [login, {loading,error,data}] = useLazyQuery(GET_loginMember,{
+    onCompleted:(data)=>{
+        //useLazyQuery execute성공시 localStorage에 저장
+        SecureStore.setItemAsync("loginToken", data.loginMember.token);
+        SecureStore.setItemAsync("loginUser", JSON.stringify(data.loginMember.memberData));
+      }
+  });
+
+  const onLogin=async(e)=>{
+    e.preventDefault();
+    try {
+      //useLazyQuery executes 
+      const inputData ={id:e.target.id.value, password:e.target.password.value};
+      await login({variables:inputData})
+      navigation.navigate("main");
+    } catch (error) {
+      alert("아이디 또는 비밀번호 오류 입니다.");
+    }    
   };
 
-  const { data, refetch } = useQuery(LOGINUSER, {
-    variables: {
-      loginUserId: id,
-      password: password,
-    },
-    pollInterval: 500,
-  });
 
   return (
     <Base>
-      <Title>INFOFLA</Title>
+      <Title>OJT_ITOMS</Title>
       <Container>
         <LoginContainer>
           <LoginText

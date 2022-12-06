@@ -87,6 +87,10 @@ const resolvers ={
             let result = await dbExe.getAllDeviceByParamsExe(params);
             return result;
         },
+        getAllRole:async()=>{
+            let result = await dbExe.getAllRoleExe();
+            return result;
+        },
     },
     
     Member: {
@@ -169,7 +173,7 @@ const resolvers ={
             try {
                 let newDeviceData={
                     company_no:company_no,
-                    member_no:member_no,
+                    member_no:member_no === 0? null:member_no,
                     os:os,
                     device_name:device_name
                 }

@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 import ProductInfo from "../components/ProductInfo";
+import LoginPage from "../pages/LoginPage";
 
 const Stack = createStackNavigator();
 
@@ -29,10 +30,10 @@ export default function StackNav() {
         // options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="productInfo"
-        component={ProductInfo}
+        name="login"
+        component={LoginPage}
         options={{
-          title: "상품",
+          title: "로그인",
           // Header 블록에 대한 스타일
           headerStyle: {
             backgroundColor: "#ffffff",
@@ -44,9 +45,8 @@ export default function StackNav() {
             fontSize: 25,
           },
         }}
-
-        // options={{ headerShown: false }}
       />
+
     </Stack.Navigator>
   );
 }

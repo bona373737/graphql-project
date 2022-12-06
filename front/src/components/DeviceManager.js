@@ -56,16 +56,18 @@ const AddDeviceCard = styled.div`
 const DeviceManager=()=>{
     const [modalOpen, setModalOpen] = useState(false);
     const [getDevice,{loading,data,error}] = useLazyQuery(GET_GetAllDeviceByParams);
-    
+    const [role, setRole] = useState();
+
     useEffect(()=>{
         //localStorage에 저장된 로그인한 사용자 정보....수정필요 
         const loginUser =  JSON.parse(localStorage.getItem("loginUser"));
-        const roleNo = loginUser.role_no;
+        setRole(loginUser.role_no);
+    
         const params={};
 
-        if(roleNo===2){
+        if(loginUser.role_no===2){
             params.company_no = loginUser.company_no.company_no;
-        }else if(roleNo===3){
+        }else if(loginUser.role_no===3){
             params.member_no = loginUser.member_no;
         }
         // const params = {
@@ -78,6 +80,7 @@ const DeviceManager=()=>{
         //사용자가 로그인했을때--> member_no기분으로 device 전체조회  
         getDevice({variables:{params:params}})
     },[])
+
 
     const handelModalOpen=()=>{
         setModalOpen(true);
@@ -103,11 +106,15 @@ const DeviceManager=()=>{
                     }
 
             {
-                modalOpen &&
-                <>
-                <CreateDevice className="create_device_modal" setModalOpen={setModalOpen}></CreateDevice>
-                <div className="dimmed"></div>
-                </>
+                role===2? (
+                    modalOpen && 
+                    <>
+                    <CreateDevice className="create_device_modal" setModalOpen={setModalOpen}></CreateDevice>
+                    <div className="dimmed"></div>
+                    </>
+                ):(
+                    ""
+                )   
             }
             </div>
     

@@ -22,6 +22,8 @@ const DeviceCard =({device})=>{
                     <div className="card_wrap" >
                         <h1>장비번호 : {device.device_no}</h1>
                         <h1>장비명 : {device.device_name}</h1>
+                        <h1>장비명 : {device.os}</h1>
+                        <h1>담당자 : {device.member_no? device.member_no:"담당자 미정" }</h1>
                     </div>
                 )
             }

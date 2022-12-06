@@ -4,9 +4,19 @@ import { gql } from "apollo-server";
 const typeDefs = gql`
     type Query{
         loginMember(id:String!,password:String!): Auth
+
+        getAllRole: [Role]
+
+        getAllDeviceByParams(params:Params): [Device]
+        
+
+        getAllMemberByRole(role:Int!): [Member]
+
+
+
+
         getAllMember: [Member]
         getAllAdminMember: [Member]
-        getAllMemberByRole(role:Int!): [Member]
         getAllMemberByRoleAndCorp(role:Int!,companyName:String!): [Member]
         getAllMemberByRoleAndCorpNo(role:Int!,companyNo:Int!): [Member]
         getMemberByCompanyName(companyName:String!): [Member]
@@ -18,7 +28,6 @@ const typeDefs = gql`
         getDeviceByCorpAndMember(companyNo:Int!,memberNo:Int!): [Device]
         getAllDevice: [Device]
         getAllDeviceByCompany: [DeviceByCompany]
-        getAllDeviceByParams(params:Params): [Device]
     }
     type Mutation {
         createMember(
@@ -57,6 +66,12 @@ const typeDefs = gql`
         token:String!
         memberData: Member!
     }
+
+    type Role {
+        role_no:Int!
+        role_name:String!
+    }
+
     type Member {
         member_no:Int!
         role_no:Int!
@@ -76,7 +91,7 @@ const typeDefs = gql`
     type Device {
         device_no:Int!
         company_no:Int!
-        member_no:Int!
+        member_no:Int
         os:String!
         device_name:String!
         reg_date:String!

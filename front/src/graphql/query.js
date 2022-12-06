@@ -142,6 +142,25 @@ query GetAllDeviceByParams($params: Params) {
 }
 `;
 
+export const GET_AllCompany=gql`
+query getAllCompany {
+  getAllCompany {
+    business_number
+    company_name
+    company_no
+  }
+}
+`;
+
+export const GET_AllRole=gql`
+query getAllRole {
+  getAllRole{
+    role_no
+    role_name
+  }
+}
+`;
+
 
 // ===================================================
 
