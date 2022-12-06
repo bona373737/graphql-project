@@ -13,8 +13,12 @@ const resolvers ={
         loginMember: async(_,{
             id,password
         })=>{
-            let result = await login.loginMemberExe(id,password);
-            return result; 
+            try {
+                let result = await login.loginMemberExe(id,password);
+                return result; 
+            } catch (error) {
+                throw error;
+            }
         },
         getAllMember: async()=>{
             try {

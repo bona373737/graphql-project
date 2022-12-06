@@ -54,10 +54,11 @@ const CorpManagerContainer=styled.div`
             border-bottom: 1px solid var(--gray);
         }
         tr{
-            line-height: 30px;
+            line-height: 40px;
 
         }
         td{
+            vertical-align: middle;
 
         }
     }

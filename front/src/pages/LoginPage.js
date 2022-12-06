@@ -63,7 +63,7 @@ const LoginPage=()=>{
 
           //memberData... localStorage에 저장... 이부분 수정필요
           localStorage.setItem("loginUser", JSON.stringify(data.loginMember.memberData));
-        }
+        },
     });
       
     const onSubmitLogin=async(e)=>{
@@ -72,11 +72,11 @@ const LoginPage=()=>{
         //useLazyQuery executes 
         const inputData ={id:e.target.id.value, password:e.target.password.value};
         await login({variables:inputData})
-        history.push({pathname:"/main"})
       } catch (error) {
         alert("아이디 또는 비밀번호 오류 입니다.");
         throw error;
       }    
+      history.push({pathname:"/main"})
     };
 
     return(

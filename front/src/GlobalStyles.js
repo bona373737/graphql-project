@@ -24,6 +24,8 @@ const GlobalStyles = createGlobalStyle`
     }
     button{
         border-radius: 2px;
+        border: none;
+        cursor: pointer;
     }
 `;
 export default GlobalStyles;
