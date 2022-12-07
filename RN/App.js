@@ -10,12 +10,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 
 import BottomTab from "./src/navigation/BottomTab";
-import LoginPage from "./src/pages/LoginPage";
+import Login from "./src/components/Login"
 
 const Stack = createStackNavigator();
 
 const httpLink = new HttpLink({
-  uri: "http://10.90.101.24:4000/graphql",
+  uri: "http://10.90.100.209:4000/",
 });
 
 const client = new ApolloClient({
@@ -33,14 +33,17 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen
               name="login"
-              component={LoginPage}
+              component={Login}
               options={{
                 headerShown: false,
               }}
             />
             <Stack.Screen
-              name="main"
-              component={}
+              name="BottomTab"
+              component={BottomTab}
+              options={{
+                headerShown: false,
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>

@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
-import LoginMember from "../components/LoginMember";
+import Dashboard from "../components/Dashboard";
 
 
 const Stack = createStackNavigator();
@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="LoginMember"
-        component={LoginMember}
+        name="Dashboard"
+        component={Dashboard}
         options={{
           title: "OJT_ITOMS",
           //back button disappear

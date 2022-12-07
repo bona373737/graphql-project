@@ -76,20 +76,22 @@ function Login() {
   // };
 
   const [login, {loading,error,data}] = useLazyQuery(GET_loginMember,{
-    onCompleted:(data)=>{
-        //useLazyQuery execute성공시 localStorage에 저장
-        SecureStore.setItemAsync("loginToken", data.loginMember.token);
-        SecureStore.setItemAsync("loginUser", JSON.stringify(data.loginMember.memberData));
+    onCompleted:async(data)=>{
+        //useLazyQuery execute성공시 Storage에 저장
+        await SecureStore.setItemAsync("loginToken", data.loginMember.token);
+        await SecureStore.setItemAsync("loginUser", JSON.stringify(data.loginMember.memberData));
       }
   });
 
   const onLogin=async(e)=>{
     e.preventDefault();
+    // navigation.navigate("BottomTab")
+
     try {
       //useLazyQuery executes 
-      const inputData ={id:e.target.id.value, password:e.target.password.value};
+      const inputData ={id:id, password:password};
       await login({variables:inputData})
-      navigation.navigate("main");
+      navigation.navigate("BottomTab");
     } catch (error) {
       alert("아이디 또는 비밀번호 오류 입니다.");
     }    
