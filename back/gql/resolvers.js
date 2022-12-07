@@ -28,6 +28,10 @@ const resolvers ={
                 
             }
         },
+        getMemberByParams:async(_,{params})=>{
+            let result = await dbExe.getMemberByParamsExe(params);
+            return result;
+        },
         getAllAdminMember: async()=>{
             let result = await dbExe.getAllAdminMemberExe();
             return result;

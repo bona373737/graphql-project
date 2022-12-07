@@ -1,13 +1,13 @@
-import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import styled from "styled-components";
-import {M_CREATEMEMBER} from '../graphql/query';
-import { GET_ALLMEMBERBYROLE } from "../graphql/query";
-import {GET_AllCompany} from '../graphql/query';
-import {GET_AllRole} from '../graphql/query';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { useState } from "react";
 
+import {M_CREATEMEMBER} from '../graphql/query';
+import {GET_ALLMEMBERBYROLE } from "../graphql/query";
+import {GET_AllCompany} from '../graphql/query';
+import {GET_AllRole} from '../graphql/query';
 
 const CreateMemberContainer=styled.div`
     position: absolute;
@@ -72,8 +72,6 @@ const CreateMemberContainer=styled.div`
                 background-color: white;
                 color: black;
             } 
-          
-            
         }
     }
 `;
@@ -93,7 +91,6 @@ const CreateMember=({setModalOpen})=>{
 
     const onSubmit =async(e)=>{
         e.preventDefault();
-        console.log(e.target)
 
         const current = e.target        
         await createMember({variables:{
@@ -113,11 +110,13 @@ const CreateMember=({setModalOpen})=>{
                 <button className="close_button" onClick={()=>{setModalOpen(false)}}>
                     <FontAwesomeIcon icon={faX} />
                 </button>
-                {/* <p>{JSON.stringify(allCompany.getAllCompany)}</p> */}
                 <form onSubmit={onSubmit}>
                     <h1>계정 등록</h1>
                     <div className="input_wrap">
                         <label htmlFor="role_no"><span>*</span>권한</label>
+                        {
+                            
+                        }
                         <input id="role_no" defaultValue="기업관리자" disabled></input>
                         {/* <select id="role_no" required>
                             {allRole&&

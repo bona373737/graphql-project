@@ -26,6 +26,24 @@ export const GET_LOGINMEMBER = gql`
     }
 `;
 
+export const GET_getMemberByParams =gql`
+query getMemberByParams($params: MemberParams) {
+ getMemberByParams(params: $params) {
+   id
+   name
+   role_no
+   member_no
+   reg_date
+   isavailable
+   company_no {
+     business_number
+     company_name
+     company_no
+   }
+ } 
+}
+`;
+
 export const GET_ALLDEVICE  = gql`
   query getAllDevice {
     getAllDevice {

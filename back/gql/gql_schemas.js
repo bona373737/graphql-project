@@ -9,14 +9,15 @@ const typeDefs = gql`
 
         getAllDeviceByParams(params:Params): [Device]
         
+        getMemberByParams(params:MemberParams): [Member]
 
         getAllMemberByRole(role:Int!): [Member]
 
 
 
+        getAllAdminMember: [Member]
 
         getAllMember: [Member]
-        getAllAdminMember: [Member]
         getAllMemberByRoleAndCorp(role:Int!,companyName:String!): [Member]
         getAllMemberByRoleAndCorpNo(role:Int!,companyNo:Int!): [Member]
         getMemberByCompanyName(companyName:String!): [Member]
@@ -106,6 +107,12 @@ const typeDefs = gql`
     input Params{
         company_no:Int
         member_no:Int
+    }
+
+    input MemberParams{
+        role_no:Int
+        member_name:String
+        company_name:String
     }
 `;
 

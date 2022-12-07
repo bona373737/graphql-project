@@ -71,11 +71,11 @@ const Main =()=>{
                             loginUser?.role_no === 1? (
                                 <>
                                 <li><NavLink to="/main/dashboard" >ITOMS 운영현황</NavLink></li>
-                                <li><NavLink to={{pathname:"/main/corpmanager"}}>기업관리자 계정관리</NavLink></li>
+                                <li><NavLink to={{pathname:"/main/membermanager"}}>기업관리자 계정관리</NavLink></li>
                                 </>
                             ): loginUser?.role_no ===2? (
                                 <>
-                                <li><NavLink to={{pathname:"/main/usermanager"}}>사용자 계정관리 </NavLink></li>
+                                <li><NavLink to={{pathname:"/main/membermanager"}}>사용자 계정관리 </NavLink></li>
                                 <li><NavLink to={{pathname:"/main/devicemanager"}}>장비현황 </NavLink></li>
                                 </>
                                 ) : (

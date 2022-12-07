@@ -1,4 +1,6 @@
-
+- [ ] 로그인,계정등록 입력값 유효성검사
+- [ ] 예외처리
+- [ ] 
 ### React Router V6 -> V5
 https://jforj.tistory.com/241   
 yarn remove react-router-dom   
@@ -19,3 +21,5 @@ and returns a result object containing loading, error, and data properties:
 - https://www.digitalocean.com/community/tutorials/react-simple-authorization
 
 ## history객체, location 객체
+
+

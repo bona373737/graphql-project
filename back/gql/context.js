@@ -18,7 +18,7 @@ const context = ({req})=>{
     
     // console.log(req.body)
     if(req.body.operationName !== "loginMember"){
-        console.log(req.body.variables)
+        // console.log(req.body.variables)
         
         //token이 없는 경우
         if (!req.headers.authorization){

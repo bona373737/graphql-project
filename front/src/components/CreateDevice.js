@@ -15,7 +15,7 @@ const CreateDeviceContainer=styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     width: 600px;
-    height: 400px;
+    height: 500px;
     margin: auto;
     background-color: var(--gray);
 
@@ -43,25 +43,38 @@ const CreateDeviceContainer=styled.div`
             }
             input{
                 width: 300px;
-                line-height: 30px;
+                height: 30px;
                 text-indent: 5px;
                 border: none;
                 :focus{
                     outline: none;
                 }
-                .os{
-                    width: 500px;
-                    option{
-                        width: 300px;
-                        line-height: 30px;
-                        text-indent: 5px;
-                    }
+            }
+            select{
+                width: 300px;
+                height: 30px;
+                text-indent: 5px;
+                border: none;
+                :focus{
+                    outline: none;
                 }
+            }
+            span{
+                color: red;
+                margin: 0 5px;
             }
         }
         button{
+            background-color: black;
+            color: white;
             width: 100px;
-            
+            height: 30px;
+            border: none;
+            margin :20px 0;
+            :hover{
+                background-color: white;
+                color: black;
+            }
         }
     }
 `;

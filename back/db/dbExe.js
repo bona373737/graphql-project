@@ -30,6 +30,27 @@ export default {
             return err;
         }
     }, 
+    getMemberByParamsExe:async(params)=>{
+        try{
+            // console.log(params)
+            let queryString = "select m.member_no,m.role_no,m.company_no,m.name, m.id, m.reg_date,m.isavailable from members as m"
+            
+            if(params.role_no && params.member_name){
+                queryString += ` where m.role_no=${Number(params.role_no)} and m.name like "%${params.member_name}%"`
+            }else if(params.role_no && params.company_name ){
+                queryString += ` left join company as c on m.company_no = c.company_no where m.role_no=${Number(params.role_no)} and c.company_name like "%${params.company_name}%"`
+            }else if(params.role_no){
+                queryString += ` where m.role_no=${Number(params.role_no)}; `
+            }
+            console.log(queryString);
+            let result = await db.exe(queryString);
+            // console.log(result);
+            return result;
+        }catch(err){
+            console.error("getMemberByParamsExe 오류");
+            return err;
+        }
+    },
     getAllAdminMemberExe : async ()=>{
         try{
             let queryString = "select * from members where role_no=2";

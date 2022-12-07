@@ -70,13 +70,8 @@ const DeviceManager=()=>{
         }else if(loginUser.role_no===3){
             params.member_no = loginUser.member_no;
         }
-        // const params = {
-        //     company_no:loginUser.company_no.company_no,
-        //     member_no:loginUser.member_no
-        // }
-        console.log(params)
 
-        //기업관리자가 로그인했을때-->company_no기준으로 device 전체조회, CreateDevice컴포넌트 렌더링
+        //기업관리자가 로그인했을때-->company_no기준으로 device 전체조회
         //사용자가 로그인했을때--> member_no기분으로 device 전체조회  
         getDevice({variables:{params:params}})
     },[])
@@ -92,9 +87,13 @@ const DeviceManager=()=>{
         <DeviceManagerContainer>
             <h1 className="title"> [ 장비 관리 ]</h1>
             <div className="device_wrap">
-                <AddDeviceCard onClick={handelModalOpen} >
-                  <FontAwesomeIcon icon={faPlus}/>
-                </AddDeviceCard>
+                {role && role === 2? (
+                    <AddDeviceCard onClick={handelModalOpen} >
+                    <FontAwesomeIcon icon={faPlus}/>
+                    </AddDeviceCard>
+                ):(
+                    ""
+                )}
             {
                 data?.getAllDeviceByParams?.length>0? (
                     data.getAllDeviceByParams.map((item,index)=>{
@@ -106,15 +105,11 @@ const DeviceManager=()=>{
                     }
 
             {
-                role===2? (
-                    modalOpen && 
-                    <>
-                    <CreateDevice className="create_device_modal" setModalOpen={setModalOpen}></CreateDevice>
-                    <div className="dimmed"></div>
-                    </>
-                ):(
-                    ""
-                )   
+                modalOpen && 
+                <>
+                <CreateDevice className="create_device_modal" setModalOpen={setModalOpen}></CreateDevice>
+                <div className="dimmed"></div>
+                </>   
             }
             </div>
     
