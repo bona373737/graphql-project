@@ -55,7 +55,7 @@ const CorpManager =()=>{
                     console.log(_.getAllMemberByRole)
                 },
                 onError:(e)=>{
-                    console.log(e)
+                    console.log(e);
                 }
             })
         }
