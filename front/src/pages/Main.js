@@ -43,7 +43,13 @@ const MainContainer = styled.div`
     main{
         width: 80%;
         .now_user_info{
-            min-height: 60px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            min-height: 38px;
+            div{
+                margin: 0 16px;
+            }
         }
     }
 `;
@@ -89,12 +95,14 @@ const Main =()=>{
                 <main>
                     {
                         nowMember?.nowMember.length>0 &&
+                        <>
                         <div className='now_user_info'>
                             <div>접속자 : {nowMember.nowMember[0].name}</div>
                             <div>접속아이디 : {nowMember.nowMember[0].id}</div>
                             <div>기업명 : {nowMember.nowMember[0].company_no.company_name}</div>
-                            <hr/>
                         </div>
+                        <hr/>
+                        </>
                     }
                     <Contents/>
                 </main>

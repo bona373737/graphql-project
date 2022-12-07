@@ -43,7 +43,7 @@ export default {
     },
     getAllMemberByRoleExe:async(role)=>{
         try{
-            let queryString = `select * from members where role_no=${role}`;
+            let queryString = `select * from members where role_no=${role} order by reg_date desc`;
             let result = await db.exe(queryString);
             // console.log(result);
             return result;

@@ -16,7 +16,7 @@ const CreateMemberContainer=styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     width: 600px;
-    height: 400px;
+    height: 450px;
     margin: auto;
     background-color: var(--gray);
 
@@ -41,6 +41,10 @@ const CreateMemberContainer=styled.div`
                 display: inline-block;
                 text-align: center;
                 width: 120px;
+                span{
+                    color:red;
+                    margin-right: 5px;
+                }
             }
             input{
                 width: 300px;
@@ -51,9 +55,25 @@ const CreateMemberContainer=styled.div`
                     outline: none;
                 }
             }
+            select{
+                width: 300px;
+                height: 30px;
+                border: none;
+            }
         }
         button{ 
+            background-color: black;
+            color: white;
             width: 100px;
+            height: 30px;
+            border: none;
+            margin :20px 0;
+            :hover{
+                background-color: white;
+                color: black;
+            } 
+          
+            
         }
     }
 `;
@@ -73,7 +93,7 @@ const CreateMember=({setModalOpen})=>{
 
     const onSubmit =async(e)=>{
         e.preventDefault();
-        console.log(e)
+        console.log(e.target)
 
         const current = e.target        
         await createMember({variables:{
@@ -84,7 +104,6 @@ const CreateMember=({setModalOpen})=>{
             password:current.password.value
         }})
 
-        //input창 입력값 삭제
         e.target.reset();
         setModalOpen(false)
     };
@@ -110,7 +129,7 @@ const CreateMember=({setModalOpen})=>{
                         </select> */}
                     </div>
                     <div className="input_wrap">
-                        <label htmlFor="company_no">기업번호</label>
+                        <label htmlFor="company_no"><span>*</span>기업번호</label>
                         <select id="company_no" onChange={(e)=>{setCompanyNoSelected(e.target.value)}}>
                             {allCompany?.getAllCompany &&
                                 allCompany.getAllCompany.map((item,index)=>{
