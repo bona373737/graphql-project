@@ -68,3 +68,11 @@ query GetCompanyByParams($params: CorpParams) {
 }
 `;
 
+// =========== Mutation ==================================
+export const M_createCompany=gql`
+mutation createCompany($companyName: String!, $businessNumber: String!) {
+createCompany(company_name: $companyName, business_number: $businessNumber)
+}
+
+`;
+

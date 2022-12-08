@@ -56,6 +56,7 @@ const Dashboard =()=>{
         // checkToken();
 
         getCompany({
+            fetchPolicy:'no-cache',
             variables:{params:params},
             // fetchPolicy:"no-cache",
             onCompleted:(data)=>{

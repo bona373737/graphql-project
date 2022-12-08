@@ -376,6 +376,33 @@ export default {
         finally {
             if (conn) await db.endPoolConnection(conn);
         }
+    },
+
+    createCompanyExe:async(createCompanyData)=>{
+        let conn;
+
+        try {
+            conn = await db.getPoolConnection();
+
+            //새로운 장비 insert
+            let queryString =
+            "insert into company (company_name,business_number) " +
+            "values (" + conn.escape(createCompanyData['company_name']) +
+                    "," + conn.escape(createCompanyData['business_number']) +
+                    ")";
+
+            const result = conn.query(queryString);
+            console.log("query statement : " + queryString);
+            
+            return "신규기업 ["+createCompanyData.company_name+"] 등록완료";
+
+        } catch (error) {
+            console.log("createCompanyExe error :" + error);
+            throw error;
+        }
+        finally {
+            if (conn) await db.endPoolConnection(conn);
+        }
     }
      
 }

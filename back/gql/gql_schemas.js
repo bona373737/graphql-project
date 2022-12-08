@@ -61,6 +61,11 @@ const typeDefs = gql`
             os:String!
             member_no:Int!
         ): Device
+
+        createCompany(
+            company_name:String!
+            business_number:String!
+        ): String!
     }
     #------------------------------------------------------------
     type Auth {

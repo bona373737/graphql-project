@@ -75,23 +75,37 @@ function Login() {
   //   }
   // };
 
+  const setStore=async(data)=>{
+    console.log(data)
+    try {
+      await SecureStore.setItemAsync("loginToken", data?.loginMember.token);
+      await SecureStore.setItemAsync("loginUser",  JSON.stringify(data.loginMember.memberData));          
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
   const [login, {loading,error,data}] = useLazyQuery(GET_loginMember,{
-    // fetchPolicy:"no-cache",
-    onCompleted:async(data)=>{
+    fetchPolicy:"no-cache",
+    onCompleted:(data)=>{
         //useLazyQuery execute성공시 Storage에 저장
-        await SecureStore.setItemAsync("loginToken", data.loginMember.token);
-        await SecureStore.setItemAsync("loginUser", JSON.stringify(data.loginMember.memberData));
+        setStore(data);
+        console.log("onComlete!!!")
+        console.log(data);
       },
-    onError:()=>{console.log({...error})}
+    onError:(error)=>{console.log({...error})}
   });
 
   const onLogin=async(e)=>{
     e.preventDefault();
-    // navigation.navigate("BottomTab")
-    // await SecureStore.deleteItemAsync('loginToken');
-    // await SecureStore.deleteItemAsync('loginUser');
-    // console.log(await SecureStore.getItemAsync('loginUser'));
-    // console.log(await SecureStore.getItemAsync("loginToken"))
+    console.log(id,password)
+    console.log("로그인 하기전 data있냥")
+    console.log(data)
+    if(data?.length > 0){
+      await SecureStore.deleteItemAsync("loginToken");
+      await SecureStore.deleteItemAsync("loginUser");
+    }
 
     try {
       //useLazyQuery executes 
@@ -101,8 +115,9 @@ function Login() {
 
     } catch (error) {
       alert("아이디 또는 비밀번호 오류 입니다.");
+      throw error
     }    
-  };
+  };  
 
 
   return (

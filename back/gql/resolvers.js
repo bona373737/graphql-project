@@ -216,6 +216,24 @@ const resolvers ={
                 throw error;
             }
         },
+
+        createCompany:async(_,{
+            company_name, 
+            business_number
+        })=>{
+            try {
+                let createCompanyData={
+                    company_name : company_name,
+                    business_number: business_number
+                }
+                const result = await dbExe.createCompanyExe(createCompanyData);
+                return result;
+
+            } catch (error) {
+                console.log(`createCompany Error: ${error}`);
+                throw error;
+            }
+        },
     }
 }
 
