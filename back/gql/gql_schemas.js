@@ -11,15 +11,13 @@ const typeDefs = gql`
         
         getMemberByParams(params:MemberParams): [Member]
 
+        getCompanyByParams(params:CorpParams) : [Company]
+        
+
+        
         getAllMemberByRole(role:Int!): [Member]
-
-
-
         getAllAdminMember: [Member]
-
         getAllMember: [Member]
-        getAllMemberByRoleAndCorp(role:Int!,companyName:String!): [Member]
-        getAllMemberByRoleAndCorpNo(role:Int!,companyNo:Int!): [Member]
         getMemberByCompanyName(companyName:String!): [Member]
         getMemberByMemberName(memberName:String!):[Member]
         getAllCompany:[Company]
@@ -29,6 +27,8 @@ const typeDefs = gql`
         getDeviceByCorpAndMember(companyNo:Int!,memberNo:Int!): [Device]
         getAllDevice: [Device]
         getAllDeviceByCompany: [DeviceByCompany]
+        getAllMemberByRoleAndCorp(role:Int!,companyName:String!): [Member]
+        getAllMemberByRoleAndCorpNo(role:Int!,companyNo:Int!): [Member]
     }
     type Mutation {
         createMember(
@@ -87,6 +87,7 @@ const typeDefs = gql`
         company_no:Int!
         company_name:String!
         business_number:String!
+        device_total:Int!
     }
 
     type Device {
@@ -113,6 +114,11 @@ const typeDefs = gql`
         role_no:Int
         member_name:String
         company_name:String
+    }
+
+    input CorpParams{
+        company_name:String
+        business_number:String
     }
 `;
 

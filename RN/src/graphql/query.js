@@ -56,3 +56,15 @@ query getAllMemberByRoleAndCorp($role:Int!, $companyName:String!){
     }
 }
 `;
+
+export const GET_getCompanyByParams=gql`
+query GetCompanyByParams($params: CorpParams) {
+  getCompanyByParams(params: $params) {
+    business_number
+    company_name
+    company_no
+    device_total
+  }
+}
+`;
+

@@ -73,10 +73,10 @@ export default {
 
     // Authentication middleware
     // https://escape.tech/blog/9-graphql-security-best-practices/
-    authMiddleware : (next) => (parent, args, context) => {
-        if(!context.user) {
-            throw new Error("Unauthenticated")
-        }
-        return next(parent, args, context)
-    },
+    // authMiddleware : (next) => (parent, args, context) => {
+    //     if(!context.user) {
+    //         throw new Error("Unauthenticated")
+    //     }
+    //     return next(parent, args, context)
+    // },
 }

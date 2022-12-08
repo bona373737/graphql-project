@@ -51,6 +51,26 @@ export default {
             return err;
         }
     },
+    getCompanyByParams:async(params)=>{
+        try{
+            console.log(params)
+            let queryString = "select c.company_no, c.company_name, c.business_number, count(*) as device_total from company as c left join devices as d on c.company_no = d.company_no"
+            
+            if(params.company_name){
+                queryString += ` where c.company_name like "%${params.company_name}%"`;
+            }else if(params.business_number){
+                queryString += ` where c.business_number=${params.business_number}`;
+            }
+            queryString += " group by c.company_no;"
+            console.log(queryString);
+            let result = await db.exe(queryString);
+            // console.log(result);
+            return result;
+        }catch(err){
+            console.error("getCompanyByParams 오류");
+            return err;
+        }
+    },
     getAllAdminMemberExe : async ()=>{
         try{
             let queryString = "select * from members where role_no=2";

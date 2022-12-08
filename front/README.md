@@ -22,4 +22,11 @@ and returns a result object containing loading, error, and data properties:
 
 ## history객체, location 객체
 
+## mariadb 데이터 타입 설정
+count(*)... 집계함수 결과값 데이터형태 : BigInt
+
+설정변경
+const pool = mariadb.createPool({
+  bigIntAsNumber: true,
+
 

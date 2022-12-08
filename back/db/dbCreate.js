@@ -2,6 +2,7 @@ import mariadb from 'mariadb';
 import config from './dbConfig.js';
 
 const pool = mariadb.createPool({
+    bigIntAsNumber: true,
     connectionLimit : config.connectionLimit,
     acquireTimeout: config.acquireTimeout,
     host: config.host,

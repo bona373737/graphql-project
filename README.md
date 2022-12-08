@@ -9,3 +9,15 @@
 - [ ] 
 
 
+
+## Error
+```javaScript
+    getCompany({
+            variables:null,
+            onCompleted:(_,data)=>{console.log("성공")},
+            onError:(error)=>{
+                console.log({...error});
+                console.log(error.networkError.result.errors);
+            }
+        });
+```
