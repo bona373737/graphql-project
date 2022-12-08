@@ -152,7 +152,7 @@ const MemberManager=()=>{
                 <input id="search_input"></input>
                 <button>검색</button>
             </form>
-            {loginMemberData?.role_no === 1?(
+            {loginMemberData?.role_no === 2 || loginMemberData?.role_no === 1?(
                 <button className="create_member_btn" onClick={()=>{setModalOpen(true)}}>계정등록</button>
             ):(
                 ""

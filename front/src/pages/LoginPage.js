@@ -56,8 +56,8 @@ const LoginPage=()=>{
     const [login, {loading,error,data}] = useLazyQuery(GET_LOGINMEMBER,{
       onCompleted:(data)=>{
           //useLazyQuery execute성공시 token->localStorage에 저장, memberData->전역변수로 저장
-          console.log(data)
-          console.log("onComleted!!!!!!!")
+          // console.log(data)
+          // console.log("onComleted!!!!!!!")
           localStorage.setItem("loginToken", data.loginMember.token);
           nowMemberInVar([data.loginMember.memberData])   
 
