@@ -85,7 +85,7 @@ const DeviceManager=()=>{
     if (error) return <p>Error : {error.message}</p>;
         return(
         <DeviceManagerContainer>
-            <h1 className="title"> [ 장비 관리 ]</h1>
+            <h1 className="title"> 장비 관리</h1>
             <div className="device_wrap">
                 {role && role === 2? (
                     <AddDeviceCard onClick={handelModalOpen} >

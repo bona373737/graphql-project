@@ -27,7 +27,7 @@ const authCheckLink = new ApolloLink((operation,forword)=>{
 });
 
 
-export const cache = new InMemoryCache({
+const cache = new InMemoryCache({
     typePolicies:{
         Query:{
             fields:{
@@ -42,11 +42,26 @@ export const cache = new InMemoryCache({
 })
 
 
-
-
 export const client = new ApolloClient({
     link: from([errorLink,authCheckLink,httpLink]),
-    cache: cache
+    cache: cache,
+    // 에러처리관련 https://crmrelease.tistory.com/60
+    //             https://yongkshire.tistory.com/2
+    defaultOptions:{
+        watchQuery:{
+            fetchPolicy:'network-only',
+            // errorPolicy:'ignore',
+        },
+        query:{
+            fetchPolicy:'network-only',
+            // loginMember query요청시 infofla(사이트관리자계정)만 comapany_no값이 null인상황
+            // partial failure가 발생하기때문에 기본값 errorPolicy:'none'으로 진행.
+            // errorPolicy:'all',
+        },
+        mutate:{
+            errorPolicy:'all'
+        }
+    }
 });
 
 // export default client;

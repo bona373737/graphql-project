@@ -6,29 +6,28 @@ const typeDefs = gql`
         loginMember(id:String!,password:String!): Auth
 
         getAllRole: [Role]
+        getAllCompany:[Company]
 
         getAllDeviceByParams(params:Params): [Device]
-        
         getMemberByParams(params:MemberParams): [Member]
-
         getCompanyByParams(params:CorpParams) : [Company]
         
-
-        
-        getAllMemberByRole(role:Int!): [Member]
-        getAllAdminMember: [Member]
-        getAllMember: [Member]
-        getMemberByCompanyName(companyName:String!): [Member]
-        getMemberByMemberName(memberName:String!):[Member]
-        getAllCompany:[Company]
-        getCompanyByCompanyNo(companyNo:Int!) : Company
-        getCountDevice: Int
-        getDeviceByCompany: [Device]
-        getDeviceByCorpAndMember(companyNo:Int!,memberNo:Int!): [Device]
-        getAllDevice: [Device]
+        # #####삽질쿼리..위의 쿼리로 코드수정해야함
         getAllDeviceByCompany: [DeviceByCompany]
+        getAllMemberByRole(role:Int!): [Member]
         getAllMemberByRoleAndCorp(role:Int!,companyName:String!): [Member]
         getAllMemberByRoleAndCorpNo(role:Int!,companyNo:Int!): [Member]
+        getDeviceByCompany: [Device]
+        
+        # #####사용안함
+        # getCompanyByCompanyNo(companyNo:Int!) : Company
+        # getAllAdminMember: [Member]
+        # getAllMember: [Member]
+        # getMemberByCompanyName(companyName:String!): [Member]
+        # getMemberByMemberName(memberName:String!):[Member]
+        # getCountDevice: Int
+        # getDeviceByCorpAndMember(companyNo:Int!,memberNo:Int!): [Device]
+        # getAllDevice: [Device]
     }
     type Mutation {
         createMember(
@@ -37,16 +36,12 @@ const typeDefs = gql`
             name: String!
             id: String!
             password: String!
-        ): Member
+        ): String!
 
         updateMember(
-            role_no: Int!
-            company_no: Int
-            id:String!
-            name: String!
-            password: String!
+            member_no:Int!
             isavailable:Boolean!
-        ): Member
+        ): String!
 
         createDevice(
             company_no:Int!
@@ -98,7 +93,7 @@ const typeDefs = gql`
     type Device {
         device_no:Int!
         company_no:Int!
-        member_no:Int
+        member_no:Int!
         os:String!
         device_name:String!
         reg_date:String!
@@ -117,6 +112,7 @@ const typeDefs = gql`
 
     input MemberParams{
         role_no:Int
+        company_no:Int
         member_name:String
         company_name:String
     }

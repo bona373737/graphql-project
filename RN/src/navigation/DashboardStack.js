@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 
 export default function Home() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator  >
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}

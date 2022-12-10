@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import dayjs from 'dayjs';
 import db from './dbCreate.js';
 import {ValidationError, UserInputError} from 'apollo-server';
+// import { GET_NOWMEMBER } from '../../front/src/graphql/query.js';
 
 // const logger = require('../logger/winston');
 // const log = (msg) => logger.info(msg);
@@ -32,15 +33,22 @@ export default {
     }, 
     getMemberByParamsExe:async(params)=>{
         try{
-            // console.log(params)
+            console.log(params)
             let queryString = "select m.member_no,m.role_no,m.company_no,m.name, m.id, m.reg_date,m.isavailable from members as m"
             
-            if(params.role_no && params.member_name){
+            //조건분기..대환장.... 코드 수정필요!!!
+            if(params.member_name && params.role_no && params.company_no){
+                queryString += ` left join company as c on m.company_no = c.company_no where m.role_no=${Number(params.role_no)} and m.company_no = ${params.company_no} and m.name like "%${params.member_name}%"`
+            }
+            else if(params.role_no && params.member_name){
                 queryString += ` where m.role_no=${Number(params.role_no)} and m.name like "%${params.member_name}%"`
             }else if(params.role_no && params.company_name ){
                 queryString += ` left join company as c on m.company_no = c.company_no where m.role_no=${Number(params.role_no)} and c.company_name like "%${params.company_name}%"`
-            }else if(params.role_no){
-                queryString += ` where m.role_no=${Number(params.role_no)}; `
+            }else if(params.role_no && params.company_no){
+                queryString += ` left join company as c on m.company_no = c.company_no where m.role_no=${Number(params.role_no)} and c.company_no = ${params.company_no}`
+            }
+            else if(params.role_no){
+                queryString += ` where m.role_no=${Number(params.role_no)};`
             }
             console.log(queryString);
             let result = await db.exe(queryString);
@@ -113,7 +121,6 @@ export default {
             let queryString = `select * from members where role_no=${role} and company_no=${companyNo}`;
             console.log(queryString)
             let result = await db.exe(queryString);
-            console.log(result);
             return result;
         }catch(err){
             console.error("getAllMemberByRoleAndCorpNoExe 오류");
@@ -159,6 +166,10 @@ export default {
             let result = await db.exe(queryString);
             // console.log(result);
             return result;
+            // if(companyNo){
+            // }else{
+            //     return null;
+            // }
         }catch(err){
             console.error("getCompanyByCompanyNoExe 오류");
             return err;
@@ -258,12 +269,13 @@ export default {
             const insertResult = conn.query(queryString);
             // result = { affectedRows: 1, insertId: 3n, warningStatus: 0 }
             console.log("query statement : " + queryString);
+            return `[ ${newMemberData.name} ]님 계정등록 완료!`;
 
             //insert된 데이터를 조회하여 return 
-            queryString = "select * from members where member_no = (select LAST_INSERT_ID())";
-            const selectResult = conn.query(queryString);
-            console.log("query statement : " + queryString)
-            return selectResult;
+            // queryString = "select * from members where member_no = (select LAST_INSERT_ID())";
+            // const selectResult = conn.query(queryString);
+            // console.log("query statement : " + queryString)
+            // return selectResult;
 
         } catch (error) {
             console.log("createMemberExe error :" + error);
@@ -277,32 +289,40 @@ export default {
     updateMemberExe: async(updateMemberData)=>{
         let conn;
 
-        const hashedPassword=(password)=>{
-            const salt ="12345"
-            return crypto.createHmac("sha512",salt).update(password).digest("base64");        
-        }
+        // const hashedPassword=(password)=>{
+        //     const salt ="12345"
+        //     return crypto.createHmac("sha512",salt).update(password).digest("base64");        
+        // }
 
         try {
             conn = await db.getPoolConnection();
 
             let queryString =
-                `update members set 
-                    role_no = ${conn.escape(updateMemberData['role_no'])},
-                    company_no= NULLIF(${(conn.escape(updateMemberData['company_no']))}, null),
-                    name=${conn.escape(updateMemberData['name'])},
-                    password=${conn.escape(hashedPassword(updateMemberData['password']))},
-                    isavailable=1 where id = ${conn.escape(updateMemberData['id'])};
+                `update members set isavailable=${updateMemberData.isavailable} where member_no=${updateMemberData.member_no};
                 `
+                // `update members set 
+                //     role_no = ${conn.escape(updateMemberData['role_no'])},
+                //     company_no= NULLIF(${(conn.escape(updateMemberData['company_no']))}, null),
+                //     name=${conn.escape(updateMemberData['name'])},
+                //     password=${conn.escape(hashedPassword(updateMemberData['password']))},
+                //     isavailable=1 
+                //     where id = ${conn.escape(updateMemberData['id'])};
+                // `
             const insertResult = conn.query(queryString);
             // console.log(insertResult)
             // result = { affectedRows: 1, insertId: 3n, warningStatus: 0 }
             console.log("query statement : " + queryString);
 
+            const returnMsg=updateMemberData.isavailable===true? 
+                updateMemberData.member_no +"번 계정이 활성화 되었습니다." : updateMemberData.member_no +"번 계정이 비활성화 되었습니다. "
+            
+            return returnMsg;
+
             //update된 데이터를 조회하여 return 
-            queryString = `select * from members where id = ${conn.escape(updateMemberData['id'])}`;
-            const selectResult = conn.query(queryString);
-            console.log("query statement : " + queryString)
-            return selectResult;
+            // queryString = `select * from members where id = ${conn.escape(updateMemberData['id'])}`;
+            // const selectResult = conn.query(queryString);
+            // console.log("query statement : " + queryString)
+            // return selectResult;
 
         } catch (error) {
             console.log("createMemberExe error :" + error);

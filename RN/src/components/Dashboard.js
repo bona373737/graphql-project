@@ -56,12 +56,12 @@ const Dashboard =()=>{
         // checkToken();
 
         getCompany({
-            fetchPolicy:'no-cache',
+            fetchPolicy:'network-only',
             variables:{params:params},
             // fetchPolicy:"no-cache",
             onCompleted:(data)=>{
                 // console.log("complete")
-                // console.log(data)},
+                // console.log(data)
             },
             onError:(error)=>{
                 console.log("대쉬보드.. 에러...")
@@ -81,7 +81,7 @@ const Dashboard =()=>{
         <ScrollView>
             { data.getCompanyByParams.map((item,index)=>{ 
                 return(
-                    <TouchableOpacity key={index} style={styles.cardContainer} onPress={()=>{navigation.navigate("DeviceManager")}}>
+                    <TouchableOpacity key={index} style={styles.cardContainer} onPress={()=>{navigation.navigate("DeviceManager",{companyNo:item.company_no})}}>
                     <Card.Title 
                     title={item.company_name}
                     subtitle={`장비총계 : ${item.device_total}`}

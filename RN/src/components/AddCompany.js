@@ -27,7 +27,12 @@ const AddCompany =()=>{
     const [companyName, setCompanyName] = React.useState("");
     const [businessNum, setBusinessNum] = React.useState("");
 
-    const [addCompany,{data,error}] = useMutation(M_createCompany)
+    const [addCompany,{data,error}] = useMutation(M_createCompany,{
+          refetchQueries:[
+          {query : GET_getCompanyByParams,
+          variables:{params:{company_name:"",business_number:""}}}
+        ],
+    })
 
     const handleAddCompany=()=>{  
       const params={
@@ -38,18 +43,15 @@ const AddCompany =()=>{
 
       addCompany({
         variables:params,
-        refetchQueries:[
-          {query : GET_getCompanyByParams,
-          variables:{ company_name:"",business_number:""}}
-        ],
+    
         onCompleted:(data)=>{
-          alert(data.createCompany);
+          console.log(data.createCompany);
           navigate.navigate("Dashboard")
         },
         onError:(error)=>{
           console.log("에러에러에러에러")
           console.log({...error})
-          console.log(error.networkError.result.errors);
+          // console.log(error.networkError.result.errors);
         }
     })}
 

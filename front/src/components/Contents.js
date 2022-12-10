@@ -1,12 +1,12 @@
 import { Switch,Route } from 'react-router-dom';
 import DashBoard from "../components/DashBoard";
 import MemberManager from "../components/MemberManager";
-import UserManager from "../components/UserManager";
 import DeviceManager from "../components/DeviceManager";
 import styled from 'styled-components';
 
 const ContentsContainer =styled.div`
     height: 100%;
+    min-width: 800px;
 
 `;
 

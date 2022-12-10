@@ -83,7 +83,7 @@ const CreateDeviceContainer=styled.div`
 const CreateDevice=({setModalOpen})=>{
 
     const [companyNo, setCompanyNo] = useState();
-    const [memberNo, setMemberNo] = useState();
+    const [selectedUserNo, setSelectedUserNo] = useState();
     const [companyName, setCompanyName] = useState();
     const osArr = ["Linux","Window32","Window64"];
     const [createDevice, {loading, data, errror}] = useMutation(M_CREATEDEVICE,{
@@ -102,11 +102,11 @@ const CreateDevice=({setModalOpen})=>{
     useEffect(()=>{
         const loginUser = JSON.parse(localStorage.getItem("loginUser"));
         setCompanyName(loginUser?.company_no.company_name);
-        setCompanyNo(loginUser?.company_no.company_no);
+        setCompanyNo(Number(loginUser?.company_no.company_no));
         // const companyNo = loginUser?.company_no.company_no;
         getUsers({variables:{
             role:3,
-            companyNo:companyNo
+            companyNo:loginUser.company_no.company_no
         }})
     },[])
 
@@ -114,14 +114,19 @@ const CreateDevice=({setModalOpen})=>{
         e.preventDefault();
 
         const params={};
-        params.company_no=Number(e.target.company_no.value)
-            
+        params.company_no=parseInt(e.target.company_no.value);
+        params.device_name=e.target.device_name.value;
+        params.os=e.target.os.value;
+        params.member_no=selectedUserNo;
+
+        // console.log(params)
+
         createDevice({
-            variables:{
-            company_no:Number(e.target.company_no.value),
-            device_name:e.target.device_name.value,
-            os:e.target.os.value,
-            member_no:Number(e.target.device_user.value)
+            variables:{     
+                company_no:parseInt(e.target.company_no.value),
+                device_name:e.target.device_name.value,
+                os:e.target.os.value,
+                member_no:parseInt(selectedUserNo)
             },
             onCompleted:(data)=>{
                 alert(`장비 ${data.createDevice.device_name} 등록완료`)
@@ -164,12 +169,12 @@ const CreateDevice=({setModalOpen})=>{
                     </div>
                     <div className="input_wrap">
                         <label htmlFor="device_user">담당사용자</label>
-                        <select id="device_user">
+                        <select id="device_user" onChange={(e)=>{setSelectedUserNo(e.target.value)}}>
                           <option value="">사용자미정</option>
                         {
                             userData?.getAllMemberByRoleAndCorpNo.length>0 &&
                             userData.getAllMemberByRoleAndCorpNo.map((item,index)=>{
-                                return <option value={item.company_no.company_no} key={index}>{item.name}</option>
+                                return <option value={item.member_no} key={index}>{`${item.member_no}:${item.name}`}</option>
                             })
                         }
                         </select>

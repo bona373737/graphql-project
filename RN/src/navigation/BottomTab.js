@@ -8,13 +8,14 @@ import { View, Text, StyleSheet } from "react-native";
 import Dashboard from "../components/Dashboard";
 import Corpmanager from  "../components/CorpManager";
 import DeviceManager from "../components/DeviceManager"
-import UserManager from "../components/UserManager"
+import MemberManager from "../components/MemberManager"
 import LoginMember from "../components/LoginMember"
 import Home from "../pages/Home";
 import DashboardStack from "../navigation/DashboardStack";
 import DeviceStack from "./DeviceStack";
 import CorpStack from "./CorpStack";
 import UserStack from "./UserStack";
+import { useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
   headerStyle:{
@@ -27,17 +28,68 @@ const styles = StyleSheet.create({
 const Tab = createMaterialBottomTabNavigator();
 
 function BottomTab() {
+  const navigation = useNavigation();
   const [ loginMemberData, setLoginMemberData] = useState();
 
   const getLoginMemberData=async()=>{
-      const data = await SecureStore.getItemAsync("loginUser");
-      setLoginMemberData(JSON.parse(data));
+      let data = await SecureStore.getItemAsync("loginUser");
+      data = JSON.parse(data);
+      if(data){
+        return data;
+      }
   }
 
   useEffect(()=>{
-      getLoginMemberData();
+      getLoginMemberData().then((data)=>{
+        setLoginMemberData(data)
+      });
   },[])
-  console.log(loginMemberData)
+  // console.log(loginMemberData)
+
+  /** 탭이동시 내부의 stack 초기화... */
+  const handleTabPress = ({ navigation,defaultHandler}) => {
+    const firstLevelState = navigation.state;
+
+    if (firstLevelState.index !== 0) {
+      navigation.popToTop({ immediate: true });
+
+      const secondLevelState = firstLevelState.routes[firstLevelState.index];
+      if (secondLevelState.index !== 0) {
+        navigation.popToTop({ immediate: true });
+      }
+    }
+    defaultHandler();
+
+    // navigation.popToTop();
+    // defaultHandler();
+    
+    // navigation.popToTop();
+    // navigation.navigate(navigation.state.routeName);
+  }
+  // const resetHomeStackOnTabPress = ({ navigation, route }) => ({
+  //   tabPress: (e) => {
+  //     const state = navigation.dangerouslyGetState();
+  
+  //     if (state) {
+  //       // Grab all the tabs that are NOT the one we just pressed
+  //       const nonTargetTabs = state.routes.filter((r) => r.key !== e.target);
+  
+  //       nonTargetTabs.forEach((tab) => {
+  //         // Find the tab we want to reset and grab the key of the nested stack
+  //         const tabName = tab?.name;
+  //         const stackKey = tab?.state?.key;
+  
+  //         if (stackKey && tabName === TAB_TO_RESET) {
+  //           // Pass the stack key that we want to reset and use popToTop to reset it
+  //           navigation.dispatch({
+  //             ...StackActions.popToTop(),
+  //             target: stackKey,
+  //           });
+  //         }
+  //       });
+  //     }
+  //   },
+  // });
 
   return (
     loginMemberData &&
@@ -51,6 +103,7 @@ function BottomTab() {
         name="Home"
         component={Home}
         options={{
+          tabPress:handleTabPress,
           headerShown: false,
           tabBarOptions: { labelStyle: 20 },
           tabBarLabel: "접속자",
@@ -60,7 +113,7 @@ function BottomTab() {
               ) : (
                 <IconAntDesign name="home" size={25} color={"#adadad"} />
                 ),
-              }}
+        }}
       />
     
 
@@ -70,7 +123,16 @@ function BottomTab() {
           <Tab.Screen
             name="DashboardStack"
             component={DashboardStack}
+            // listeners={({ navigation }) => ({
+            //   //다른 탭에 이동했다가 돌아왔을때 첫번째 stack으로 이동
+            //   //https://github.com/react-navigation/react-navigation/issues/1557
+            //   tabPress: (e) => {
+            //     e.preventDefault();
+            //     navigation.navigate("Dashboard")
+            //   }
+            // })}
             options={{
+              tabPress:handleTabPress,
               tabBarOptions: { labelStyle: 20 },
               headerShown: false,
               tabBarLabel: "ITOMS운영현황",

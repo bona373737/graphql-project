@@ -20,13 +20,13 @@ const resolvers ={
                 throw error;
             }
         },
-        getAllMember: async()=>{
-            try {
-                let result = await dbExe.getAllMemberExe();
-                return result; 
-            } catch (error) {
-                
-            }
+        getAllRole:async()=>{
+            let result = await dbExe.getAllRoleExe();
+            return result;
+        },
+        getAllCompany:async()=>{
+            let result = await dbExe.getAllCompanyExe();
+            return result;
         },
         getMemberByParams:async(_,{params})=>{
             let result = await dbExe.getMemberByParamsExe(params);
@@ -36,8 +36,9 @@ const resolvers ={
             let result = await dbExe.getCompanyByParams(params);
             return result;
         },
-        getAllAdminMember: async()=>{
-            let result = await dbExe.getAllAdminMemberExe();
+        getAllDeviceByParams:async(_,{params})=>{
+            // console.log(params)
+            let result = await dbExe.getAllDeviceByParamsExe(params);
             return result;
         },
         getAllMemberByRole: async(_,{role})=>{
@@ -57,61 +58,60 @@ const resolvers ={
             let result = await dbExe.getAllMemberByRoleAndCorpNoExe(role,companyNo);
             return result;
         },
-        getMemberByCompanyName:async(_,{companyName})=>{
-            let result = await dbExe.getMemberByCompanyNameExe(companyName);
-            return result;
-        },
-        getMemberByMemberName:async(_,{memberName})=>{
-            let result = await dbExe.getMemberByMemberNameExe(memberName);
-            return result;
-        },
-        getAllCompany:async()=>{
+        getAllDeviceByCompany: async()=>{
             let result = await dbExe.getAllCompanyExe();
-            return result;
-        },
-        getCompanyByCompanyNo:async(_,{companyNo})=>{
-            let result = await dbExe.getCompanyByCompanyNoExe();
-            return result;
-        },
-        getCountDevice: async()=>{
-            let result = await dbExe.getCountDeviceExe();
             return result;
         },
         getDeviceByCompany:async(_,{companyNo})=>{
             let result = await dbExe.getDeviceByCompanyExe(companyNo);
             return result;
         },
-        getAllDevice: async()=>{
-            let result = await dbExe.getAllDeviceExe();
-            return result;
-        },
-        getAllDeviceByCompany: async()=>{
-            let result = await dbExe.getAllCompanyExe();
-            return result;
-        },
+        // getAllMember: async()=>{
+        //     try {
+        //         let result = await dbExe.getAllMemberExe();
+        //         return result; 
+        //     } catch (error) {
+        //     }
+        // },
+        // getAllAdminMember: async()=>{
+        //     let result = await dbExe.getAllAdminMemberExe();
+        //     return result;
+        // },
+        // getMemberByCompanyName:async(_,{companyName})=>{
+        //     let result = await dbExe.getMemberByCompanyNameExe(companyName);
+        //     return result;
+        // },
+        // getMemberByMemberName:async(_,{memberName})=>{
+        //     let result = await dbExe.getMemberByMemberNameExe(memberName);
+        //     return result;
+        // },
+        // getCompanyByCompanyNo:async(_,{companyNo})=>{
+        //     let result = await dbExe.getCompanyByCompanyNoExe();
+        //     return result;
+        // },
+        // getCountDevice: async()=>{
+        //     let result = await dbExe.getCountDeviceExe();
+        //     return result;
+        // },
+      
+        // getAllDevice: async()=>{
+        //     let result = await dbExe.getAllDeviceExe();
+        //     return result;
+        // },
         //기업의 특정 사용자가 담당하는 장비목록
-        getDeviceByCorpAndMember: async(_,{companyNo,memberNo})=>{
-            let result = await dbExe.getDeviceByCorpAndMemberExe(companyNo,memberNo);
-            return result;
-        },
-        getAllDeviceByParams:async(_,{params})=>{
-            console.log(params)
-            let result = await dbExe.getAllDeviceByParamsExe(params);
-            return result;
-        },
-        getAllRole:async()=>{
-            let result = await dbExe.getAllRoleExe();
-            return result;
-        },
+        // getDeviceByCorpAndMember: async(_,{companyNo,memberNo})=>{
+        //     let result = await dbExe.getDeviceByCorpAndMemberExe(companyNo,memberNo);
+        //     return result;
+        // },
     },
-    
+    // SubQuery ========================================================================
     Member: {
         company_no: async ({
             company_no
         }) => {
             try {
                 let result;
-                result = await dbExe.getAllCompanyExe();
+                result = await dbExe.getCompanyByCompanyNoExe(company_no);
                 return result[0];
             } catch (error) {
                 log("Member error is + " + error);
@@ -119,7 +119,6 @@ const resolvers ={
             }
         }
     },
-
     DeviceByCompany:{
         company_no: async({
             company_no
@@ -134,7 +133,7 @@ const resolvers ={
             }
         }
     },
-
+    // Mutation =========================================================================
     Mutation:{
         createMember: async(_,{
             role_no,company_no,name,id,password
@@ -149,7 +148,7 @@ const resolvers ={
                 }
                 const result = await dbExe.createMemberExe(newMemberData);
                 // console.log(result);
-                return result[0];
+                return result;
 
             } catch (error) {
                 console.log(`createMember Error: ${error}`);
@@ -158,20 +157,16 @@ const resolvers ={
         },
 
         updateMember: async(_,{
-            role_no,company_no,name,id,password,isavailable
+            member_no,isavailable
         })=>{
             try {
                 let updateMemberData={
-                    role_no : role_no,
-                    company_no : company_no,
-                    name : name,
-                    id:id,
-                    password : password,
+                    member_no: member_no,
                     isavailable: isavailable
                 }
                 const result = await dbExe.updateMemberExe(updateMemberData);
                 // console.log(result);
-                return result[0];
+                return result;
 
             } catch (error) {
                 console.log(`createMember Error: ${error}`);

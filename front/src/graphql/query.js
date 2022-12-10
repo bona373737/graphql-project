@@ -196,17 +196,12 @@ export const M_CREATEMEMBER = gql`
       name:$name
       id:$id
       password:$password
-    ){
-      member_no
-      role_no
-      id
-      name
-      reg_date
-      isavailable
-      company_no{
-        company_name
-      }
-    }
+    )
+  }
+`;
+export const M_updateMember =gql`
+  mutation Mutation($memberNo: Int!, $isavailable: Boolean!) {
+    updateMember(member_no: $memberNo, isavailable: $isavailable)
   }
 `;
 

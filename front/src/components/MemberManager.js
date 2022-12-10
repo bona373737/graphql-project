@@ -11,11 +11,13 @@ import {GET_getMemberByParams} from "../graphql/query";
 const MemberManagerContainer=styled.div`
     height: 100%;
     width: 100%;
+    min-width: 800px;
     position: relative;
 
     .title{
         margin: 30px 20px;
         font-size: 20px;
+        text-align: center;
     }
     .menu{
         width: 70%;
@@ -49,6 +51,7 @@ const MemberManagerContainer=styled.div`
     }
     table{
         width: 70%;
+        min-width: 700px;
         margin: 10px auto;
         box-sizing: border-box;
         text-align: center;
@@ -83,14 +86,16 @@ const MemberManager=()=>{
     const [roleParam, setRoleParam] = useState();
     const column = ['계정번호','기업명','아이디','이름','계정생성일','계정유효상태'];
 
-    const [getMemberByParams,{loading,data,error}] = useLazyQuery(GET_getMemberByParams);
+    const [getMemberByParams,{loading,data,error}] = useLazyQuery(GET_getMemberByParams,{
+        fetchPolicy:'network-only',
+    });
     // const [getMembers,{data:AllData}] = useLazyQuery(GET_ALLMEMBERBYROLE);
     // const [searchQuery,{data:searchData}] = useLazyQuery(getAllMemberByRoleAndCorp);
     // let [renderData, setRenderData] = useState([]);
     
-    //컴포넌트 마운트시점_해당하는 role_no의 모든 계정 조회
+    //사이트관리자로 접속시 기업관리자(role_no) 전체조회 
+    //기업관리자로 접속시 해당기업(company_no)의 사용자(role_no) 전체조회
     useEffect(()=>{
-        // getLoginUser();
         const loginData = JSON.parse(localStorage.getItem("loginUser"))
         setLoginMemberData(loginData);
         setRoleParam(loginData?.role_no+1);
@@ -99,46 +104,61 @@ const MemberManager=()=>{
             role_no:loginData?.role_no+1,
         }
 
-        getMemberByParams({variables:{params:params}});
+        if(loginData.role_no === 2){
+            params['company_no'] = loginData.company_no.company_no;
+        }
 
-        // getMembers({
-        //     variables:{role:loginUser.role_no+1},
-        //     onCompleted:(_,data)=>{
-        //         setRenderData(_.getAllMemberByRole)
-        //     }
-        // })
+        getMemberByParams({variables:{params:params},fetchPolicy:'network-only'});
+
     },[])
     //검색버튼 클릭시 해당하는 role_no로 조회된 계정 중 기업이름으로 검색
     const handleSearch=(e)=>{
         e.preventDefault();
         const searchKeword = e.target.search_input.value;
-        
-        if(roleParam===2 && searchKeword){
-                const params={
-                    role_no:roleParam,
-                    company_name:searchKeword
-                }
-                getMemberByParams({variables:{params:params}});
-                // searchQuery({variables:{role:roleParam,companyName:searchKeword},
-                //     onCompleted:(_,data) => {
-                //         setRenderData(_.getAllMemberByRoleAndCorp)
-                //     }
-                // })
-        }else if(roleParam===3 && searchKeword){
-            const params={
-                role_no:roleParam,
-                member_name:searchKeword
+
+        if(!searchKeword){
+            switch (loginMemberData.role_no) {
+                case 1:
+                    getMemberByParams({variables:{params:{role_no:roleParam}}});
+                    break;
+                case 2:
+                    getMemberByParams({variables:{params:{role_no:roleParam,company_no:loginMemberData.company_no.company_no}}});
+                    break;
+                default:
+                    break;
             }
-            getMemberByParams({variables:{params:params}});
+            
+        }else {
+            let params={}
+            switch (loginMemberData.role_no) {
+                case 1:
+                    params={
+                        role_no:roleParam,
+                        company_name:searchKeword
+                    }
+                    getMemberByParams({variables:{params:params}});
+                    break;
+                case 2:
+                    params={
+                        role_no:roleParam,
+                        company_no:parseInt(loginMemberData.company_no.company_no),
+                        member_name:searchKeword
+                    }
+                    getMemberByParams({variables:{params:params}});
+                    break;
+                default:
+                    break;
+            }
+       
         }
     };
 
     return(
         <MemberManagerContainer>
             {loginMemberData?.role_no === 1?(
-                <h1 className="title"> [기업관리자 계정 관리] </h1>
+                <h1 className="title"> 기업관리자 계정 관리</h1>
                 ):(
-                    <h1 className="title"> [사용자 계정 관리] </h1>
+                    <h1 className="title"> 사용자 계정 관리 </h1>
                 )
             }
             <div className="menu">
@@ -161,12 +181,12 @@ const MemberManager=()=>{
             {
                 <table>
                     <colgroup>
-                        <col width="10%"></col>
-                        <col width="20%"></col>
+                        <col width="10%" ></col>
+                        <col width="15%"></col>
                         <col width="20%"></col>
                         <col width="0%"></col>
                         <col width="20%"></col>
-                        <col width="20%"></col>
+                        <col width="15%"></col>
                     </colgroup>
                     <thead>
                         <tr className="colum_tr">
@@ -183,7 +203,9 @@ const MemberManager=()=>{
                                     return <MemberTr key={index} memberData={item}></MemberTr>
                                 })
                             ):(
-                              <p>등록된 계정이 없습니다.</p>  
+                                <tr>
+                                    <td colSpan="6">등록된 계정이 없습니다.</td>
+                                </tr>
                             ) 
                             }
                     </tbody>

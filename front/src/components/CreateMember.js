@@ -5,9 +5,10 @@ import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { useState } from "react";
 
 import {M_CREATEMEMBER} from '../graphql/query';
-import {GET_ALLMEMBERBYROLE } from "../graphql/query";
+import {GET_getMemberByParams } from "../graphql/query";
 import {GET_AllCompany} from '../graphql/query';
 import {GET_AllRole} from '../graphql/query';
+import { useEffect } from "react";
 
 const CreateMemberContainer=styled.div`
     position: absolute;
@@ -77,25 +78,58 @@ const CreateMemberContainer=styled.div`
 `;
 
 const CreateMember=({setModalOpen})=>{
-
+    const [loginMemberData, setLoginMemberData] = useState();
+    const [role, setRole] = useState(); 
     const [companyNoSelected, setCompanyNoSelected] = useState();
-    const [getAllAdmin] = useLazyQuery(GET_ALLMEMBERBYROLE);
-    const [createMember, {loading, data, error}]= useMutation(M_CREATEMEMBER,{
-        refetchQueries:[
-            {query : GET_ALLMEMBERBYROLE,
-            variables:{role:2}}
-        ]
-    });
+    const [params, setParams] = useState();
+    
+    useEffect(()=>{
+        const data= JSON.parse(localStorage.getItem("loginUser"));
+        setLoginMemberData(data);
+        setRole(data.role_no);
+
+        const params={
+            role_no:data.role_no+1,
+        }
+
+        if(data.role_no === 2){
+            params['company_no'] = data.company_no.company_no;
+        }
+        setParams(params);
+    },[])
+    
     const {data:allCompany} = useQuery(GET_AllCompany)
     const {data:allRole} = useQuery(GET_AllRole)
+    // const [getAllAdmin] = useLazyQuery(GET_ALLMEMBERBYROLE);
+    //사이트관리자(1)는 기업관리자(2) 생성 / 기업관리자(2)는 사용자(3)생성
+    const [createMember, {loading, data, error}]= useMutation(M_CREATEMEMBER,{
+        fetchPolicy:'network-only',
+        refetchQueries:[
+            {query : GET_getMemberByParams,
+            variables:{params:params}}
+        ],
+        onCompleted:(data)=>{
+            alert(data.createMember)
+        }
+    });
 
     const onSubmit =async(e)=>{
         e.preventDefault();
+        const current = e.target  
+        const createMemberCorpNo = loginMemberData.role_no ===1? Number(companyNoSelected): loginMemberData.company_no.company_no;
 
-        const current = e.target        
+        const params={
+            role_no:role+1,
+            company_no:createMemberCorpNo,
+            name:current.name.value,
+            id:current.id.value,
+            password:current.password.value
+        }
+        // console.log(params)
+
         await createMember({variables:{
-            role_no:2,
-            company_no:Number(companyNoSelected),
+            role_no:role+1,
+            company_no:createMemberCorpNo,
             name:current.name.value,
             id:current.id.value,
             password:current.password.value
@@ -113,11 +147,11 @@ const CreateMember=({setModalOpen})=>{
                 <form onSubmit={onSubmit}>
                     <h1>계정 등록</h1>
                     <div className="input_wrap">
-                        <label htmlFor="role_no"><span>*</span>권한</label>
+                        <label htmlFor="role_no"><span>*</span>계정권한</label>
                         {
-                            
+                            role &&
+                            <input id="role_no" defaultValue={role ===1? "기업관리자":"사용자"} disabled></input>
                         }
-                        <input id="role_no" defaultValue="기업관리자" disabled></input>
                         {/* <select id="role_no" required>
                             {allRole&&
                                 allRole.getAllRole.map((item,index)=>{
@@ -128,14 +162,25 @@ const CreateMember=({setModalOpen})=>{
                         </select> */}
                     </div>
                     <div className="input_wrap">
-                        <label htmlFor="company_no"><span>*</span>기업번호</label>
-                        <select id="company_no" onChange={(e)=>{setCompanyNoSelected(e.target.value)}}>
-                            {allCompany?.getAllCompany &&
-                                allCompany.getAllCompany.map((item,index)=>{
-                                    return <option key={index} value={item.company_no}>{`${item.company_no}:${item.company_name}`}</option>
-                                })
-                            }
-                        </select>
+                        { role && role === 1? (
+                            <>
+                            <label htmlFor="company_no"><span>*</span>기업</label>
+                            <select id="company_no" onChange={(e)=>{setCompanyNoSelected(e.target.value)}}>
+                                {allCompany?.getAllCompany &&
+                                    allCompany.getAllCompany.map((item,index)=>{
+                                        return <option key={index} value={item.company_no}>{`${item.company_no}:${item.company_name}`}</option>
+                                    })
+                                }
+                            </select>
+                            </>
+                        ):(
+                            //객체인데... empty확인이..이거아닌데 말이즤.......
+                            loginMemberData &&
+                            <>
+                            <label htmlFor="company_no"><span>*</span>기업</label>
+                            <input id="company_no" defaultValue={`${loginMemberData.company_no.company_no}:${loginMemberData.company_no.company_name}`} disabled></input>
+                            </>
+                        )}
                     </div>
                     <div className="input_wrap">
                         <label htmlFor="name"><span>*</span>성명</label>
