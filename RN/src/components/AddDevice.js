@@ -6,6 +6,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import {M_createDevice} from "../graphql/query";
 import {GET_GetAllDeviceByParams} from "../graphql/query";
 import { useNavigation } from '@react-navigation/native';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 const styles = StyleSheet.create({
     AddCompanyContainer:{
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     },
     InputStyle:{
         marginVertical:30,
-    }
+    },
 })
 
 
@@ -28,6 +29,7 @@ const AddDevice =()=>{
     const [deviceName, setDeviceName] = React.useState("");
     const [selectedMemberNo, setSelectedMemberNo] = React.useState("");
     const [selectedOs, setSelectedOs] = React.useState("");
+    const osItems=['Linux','window32','window64'];
 
     const [AddDevice,{data,error}] = useMutation(M_createDevice,{
           refetchQueries:[
@@ -39,10 +41,6 @@ const AddDevice =()=>{
     //로그인된 계정의 전체 사용자 조회
     // const {data:users} = useQuery()
 
-
-    //운영체제 종류 조회
-    // const {data:osItems} = useQuery() 
-    const osItems=['Linux','window']
 
     const handleAddCompany=()=>{  
       const params={
@@ -81,21 +79,23 @@ const AddDevice =()=>{
           onChangeText={text => setDeviceName(text)}
           styles={styles.InputStyle}
           />
-      {/* <TextInput
-        label="운영체제"
-        value={os}
-        onChangeText={text => setOs(text)}
-        styles={styles.InputStyle}
+        <TextInput
+          label="운영체제"
+          value=""
+          onChangeText={text => setOs(text)}
+          styles={styles.InputStyle}
+          />
+        {/* <ModalDropdown 
+          textStyle={styles.dropdownStyle} 
+          dropdownStyle={styles.dropdownStyle} 
+          options={osItems}
         /> */}
- 
-
-
-      <TextInput
-        label="사용자지정"
-        value={selectedMemberNo}
-        onChangeText={text => setSelectedMemberNo(text)}
-        styles={styles.InputStyle}
-        />
+        <TextInput
+          label="사용자지정"
+          value={selectedMemberNo}
+          onChangeText={text => setSelectedMemberNo(text)}
+          styles={styles.InputStyle}
+          />
         <Button mode="contained" onPress={handleAddCompany}>
             등록
         </Button>

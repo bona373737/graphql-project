@@ -22,10 +22,12 @@ const styles = StyleSheet.create({
     },
     devcieCard:{
         marginVertical:5,
-        paddingVertical:5,
+    },
+    cardContent:{
+        flexDirection:'column'
     },
     title:{
-        paddingVertical:8,
+        marginBottom:40,
     },  
     deviceDesc:{
         flexDirection:"column"
@@ -37,6 +39,8 @@ const styles = StyleSheet.create({
 
 const DeviceManager =({route})=>{
     const navigation = useNavigation();
+    const [role, setRole] = useState();
+    const [memberNo,setMemberNo] = useState();
     let companyNo;
     if(route.params){
         companyNo = route.params;
@@ -66,59 +70,108 @@ const DeviceManager =({route})=>{
         }
     })
     
-    const [role, setRole] = useState();
-    const [memberNo,setMemberNo] = useState();
+  
 
     useEffect(()=>{
         getLoginMemberData().then((data)=>{
             setRole(data.role_no);
             setMemberNo(Number(data.member_no));
-        });
+            // console.log(data.member_no);
+            // console.log(data.role_no)
+
+            switch (data.role_no) {
+                case 1:
+                    //사이트관리자가 접속한 경우 앞의 stack스크린에서 선택한 기업의 장비목록조회
+                    console.log("사이트관리자!")
+                    // console.log(companyNo.companyNo)
+                    // console.log(role)
+                    getDevice({
+                        variables:{params:{company_no:Number(companyNo.companyNo),member_no:null}},
+                        fetchPolicy:'network-only',
+                        onCompleted:(data)=>{
+                            // console.log(data)
+                        },
+                        onError:(error)=>{
+                            console.log({...error})
+                            // console.log(error.networkError.result.errors)
+                        }})
+                    break;
+                case 2:
+                       // 기업관리자가 접속한 경우 로그인된 계정에 해당하는 기업의 장비목록조회
+                        console.log("기업관리자!")
+                        getDevice({
+                            variables:{params:{company_no:role,member_no:null}},
+                            fetchPolicy:'network-only',
+                            onCompleted:(data)=>{
+                                // console.log(data)
+                            },
+                            onError:(error)=>{
+                                console.log({...error})
+                                // console.log(error.networkError.result.errors)
+                            }})
+                    break;
+                case 3:
+                         // 사용자가 접속한 경우 로그인된 해당사용자의 장비목록조회
+                        console.log("사용자!")
+                        getDevice({
+                            variables:{params:{company_no:null,member_no:memberNo}},
+                            fetchPolicy:'network-only',
+                            onCompleted:(data)=>{
+                                // console.log(data)
+                            },
+                            onError:(error)=>{
+                                console.log({...error})
+                                console.log(error.networkError.result.errors)
+                            }})
+                    break;
+                default:
+                    break;
+            }
+
+            // if(companyNo && data.role_no===1){
+            //     //사이트관리자가 접속한 경우 앞의 stack스크린에서 선택한 기업의 장비목록조회
+            //     console.log("사이트관리자!")
+            //     // console.log(companyNo.companyNo)
+            //     // console.log(role)
+            //     getDevice({
+            //         variables:{params:{company_no:Number(companyNo.companyNo),member_no:null}},
+            //         fetchPolicy:'network-only',
+            //         onCompleted:(data)=>{
+            //             // console.log(data)
+            //         },
+            //         onError:(error)=>{
+            //             console.log({...error})
+            //             // console.log(error.networkError.result.errors)
+            //         }})
+            // }else if(data.role_no ===2){
+            //     // 기업관리자가 접속한 경우 로그인된 계정에 해당하는 기업의 장비목록조회
+            //     console.log("기업관리자!")
+            //     getDevice({
+            //         variables:{params:{company_no:role,member_no:null}},
+            //         fetchPolicy:'network-only',
+            //         onCompleted:(data)=>{
+            //             // console.log(data)
+            //         },
+            //         onError:(error)=>{
+            //             console.log({...error})
+            //             // console.log(error.networkError.result.errors)
+            //         }})
     
-        if(companyNo && role===1){
-            //사이트관리자가 접속한 경우 앞의 stack스크린에서 선택한 기업의 장비목록조회
-            console.log("사이트관리자!")
-            // console.log(companyNo.companyNo)
-            // console.log(role)
-            getDevice({
-                variables:{params:{company_no:Number(companyNo.companyNo),member_no:null}},
-                fetchPolicy:'network-only',
-                onCompleted:(data)=>{
-                    // console.log(data)
-                },
-                onError:(error)=>{
-                    console.log({...error})
-                    // console.log(error.networkError.result.errors)
-                }})
-        }else if(role ===2){
-            // 기업관리자가 접속한 경우 로그인된 계정에 해당하는 기업의 장비목록조회
-            console.log("기업관리자!")
-            getDevice({
-                variables:{params:{company_no:role,member_no:null}},
-                fetchPolicy:'network-only',
-                onCompleted:(data)=>{
-                    // console.log(data)
-                },
-                onError:(error)=>{
-                    console.log({...error})
-                    // console.log(error.networkError.result.errors)
-                }})
-
-
-        }else if(role ===3){
-            // 사용자가 접속한 경우 로그인된 해당사용자의 장비목록조회
-            console.log("사용자!")
-            getDevice({
-                variables:{params:{company_no:null,member_no:memberNo}},
-                fetchPolicy:'network-only',
-                onCompleted:(data)=>{
-                    // console.log(data)
-                },
-                onError:(error)=>{
-                    console.log({...error})
-                    console.log(error.networkError.result.errors)
-                }})
-        }
+            // }else if(data.role_no ===3){
+            //     // 사용자가 접속한 경우 로그인된 해당사용자의 장비목록조회
+            //     console.log("사용자!")
+            //     getDevice({
+            //         variables:{params:{company_no:null,member_no:memberNo}},
+            //         fetchPolicy:'network-only',
+            //         onCompleted:(data)=>{
+            //             // console.log(data)
+            //         },
+            //         onError:(error)=>{
+            //             console.log({...error})
+            //             console.log(error.networkError.result.errors)
+            //         }})
+            // }
+        });
     },[])
 
 
@@ -137,12 +190,13 @@ const DeviceManager =({route})=>{
                 data.getAllDeviceByParams.map((item,index)=>{
                     return(
                         <Card key={index} style={styles.devcieCard}>
-                            <Card.Content>
+                            <Card.Content style={styles.cardContent}>
                             <Title style={styles.title}>{item.device_name}</Title>
                             <Paragraph >
                                 <View style={styles.deviceDesc}>
-                                <Text>deviceNo : {item.device_no}</Text>
-                                <Text>os:{item.os}</Text>
+                                <Text>장비번호 : {item.device_no}</Text>
+                                <Text>운영체제: {item.os}</Text>
+                                <Text>담당자: {item.member_no}</Text>
                                 </View>
                             </Paragraph>
                     </Card.Content>

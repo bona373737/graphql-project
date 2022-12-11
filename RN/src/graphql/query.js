@@ -19,44 +19,6 @@ export const GET_loginMember = gql`
       }
     }
 `;
-export const GET_getAllMemberByRole = gql`
-query GetAllMemberByRole($role: Int!) {
-  getAllMemberByRole(role: $role) {
-    company_no {
-      business_number
-      company_name
-      company_no
-    }
-    id
-    isavailable
-    member_no
-    name
-    reg_date
-    role_no
-  }
-}
-`;
-
-export const GET_getAllMemberByRoleAndCorp=gql`
-query getAllMemberByRoleAndCorp($role:Int!, $companyName:String!){
-  getAllMemberByRoleAndCorp(
-    role:$role,
-    companyName:$companyName){
-      member_no
-      id
-      name
-      reg_date
-      isavailable
-      company_no{
-        company_no
-        company_name
-        business_number
-      }
-
-    }
-}
-`;
-
 // 파라미터 role_no:Int / member_name:String / company_name:String
 export const GET_getMemberByParams =gql`
 query getMemberByParams($params: MemberParams) {
@@ -101,7 +63,42 @@ query GetAllDeviceByParams($params: Params) {
   }
 }
 `;
+export const GET_getAllMemberByRole = gql`
+query GetAllMemberByRole($role: Int!) {
+  getAllMemberByRole(role: $role) {
+    company_no {
+      business_number
+      company_name
+      company_no
+    }
+    id
+    isavailable
+    member_no
+    name
+    reg_date
+    role_no
+  }
+}
+`;
+export const GET_getAllMemberByRoleAndCorp=gql`
+query getAllMemberByRoleAndCorp($role:Int!, $companyName:String!){
+  getAllMemberByRoleAndCorp(
+    role:$role,
+    companyName:$companyName){
+      member_no
+      id
+      name
+      reg_date
+      isavailable
+      company_no{
+        company_no
+        company_name
+        business_number
+      }
 
+    }
+}
+`;
 // =========== Mutation ============================================================================
 export const M_createCompany=gql`
 mutation createCompany($companyName: String!, $businessNumber: String!) {

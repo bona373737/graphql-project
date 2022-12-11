@@ -41,10 +41,10 @@ function BottomTab() {
 
   useEffect(()=>{
       getLoginMemberData().then((data)=>{
+        // console.log(data);
         setLoginMemberData(data)
       });
   },[])
-  // console.log(loginMemberData)
 
   /** 탭이동시 내부의 stack 초기화... */
   const handleTabPress = ({ navigation,defaultHandler}) => {

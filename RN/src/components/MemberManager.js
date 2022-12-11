@@ -43,9 +43,11 @@ const MemberManager =()=>{
             let data = await SecureStore.getItemAsync("loginUser");
             if(data){
                 data = JSON.parse(data);
+                console.log(data);
                 return data;
             }
         } catch (error) {
+            console.log(error);
             throw error            
         }
     }
@@ -53,30 +55,35 @@ const MemberManager =()=>{
     useEffect(()=>{
         getLoginMemberData().then((data)=>{
             setLoginMemberData(data)
+
+            console.log(data.role_no);
+          
         })
 
         //사이트관리자가 접속한 경우 기업관리자 전체 조회
-        getUser({
-            variables:{params:{company_no:null,member_no:null}},
-            onCompleted:((data)=>{
-                console.log(data);
-            }),
-            onError:((error)=>{
-                console.log(error);
-            })
-        })
+
+        // getUser({
+        //     variables:{params:{company_no:null,member_no:null}},
+        //     onCompleted:((data)=>{
+        //         console.log(data);
+        //     }),
+        //     onError:((error)=>{
+        //         console.log(error);
+        //     console.log(error.networkError.result.errors)
+
+        //     })
+        // })
         
         //기업관리자가 접속한 경우 해당기업의 사용자 전체조회
-        getUser({
-            variables:{params:{company_no:loginMemberData.company_no}},
-            onCompleted:((data)=>{
-                console.log(data);
-            }),
-            onError:((error)=>{
-                console.log(error);
-            })
-        })
-
+        // getUser({
+        //     variables:{params:{company_no:loginMemberData.company_no}},
+        //     onCompleted:((data)=>{
+        //         console.log(data);
+        //     }),
+        //     onError:((error)=>{
+        //         console.log(error);
+        //     })
+        // })
     },[])
 
 
