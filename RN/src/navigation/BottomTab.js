@@ -13,8 +13,7 @@ import LoginMember from "../components/LoginMember"
 import Home from "../pages/Home";
 import DashboardStack from "../navigation/DashboardStack";
 import DeviceStack from "./DeviceStack";
-import CorpStack from "./CorpStack";
-import UserStack from "./UserStack";
+import MemberStack from "./MemberStack";
 import { useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
@@ -145,11 +144,11 @@ function BottomTab() {
                 }}
                 />
           <Tab.Screen
-            name="CorpStack"
-            component={CorpStack}
+            name="MemberStack"
+            component={MemberStack}
             options={{
               headerShown: false,
-              tabBarLabel: "계정관리",
+              tabBarLabel: "기업계정관리",
               tabBarIcon: ({ focused }) =>
               focused ? (
                 <Icon name="account-group" size={25} color={"#7DD421"} />
@@ -181,8 +180,8 @@ function BottomTab() {
               }}
               />
         <Tab.Screen
-          name="UserStack"
-          component={UserStack}
+          name="MemberStack"
+          component={MemberStack}
           options={{
             headerShown: false,
             tabBarLabel: "사용자관리",

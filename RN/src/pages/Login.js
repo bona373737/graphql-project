@@ -98,13 +98,15 @@ function Login() {
       },
     onError:(error)=>{
       alert(error.message);
+      console.log(error.networkError.result.errors)
+
       console.log({...error})
     }
   });
 
   const onLogin=async(e)=>{
     e.preventDefault();
-    // console.log(id,password)
+    console.log(id,password)
     if(data){
       await SecureStore.deleteItemAsync("loginToken");
       await SecureStore.deleteItemAsync("loginUser");
@@ -114,7 +116,7 @@ function Login() {
       //useLazyQuery executes 
       const inputData ={id:id, password:password};
       await login({variables:inputData})
-
+      
     } catch (error) {
       alert("아이디 또는 비밀번호 오류 입니다.");
       throw error
@@ -140,7 +142,7 @@ function Login() {
         </LoginContainer>
         <LoginButton
           title="로그인"
-          color="#7DD421"
+          color="#6200EE"
           onPress={onLogin}
         ></LoginButton>
       </Container>

@@ -14,7 +14,9 @@ const MainContainer = styled.div`
     display:flex;
     
     aside{
+        /* flex: 1; */
         min-width: 200px;
+        min-height: 100%;
         width: 20%;
         background-color: var(--gray); 
         h1{

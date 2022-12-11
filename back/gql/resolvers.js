@@ -66,6 +66,11 @@ const resolvers ={
             let result = await dbExe.getDeviceByCompanyExe(companyNo);
             return result;
         },
+        // getCountDevice: async(_,{company_no})=>{
+        //     let result = await dbExe.getCountDeviceExe(company_no);
+        //     console.log(result[0])
+        //     return result;
+        // },
         // getAllMember: async()=>{
         //     try {
         //         let result = await dbExe.getAllMemberExe();
@@ -89,11 +94,6 @@ const resolvers ={
         //     let result = await dbExe.getCompanyByCompanyNoExe();
         //     return result;
         // },
-        // getCountDevice: async()=>{
-        //     let result = await dbExe.getCountDeviceExe();
-        //     return result;
-        // },
-      
         // getAllDevice: async()=>{
         //     let result = await dbExe.getAllDeviceExe();
         //     return result;
@@ -133,6 +133,20 @@ const resolvers ={
             }
         }
     },
+    // Count:{
+    //     company_no: async ({
+    //         company_no
+    //     }) => {
+    //         try {
+    //             let result;
+    //             result = await dbExe.getCountDeviceExe(company_no);
+    //             return result[0];
+    //         } catch (error) {
+    //             log("Count error is + " + error);
+    //             throw error;
+    //         }
+    //     }
+    // },
     // Mutation =========================================================================
     Mutation:{
         createMember: async(_,{

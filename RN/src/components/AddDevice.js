@@ -32,6 +32,7 @@ const AddDevice =()=>{
     const osItems=['Linux','window32','window64'];
 
     const [AddDevice,{data,error}] = useMutation(M_createDevice,{
+          fetchPolicy:'network-only',
           refetchQueries:[
           {query : GET_GetAllDeviceByParams,
           variables:{params:{}}}

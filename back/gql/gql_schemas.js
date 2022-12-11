@@ -87,12 +87,7 @@ const typeDefs = gql`
         company_no:Int!
         company_name:String!
         business_number:String!
-        device_total:Int
-    }
-
-    type CompanyWrap{
-        device_total:Count
-        company_info: Company
+        device_total:Int!
     }
 
     type Device {
@@ -108,9 +103,6 @@ const typeDefs = gql`
         company_name:String!
         business_number:String!
         company_no: [Device]
-    }
-    type Count{
-        device_total:Int
     }
 
     input Params{

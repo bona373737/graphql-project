@@ -13,7 +13,7 @@ export default {
         try{
             let queryString = "select * from role";
             let result = await db.exe(queryString);
-            // console.log(result);
+            console.log(result);
             return result;
         }catch(err){
             console.error("getAllRoleExe 오류");
@@ -62,7 +62,7 @@ export default {
     getCompanyByParams:async(params)=>{
         try{
             console.log(params)
-            let queryString = "select c.company_no, c.company_name, c.business_number, count(*) as device_total from company as c left join devices as d on c.company_no = d.company_no"
+            let queryString = "select c.company_no, c.company_name, c.business_number, count(device_no) as device_total from devices as d right outer join company as c on c.company_no = d.company_no"
             
             if(params.company_name){
                 queryString += ` where c.company_name like "%${params.company_name}%"`;
@@ -175,22 +175,22 @@ export default {
             return err;
         }
     },
-    getCountDeviceExe : async()=>{
-        try{
-            let queryString = "select count(*) as total from devices";
-            let result = await db.exe(queryString);
-            // console.log(result);
-            return Number(result[0].total);
-        }catch(err){
-            console.error("getCountDeviceExe 오류");
-            return err;
-        }
-    },
+    // getCountDeviceExe : async(company_no)=>{
+    //     try{
+    //         let queryString = `select company_no, count(*) as device_total from devices where company_no=${company_no} group by company_no;`;
+    //         let result = await db.exe(queryString);
+    //         console.log(result);
+    //         return result
+    //     }catch(err){
+    //         console.error("getCountDeviceExe 오류");
+    //         console.log(err)
+    //         return err;
+    //     }
+    // },
     getDeviceByCompanyExe: async(companyNo)=>{
         try{
             let queryString = `select * from devices where company_no=${companyNo}`;
             let result = await db.exe(queryString);
-            // console.log(result);
             return result;
         }catch(err){
             console.error("getCountDeviceExe 오류");

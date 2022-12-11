@@ -70,8 +70,6 @@ const DeviceManager =({route})=>{
         }
     })
     
-  
-
     useEffect(()=>{
         getLoginMemberData().then((data)=>{
             setRole(data.role_no);
