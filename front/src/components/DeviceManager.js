@@ -1,11 +1,20 @@
+import { useEffect, useState } from "react";
+
+//api
 import { useLazyQuery, useQuery } from "@apollo/client";
 import {GET_GetAllDeviceByParams} from "../graphql/query";
+
+//components
 import DeviceCard from "../elements/DeviceCard";
 import CreateDevice from "./CreateDevice";
-import { useEffect, useState } from "react";
+
+//style
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import * as React from 'react';
+
+
 
 const DeviceManagerContainer = styled.div`
   height: 100%;

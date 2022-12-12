@@ -1,11 +1,15 @@
 import {Link, NavLink, useHistory } from 'react-router-dom';
-import styled from "styled-components"
 // import { nowMemberInVar } from '../makeVar';
-import Contents from "../components/Contents";
 import { useQuery, useReactiveVar } from '@apollo/client';
 import {GET_NOWMEMBER } from "../graphql/query";
 import { useEffect } from 'react';
 import { useState } from 'react';
+
+//components
+import Contents from "../components/Contents";
+//style
+import styled from "styled-components"
+import { FiLogOut } from 'react-icons/fi';
 
 const MainContainer = styled.div`
     box-sizing: border-box;
@@ -18,7 +22,7 @@ const MainContainer = styled.div`
         min-width: 200px;
         min-height: 100%;
         width: 20%;
-        background-color: var(--gray); 
+        background-color: var(--black); 
         h1{
             margin: 30px 0;
             font-size: 20px;
@@ -111,6 +115,7 @@ const Main =()=>{
                                 // location.state.loginMember && <li><Link to="dashboard" state={location.state}>ITOMS 운영현황 (사이트관리자) </Link></li>
                             }                            
                     </ul>
+                    <button><FiLogOut/>logout</button>
                 </aside>
                 <main>
                     {
