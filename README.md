@@ -144,24 +144,24 @@ mobile : reactNative
 ## FrontEnd
 - 사이트관리자계정
 <div>
-<img src="./src/assets/img/itoms.png" width="300">
-<img src="../ojt/frong/img/../../front/src/assets/img/super_membermager.png" width="300">
-<img src="../ojt/frong/img/../../front/src/assets/img/super_memberadd.png" width="300">
+<img src="./front/src/assets/img/itoms.png" width="300">
+<img src="./front/src/assets/img/super_membermager.png" width="300">
+<img src="./front/src/assets/img/super_memberadd.png" width="300">
 </div>
 
 - 기업관리자계정  
 <div>
-<img src="../ojt/frong/img/../../front/src/assets/img/admin_membermanager.png" width="300">
-<img src="../ojt/frong/img/../../front/src/assets/img/admin_memberadd.png" width="300">
+<img src="./front/src/assets/img/admin_membermanager.png" width="300">
+<img src="./front/src/assets/img/admin_memberadd.png" width="300">
 </div>
 <div>
-<img src="../ojt/frong/img/../../front/src/assets/img/admin_devicemanager.png" width="300">
-<img src="../ojt/frong/img/../../front/src/assets/img/admin_deviceadd.png" width="300">
+<img src="./front/src/assets/img/admin_devicemanager.png" width="300">
+<img src="./front/src/assets/img/admin_deviceadd.png" width="300">
 </div>
 
 - 사용자계정
 <div>
-<img src="../ojt/frong/img/../../front/src/assets/img/user_devicemanager.png" width="300">
+<img src="./front/src/assets/img/user_devicemanager.png" width="300">
 </div>
 
 ### 문서구조
@@ -177,16 +177,16 @@ index.js ─ GlobalStyles.js
 ## ReactNative
 
 <div>
-<img src="../ojt/RN/assets/rn_login.png" width="100">
-<img src="../ojt/RN/assets/rn5.jpg" width="100">
-<img src="../ojt/RN/assets/rn4.jpg" width="100">
-<img src="../ojt/RN/assets/rn2.jpg" width="100">
+<img src="./RN/assets/rn_login.png" width="100">
+<img src="./RN/assets/rn5.jpg" width="100">
+<img src="./RN/assets/rn4.jpg" width="100">
+<img src="./RN/assets/rn2.jpg" width="100">
 </div>
 <div>
-<img src="../ojt/RN/assets/rn7.jpg" width="100">
-<img src="../ojt/RN/assets/rn1.jpg" width="100">
-<img src="../ojt/RN/assets/rn3.jpg" width="100">
-<img src="../ojt/RN/assets/rn6.jpg" width="100">
+<img src="./RN/assets/rn7.jpg" width="100">
+<img src="./RN/assets/rn1.jpg" width="100">
+<img src="./RN/assets/rn3.jpg" width="100">
+<img src="./RN/assets/rn6.jpg" width="100">
 </div>
 
 - 사이트관리자계정으로 접속
