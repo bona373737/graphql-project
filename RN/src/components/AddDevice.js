@@ -45,8 +45,8 @@ const AddDevice =()=>{
 
     const handleAddCompany=()=>{  
       const params={
-        company_no:companyNo,
-        member_no:selectedMemberNo,
+        company_no:parseInt(companyNo),
+        member_no:parseInt(selectedMemberNo),
         os:selectedOs,
         device_name:deviceName
       }
@@ -60,9 +60,8 @@ const AddDevice =()=>{
           navigate.navigate("DeviceManager")
         },
         onError:(error)=>{
-          console.log("에러에러에러에러")
           console.log({...error})
-          // console.log(error.networkError.result.errors);
+          console.log(error.networkError.result.errors);
         }
     })}
 
@@ -82,8 +81,8 @@ const AddDevice =()=>{
           />
         <TextInput
           label="운영체제"
-          value=""
-          onChangeText={text => setOs(text)}
+          value={selectedOs}
+          onChangeText={text => setSelectedOs(text)}
           styles={styles.InputStyle}
           />
         {/* <ModalDropdown 

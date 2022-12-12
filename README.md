@@ -177,7 +177,7 @@ index.js ─ GlobalStyles.js
 ## ReactNative
 
 <div>
-<img src="./RN/assets/rn_login.png" width="100">
+<img src="./RN/assets/rn_login.png" width="100" >
 <img src="./RN/assets/rn5.jpg" width="100">
 <img src="./RN/assets/rn4.jpg" width="100">
 <img src="./RN/assets/rn2.jpg" width="100">
