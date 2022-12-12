@@ -144,7 +144,7 @@ mobile : reactNative
 ## FrontEnd
 - 사이트관리자계정
 <div>
-<img src="../ojt/frong/img/../../front/src/assets/img/itoms.png" width="300">
+<img src="./src/assets/img/itoms.png" width="300">
 <img src="../ojt/frong/img/../../front/src/assets/img/super_membermager.png" width="300">
 <img src="../ojt/frong/img/../../front/src/assets/img/super_memberadd.png" width="300">
 </div>
