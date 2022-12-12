@@ -17,7 +17,7 @@ mobile : reactNative
     ```
 
 - [ ERD ]  
-<img src="ojt/back/assets/erd.png" >
+<img src="./back/assets/erd.png" >
 
 
 ---
