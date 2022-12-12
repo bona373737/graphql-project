@@ -19,7 +19,7 @@ import { from } from "apollo-link";
 const Stack = createStackNavigator();
 
 const httpLink = new HttpLink({
-  uri: "http://192.168.219.103:4000/",
+  uri: "http://10.90.100.169:4000/",
 });
 
 const authLink = setContext(async (_, { headers }) => {

@@ -49,7 +49,6 @@ const MemberManager =()=>{
             let data = await SecureStore.getItemAsync("loginUser");
             if(data){
                 data = JSON.parse(data);
-                console.log("loginUser데이터~~~~!!")
                 // console.log(data);
                 return data;
             }
@@ -64,6 +63,7 @@ const MemberManager =()=>{
         getLoginMemberData().then((data)=>{
             setLoginMemberData(data);
             setRole(data.role_no);
+            console.log(data.role_no);
 
             switch (data.role_no) {
                 case 1:
