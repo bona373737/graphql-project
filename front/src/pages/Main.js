@@ -23,8 +23,8 @@ const MainContainer = styled.div`
     background-color: var(--subColor);
     
     aside{
-        min-width: 200px;
-        width: 20%;
+        width: 220px;
+        min-width: 220px;
         background-color: var(--mainColor); 
         .logo{
             font-weight: bold;
@@ -35,11 +35,28 @@ const MainContainer = styled.div`
             img{
                 width: 30px;
                 padding: 0 4px;
-                /* filter: invert(46%) sepia(38%) saturate(6955%) hue-rotate(218deg) brightness(103%) contrast(100%); */
+            }
+        }
+        .user_info_wrap{
+            width: 100%;
+            .now_user_info{
+                margin: 40px auto;
+                margin-bottom: 20px;
+                font-size: 12px;
+                line-height: 18px;
+                width: 200px;
+                height: 100px;
+                border-radius: 5px;
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
         }
         .sidebar{
             display: flex;
+            flex:1;
             flex-direction: column;
             justify-content: space-between;
 
@@ -63,7 +80,7 @@ const MainContainer = styled.div`
                     }
                     .active{
                         color: var(--fontMainColor);
-                        background-image: linear-gradient(to left, var(--pointColor),10%, var(--mainColor));
+                        background-image: linear-gradient(to left, var(--pointColor),10%, rgba(255, 255, 255, .1), 60%, #00ff0000)
                     }
                 }
             }
@@ -80,34 +97,15 @@ const MainContainer = styled.div`
         }
     }
     main{
+        background-color: var(--mainColor);
         display: flex;
         flex-direction: column;
-        width: 80%;
-        .user_info_wrap{
-            background-color:var(--mainColor);
-            height: 60px;
-            .now_user_info{
-                line-height: 60px;
-                color: var(--fontMainColor);
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                /* margin-bottom: 20px; */
-                /* min-height: 38px; */
-                font-size: 12px;
-                div{
-                    margin: 0 16px;
-                }
-            }
+        flex: 1;
+        overflow-y: auto;
+        ::-webkit-scrollbar{
+            display: none;
         }
-        .content_wrap{
-            flex: 1;
-            overflow-y: auto;
-            background-color: var(--mainColor);
-            ::-webkit-scrollbar{
-             display: none;
-            }
-        }
+        
     }
 `;
  
@@ -135,6 +133,20 @@ const Main =()=>{
             <MainContainer>
                 <aside>
                     <h1 className='logo'><img src={logoImg}/>OJT_ITOMS</h1>
+                    <section className='user_info_wrap'>
+                        {
+                            loginUser &&
+                            <>
+                            <div className='now_user_info'>
+                                <div>접속자 : {loginUser.name}</div>
+                                <div>접속아이디 : {loginUser.id}</div>
+                                { loginUser?.company_no?.company_no &&
+                                <div>기업명 : {loginUser.company_no.company_name}</div>
+                            }
+                            </div>
+                            </>
+                        }
+                    </section>
                     <section className='sidebar'>
                         <ul className='menu_list'>
                             { role &&
@@ -166,24 +178,8 @@ const Main =()=>{
                         </div>
                     </section>
                 </aside>
-                <main>
-                    <section className='user_info_wrap'>
-                        {
-                            loginUser &&
-                            <>
-                            <div className='now_user_info'>
-                                <div>접속자 : {loginUser.name}</div>
-                                <div>접속아이디 : {loginUser.id}</div>
-                                { loginUser?.company_no?.company_no &&
-                                <div>기업명 : {loginUser.company_no.company_name}</div>
-                            }
-                            </div>
-                            </>
-                        }
-                    </section>
-                    <section className='content_wrap'>
-                        <Contents/>
-                    </section>
+                <main >
+                    <Contents/>
                 </main>
             </MainContainer>
     )

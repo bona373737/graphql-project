@@ -4,19 +4,24 @@ import {getAllDeviceByCompany} from "../graphql/query";
 import DeviceCard from "../elements/DeviceCard";
 
 const DashBoardContainer=styled.div`
+    color: var(--mainColor);
     display: flex;
     flex-direction: column;
+
     overflow: auto;
-    color: var(--mainColor);
     
     .title{
-        margin: 30px 20px;
+        text-align: center;
+        color: var(--mainColor);
+        margin: 40px 0;
         font-size: 20px;
         font-weight: bold;
     }
     .company_wrap{
-        border-radius: 5px;
+        border-radius: 10px;
         padding: 20px;
+        background: linear-gradient( 150deg, var(--mainColor), 3%, var(--subColor), 10%, #00ff0000 );
+        box-shadow: inset 0 0.2px rgba(23, 32, 63, .2);
         .company_name{
             font-weight: bold;
         }

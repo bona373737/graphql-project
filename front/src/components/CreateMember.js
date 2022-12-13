@@ -19,11 +19,13 @@ const CreateMemberContainer=styled.div`
     width: 600px;
     height: 450px;
     margin: auto;
-    background-color: var(--gray);
+    background-color: var(--mainColor);
+    color: white;
+    border-radius: 5px;
 
     .close_button{
         box-sizing: border-box;
-        background-color: var(--gray);
+        background-color: var(--mainColor);
         border: none;
         width: 100%;
         font-size: 20px;
@@ -35,16 +37,23 @@ const CreateMemberContainer=styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
+        h1{
+            color: var(--pointColor);
+            font-size: 20px;
+            font-weight: bold;
+            margin: 8px 0;
+            letter-spacing: 5px;
+        }
 
         .input_wrap{
             margin: 14px 0;
             label{
                 display: inline-block;
-                text-align: center;
-                width: 120px;
+                /* text-align: center; */
+                width: 100px;
                 span{
                     color:red;
-                    margin-right: 5px;
+                    margin-right: 10px;
                 }
             }
             input{
@@ -52,8 +61,13 @@ const CreateMemberContainer=styled.div`
                 line-height: 30px;
                 text-indent: 5px;
                 border: none;
+                border-radius: 5px;
                 :focus{
                     outline: none;
+                }
+                :disabled{
+                    background-color: rgba(84, 115, 255, .1);
+                    color: white;
                 }
             }
             select{
@@ -63,16 +77,9 @@ const CreateMemberContainer=styled.div`
             }
         }
         button{ 
-            background-color: black;
-            color: white;
-            width: 100px;
+            margin-top: 20px;
+            width: 80px;
             height: 30px;
-            border: none;
-            margin :20px 0;
-            :hover{
-                background-color: white;
-                color: black;
-            } 
         }
     }
 `;

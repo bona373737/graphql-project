@@ -17,11 +17,11 @@ const CreateDeviceContainer=styled.div`
     width: 600px;
     height: 500px;
     margin: auto;
-    background-color: var(--gray);
+    background-color: var(--mainColor);
 
     .close_button{
         box-sizing: border-box;
-        background-color: var(--gray);
+        background-color: var(--mainColor);
         border: none;
         width: 100%;
         font-size: 20px;
@@ -33,7 +33,14 @@ const CreateDeviceContainer=styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
-        
+        color: white;
+        h1{
+            color: var(--pointColor);
+            font-size: 20px;
+            font-weight: bold;
+            margin: 8px 0;
+            letter-spacing: 5px;
+        }
         .input_wrap{
             margin: 20px 0;
             label{
@@ -46,8 +53,13 @@ const CreateDeviceContainer=styled.div`
                 height: 30px;
                 text-indent: 5px;
                 border: none;
+                border-radius: 5px;
                 :focus{
                     outline: none;
+                }
+                :disabled{
+                    background-color: rgba(84, 115, 255, .1);
+                    color: white;
                 }
             }
             select{
@@ -55,8 +67,12 @@ const CreateDeviceContainer=styled.div`
                 height: 30px;
                 text-indent: 5px;
                 border: none;
+                line-height: 50px;
                 :focus{
                     outline: none;
+                }
+                option{
+                    padding: 5px 0;
                 }
             }
             span{
@@ -65,16 +81,9 @@ const CreateDeviceContainer=styled.div`
             }
         }
         button{
-            background-color: black;
-            color: white;
-            width: 100px;
+            margin-top: 20px;
+            width: 80px;
             height: 30px;
-            border: none;
-            margin :20px 0;
-            :hover{
-                background-color: white;
-                color: black;
-            }
         }
     }
 `;

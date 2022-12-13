@@ -9,77 +9,87 @@ import {getAllMemberByRoleAndCorp} from "../graphql/query";
 import {GET_getMemberByParams} from "../graphql/query";
 
 const MemberManagerContainer=styled.div`
-    position: relative;
+    /* position: relative; */
     height: 100%;
     width: 100%;
-    flex: 1;
-
-    .title{
-        text-align: center;
-        color: var(--mainColor);
-        margin: 30px 0;
-        font-size: 20px;
-        font-weight: bold;
-    }
-    .menu{
-        width: 70%;
-        padding: 12px 5px;
+    /* flex: 1; */
+    .contents_wrap{
+        min-width: 800px;
         margin: auto;
-        margin-bottom: 20px;
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        background-color: var(--gray);
-        border-radius: 3px;
-        input{
-            line-height: 30px;
-            border: none;
-            border-bottom: 1px solid var(--gray);
-            margin: 0 5px;
-            &:focus{
-                outline: none;
+        flex-direction: column;
+        justify-content: center;
+
+        .title{
+            text-align: center;
+            color: var(--mainColor);
+            margin: 40px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }   
+        .menu{
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            width: 100%;
+            margin: auto;
+            margin-bottom: 20px;
+            background-color: var(--mainColor);
+            border-radius: 5px;
+            label{
+                color: white;
             }
-
-        }
-        button{
-            width: 80px;
-            height: 30px;
-            border: none;
-            cursor: pointer;
-            &:hover{
-                background-color: white;
+            input{
+                height: 28px;
+                border: none;
+                border-radius: 3px;
+                border-bottom: 1px solid var(--gray);
+                margin: 0 5px;
+                &:focus{
+                    outline: none;
+                }
+    
+            }
+            button{
+                width: 80px;
+                height: 30px;
+                border: none;
+                cursor: pointer;
+                &:hover{
+                    background-color: white;
+                }
             }
         }
-    }
-    table{
-        width: 70%;
-        min-width: 700px;
-        margin: 10px auto;
-        box-sizing: border-box;
-        text-align: center;
-        .colum_tr{
-            border-bottom: 1px solid var(--gray);
-        }
-        tr{
-            line-height: 40px;
-
-        }
-        td{
-            vertical-align: middle;
-
+        table{
+            box-sizing: border-box;
+            text-align: center;
+            .colum_tr{
+                border-bottom: 1px solid var(--gray);
+            }
+            tr{
+                line-height: 40px;
+    
+            }
+            td{
+                vertical-align: middle;
+    
+            }
         }
     }
     .dimmed{
-    /* display: none; */
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 20%;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: 0.5;
-}
+        /* display: none; */
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 20%;
+        width: 100%;
+        height: 100%;
+        background-color: var(--mainColor);
+        opacity: 0.5;
+    }
 `;
 
 const MemberManager=()=>{
@@ -151,18 +161,19 @@ const MemberManager=()=>{
                 default:
                     break;
             }
-       
         }
     };
 
     return(
         <MemberManagerContainer>
+            <section className="contents_wrap">
             {loginMemberData?.role_no === 1?(
                 <h1 className="title"> 기업관리자 계정 관리</h1>
                 ):(
                     <h1 className="title"> 사용자 계정 관리 </h1>
                 )
             }
+
             <div className="menu">
             <form onSubmit={handleSearch}>
                 {loginMemberData?.role_no === 1?(
@@ -212,7 +223,8 @@ const MemberManager=()=>{
                             }
                     </tbody>
                 </table>
-            }
+                }
+                </section>
             {
                 modalOpen &&
                 <>

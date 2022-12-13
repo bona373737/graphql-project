@@ -25,6 +25,7 @@ const GlobalStyles = createGlobalStyle`
         font-family: ‘SUIT’, sans-serif;
     }
     body{
+        font-size: 14px;
 
     }
     a{

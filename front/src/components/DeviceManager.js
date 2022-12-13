@@ -19,7 +19,7 @@ import * as React from 'react';
 const DeviceManagerContainer = styled.div`
   height: 100%;
   width: 100%;
-  position: relative;
+  /* position: relative; */
 
 .title{
     color: var(--mainColor);
@@ -46,19 +46,22 @@ const DeviceManagerContainer = styled.div`
     left: 20%;
     width: 100%;
     height: 100%;
-    background-color: black;
+    background-color: var(--mainColor);
     opacity: 0.5;
+    border-radius: 5px;
 }
 `;
 
 const AddDeviceCard = styled.div`
         box-sizing: border-box;
+        border-radius: 5px;
         padding: 10px;
         margin: 10px;
         width: 200px;
         height: 120px;
-        background-color: var(--gray);
+        background-color: white;
         cursor: pointer;
+        color: var(--mainColor);
 
         font-size: 26px;
         line-height: 100px;
