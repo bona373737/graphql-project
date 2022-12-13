@@ -11,22 +11,31 @@ const LoginContainer = styled.div`
   width: 300px;
   height: 500px;
   padding: 0 50px;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: var(--gray);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
+  background-color: var(--mainColor);
+  color:var(--pointColor);
+  
   .form_title{
     margin: 60px 0;
+    font-size: 30px;
+    font-weight: bold;
     text-align: center;
   }
   .login_form{
+    font-size: 8px;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-items: flex-end;
     margin: 80px auto;
+    label{
+      color: var(--gray);
+    }
     input{
       padding: 10px 0;
       margin: 12px 0;
@@ -36,14 +45,22 @@ const LoginContainer = styled.div`
       :focus{
         outline: none;
       }
+      ::placeholder{
+        font-size: 8px;
+        color:var(--gray)
+      }
     }
     button{
+      color: white;
+      background-color: var(--pointColor);
       padding: 5px 0;
       margin: 80px 0;
       border-radius: 5px;
       :hover{
         cursor: pointer;
+        color: var(--pointColor);
         background-color: white;
+        font-weight: bold;
       }
 
     }

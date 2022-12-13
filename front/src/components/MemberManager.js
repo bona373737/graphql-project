@@ -9,15 +9,17 @@ import {getAllMemberByRoleAndCorp} from "../graphql/query";
 import {GET_getMemberByParams} from "../graphql/query";
 
 const MemberManagerContainer=styled.div`
+    position: relative;
     height: 100%;
     width: 100%;
-    min-width: 800px;
-    position: relative;
+    flex: 1;
 
     .title{
-        margin: 30px 20px;
-        font-size: 20px;
         text-align: center;
+        color: var(--mainColor);
+        margin: 30px 0;
+        font-size: 20px;
+        font-weight: bold;
     }
     .menu{
         width: 70%;

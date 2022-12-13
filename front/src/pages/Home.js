@@ -8,13 +8,17 @@ const HomeContainer=styled.div`
     display: flex;
     flex-direction: column;
     nav{
+        
         height: 60px;
-        background-color: var(--gray);
+        background-color: var(--mainColor);
         padding: 0 50px;
         display: flex;
         justify-content: space-between;
 
         .logo_wrap{
+            font-weight: bold;
+            font-size: 22px;
+            color: var(--pointColor);
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -33,9 +37,9 @@ const HomeContainer=styled.div`
         }
     }
     main{
-        /* max-height: 100%; */
+        background-color: var(--subColor);
         flex:1;
-        background:url(${homeImg}) center top no-repeat;
+        /* background:url(${homeImg}) center top no-repeat; */
         background-size: cover;
         overflow: hidden;
         h1{

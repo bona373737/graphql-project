@@ -5,9 +5,12 @@ import DeviceManager from "../components/DeviceManager";
 import styled from 'styled-components';
 
 const ContentsContainer =styled.div`
-    height: 100%;
-    min-width: 800px;
-
+    width: 100%;
+    border-radius: 20px 0 0 0 ;
+    background-color: var(--subColor);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 `;
 
 const Contents =()=>{
@@ -16,7 +19,6 @@ const Contents =()=>{
             <Switch>
                 <Route path='/main/dashboard' component={DashBoard}/>
                 <Route path='/main/membermanager' component={MemberManager} />
-                {/* <Route path='/main/usermanager' component={UserManager} /> */}
                 <Route path='/main/devicemanager' component={DeviceManager}/>
             </Switch>
         </ContentsContainer>

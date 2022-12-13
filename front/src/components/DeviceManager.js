@@ -22,8 +22,11 @@ const DeviceManagerContainer = styled.div`
   position: relative;
 
 .title{
+    color: var(--mainColor);
     margin: 30px 20px;
     font-size: 20px;
+    font-weight: bold;
+ 
 }
 .device_wrap{
     margin: 20px 10px;
