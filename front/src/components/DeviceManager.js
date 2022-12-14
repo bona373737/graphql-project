@@ -59,7 +59,9 @@ const AddDeviceCard = styled.div`
         margin: 10px;
         width: 200px;
         height: 120px;
-        background-color: white;
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+
+        /* background-color: white; */
         cursor: pointer;
         color: var(--mainColor);
 

@@ -18,6 +18,7 @@ const CreateDeviceContainer=styled.div`
     height: 500px;
     margin: auto;
     background-color: var(--mainColor);
+    border-radius: 5px;
 
     .close_button{
         box-sizing: border-box;
@@ -29,36 +30,40 @@ const CreateDeviceContainer=styled.div`
         padding: 10px;
     }
 
+    h1{
+        color: var(--pointColor);
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 5px; 
+        text-align: center;
+        letter-spacing: 5px;
+    }
     form{
         display: flex;
         flex-direction: column;
         align-items: center;
-        color: white;
-        h1{
-            color: var(--pointColor);
-            font-size: 20px;
-            font-weight: bold;
-            margin: 8px 0;
-            letter-spacing: 5px;
-        }
+        background-color: white;
+        /* color: white; */
         .input_wrap{
             margin: 20px 0;
             label{
+                color: var(--pointColor);
+                font-weight: bold;
                 display: inline-block;
-                text-align: center;
+                margin: 0 5px;
                 width: 120px;
             }
             input{
                 width: 300px;
                 height: 30px;
                 text-indent: 5px;
-                border: none;
+                border: 0.5px solid var(--pointColor);
                 border-radius: 5px;
                 :focus{
                     outline: none;
                 }
                 :disabled{
-                    background-color: rgba(84, 115, 255, .1);
+                    background-color: rgba(84, 115, 255, 1);
                     color: white;
                 }
             }
@@ -66,7 +71,8 @@ const CreateDeviceContainer=styled.div`
                 width: 300px;
                 height: 30px;
                 text-indent: 5px;
-                border: none;
+                border: 0.5px solid var(--pointColor);
+                border-radius: 5px;
                 line-height: 50px;
                 :focus{
                     outline: none;
@@ -95,7 +101,7 @@ const CreateDevice=({setModalOpen})=>{
     const [selectedUserNo, setSelectedUserNo] = useState();
     const [companyName, setCompanyName] = useState();
     const osArr = ["Linux","Window32","Window64"];
-    const [createDevice, {loading, data, errror}] = useMutation(M_CREATEDEVICE,{
+    const [createNewDevice, {loading, data, errror}] = useMutation(M_CREATEDEVICE,{
         refetchQueries:[
             {query :GET_GetAllDeviceByParams,
             variables:{params:{company_no:companyNo}}
@@ -126,18 +132,19 @@ const CreateDevice=({setModalOpen})=>{
         params.company_no=parseInt(e.target.company_no.value);
         params.device_name=e.target.device_name.value;
         params.os=e.target.os.value;
-        params.member_no=selectedUserNo;
+        params.member_no=selectedUserNo? parseInt(selectedUserNo):null;
 
-        // console.log(params)
+        console.log(params)
 
-        createDevice({
+        createNewDevice({
             variables:{     
-                company_no:parseInt(e.target.company_no.value),
-                device_name:e.target.device_name.value,
-                os:e.target.os.value,
-                member_no:parseInt(selectedUserNo)
+                company_no:params.company_no,
+                device_name:params.device_name,
+                os:params.os,
+                member_no:params.member_no
             },
             onCompleted:(data)=>{
+                console.log(data)
                 alert(`장비 ${data.createDevice.device_name} 등록완료`)
                 //mutation완료후 refetch함수 실행이 미동작,,, mutaion에 refetchQueries옵션으로 설정해서 refetch진행
                 //https://dinn.github.io/development/apollo-client-refetch/
@@ -154,41 +161,43 @@ const CreateDevice=({setModalOpen})=>{
                 <button className="close_button" onClick={()=>{setModalOpen(false)}}>
                     <FontAwesomeIcon icon={faX} />
                 </button>
+                <h1>장비 등록</h1>
                 <form onSubmit={onSubmit}>
-                    <h1>장비 등록</h1>
-                    <div className="input_wrap">
-                        <label htmlFor="company_no"><span>*</span>기업번호</label>
-                        <input id="company_no" type="text" defaultValue={companyNo} disabled></input>
-                    </div>
-                    <div className="input_wrap">
-                        <label htmlFor="company_name"><span>*</span>기업명</label>
-                        <input id="company_name" type="text" defaultValue={companyName} disabled></input>
-                    </div>
-                    <div className="input_wrap">
-                        <label htmlFor="device_name"><span>*</span>장비명</label>
-                        <input id="device_name" type="text" required></input>
-                    </div>
-                    <div className="input_wrap">
-                        <label htmlFor="os"><span>*</span>OS</label>
-                        <select id="os" className="os" required>
-                            {osArr.map((item,index)=>{
-                                return <option value={item} key={index}>{item}</option>
-                            })}
-                        </select>
-                    </div>
-                    <div className="input_wrap">
-                        <label htmlFor="device_user">담당사용자</label>
-                        <select id="device_user" onChange={(e)=>{setSelectedUserNo(e.target.value)}}>
-                          <option value="">사용자미정</option>
-                        {
-                            userData?.getAllMemberByRoleAndCorpNo.length>0 &&
-                            userData.getAllMemberByRoleAndCorpNo.map((item,index)=>{
-                                return <option value={item.member_no} key={index}>{`${item.member_no}:${item.name}`}</option>
-                            })
-                        }
-                        </select>
-                    </div>
+                    <div className="input_container">
+                        <div className="input_wrap">
+                            <label htmlFor="company_no"><span>*</span>기업번호</label>
+                            <input id="company_no" type="text" defaultValue={companyNo} disabled></input>
+                        </div>
+                        <div className="input_wrap">
+                            <label htmlFor="company_name"><span>*</span>기업명</label>
+                            <input id="company_name" type="text" defaultValue={companyName} disabled></input>
+                        </div>
+                        <div className="input_wrap">
+                            <label htmlFor="device_name"><span>*</span>장비명</label>
+                            <input id="device_name" type="text" required></input>
+                        </div>
+                        <div className="input_wrap">
+                            <label htmlFor="os"><span>*</span>OS</label>
+                            <select id="os" className="os" required>
+                                {osArr.map((item,index)=>{
+                                    return <option value={item} key={index}>{item}</option>
+                                })}
+                            </select>
+                        </div>
+                        <div className="input_wrap">
+                            <label htmlFor="device_user">담당사용자</label>
+                            <select id="device_user" onChange={(e)=>{setSelectedUserNo(e.target.value)}}>
+                            <option value="">사용자미정</option>
+                            {
+                                userData?.getAllMemberByRoleAndCorpNo.length>0 &&
+                                userData.getAllMemberByRoleAndCorpNo.map((item,index)=>{
+                                    return <option value={item.member_no} key={index}>{`${item.member_no}:${item.name}`}</option>
+                                })
+                            }
+                            </select>
+                        </div>  
                     <button>등록</button>
+                    </div>
                 </form>
         </CreateDeviceContainer>
     )

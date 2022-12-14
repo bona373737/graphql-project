@@ -45,7 +45,7 @@ const typeDefs = gql`
 
         createDevice(
             company_no:Int!
-            member_no:Int!
+            member_no:Int
             os:String!
             device_name:String!
         ) : Device
@@ -93,7 +93,7 @@ const typeDefs = gql`
     type Device {
         device_no:Int!
         company_no:Int!
-        member_no:Int!
+        member_no:Int
         os:String!
         device_name:String!
         reg_date:String!

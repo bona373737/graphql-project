@@ -208,7 +208,7 @@ export const M_updateMember =gql`
 export const M_CREATEDEVICE= gql`
   mutation createDevice(
     $company_no:Int!
-    $member_no:Int!
+    $member_no:Int
     $os:String!
     $device_name:String!
 ){
