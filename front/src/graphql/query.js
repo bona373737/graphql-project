@@ -179,6 +179,15 @@ query getAllRole {
 }
 `;
 
+export const GET_getDviceCountByDate=gql`
+  query getDviceCountByDate{
+    getDviceCountByDate{
+      date
+      count
+    }
+  }
+`;
+
 
 // ===================================================
 

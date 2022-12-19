@@ -66,6 +66,10 @@ const resolvers ={
             let result = await dbExe.getDeviceByCompanyExe(companyNo);
             return result;
         },
+        getDviceCountByDate:async()=>{
+            let result = await dbExe.getDviceCountByDateExe();
+            return result;
+        }
         // getCountDevice: async(_,{company_no})=>{
         //     let result = await dbExe.getCountDeviceExe(company_no);
         //     console.log(result[0])

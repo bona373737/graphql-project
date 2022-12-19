@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link,useHistory } from "react-router-dom";
 import homeImg from "../assets/img/home_image.jpg";
@@ -59,11 +59,10 @@ const HomeContainer=styled.div`
             position: relative;
             width: 380px;
             height: 32px;
-            font-size: .875rem;
+            font-size: 1rem;
             letter-spacing: -1px;
             padding: 7px 15px;
             box-sizing: border-box;
-            background-color: #f0f0f0;
             border-radius: 16px;
         }
         /* 타이틀 */
@@ -123,30 +122,32 @@ const HomeContainer=styled.div`
 const Home =()=>{
     const history = useHistory();
 
-        // document.addEventListener('DOMContentLoaded', ()=>{
-        // var interval = window.setInterval(rollingCallback, 3000);
-        // })
-        // function rollingCallback(){
-        //     //.prev 클래스 삭제
-        //     document.querySelector('.rollingbanner .prev').classList.remove('prev');
+    function rollingCallback(){
+        //.prev 클래스 삭제
+        document.querySelector('.rollingbanner .prev').classList.remove('prev');
 
-        //     //.current -> .prev
-        //     let current = document.querySelector('.rollingbanner .current');
-        //     current.classList.remove('current');
-        //     current.classList.add('prev');
+        //.current -> .prev
+        let current = document.querySelector('.rollingbanner .current');
+        current.classList.remove('current');
+        current.classList.add('prev');
 
-        //     //.next -> .current
-        //     let next = document.querySelector('.rollingbanner .next');
-        //     //다음 목록 요소가 널인지 체크
-        //     if(next.nextElementSibling == null){
-        //         document.querySelector('.rollingbanner ul li:first-child').classList.add('next');
-        //     }else{
-        //         //목록 처음 요소를 다음 요소로 선택
-        //         next.nextElementSibling.classList.add('next');
-        //     }
-        //     next.classList.remove('next');
-        //     next.classList.add('current');
-        // }
+        //.next -> .current
+        let next = document.querySelector('.rollingbanner .next');
+        //다음 목록 요소가 널인지 체크
+        if(next.nextElementSibling == null){
+            document.querySelector('.rollingbanner ul li:first-child').classList.add('next');
+        }else{
+            //목록 처음 요소를 다음 요소로 선택
+            next.nextElementSibling.classList.add('next');
+        }
+        next.classList.remove('next');
+        next.classList.add('current');
+    }
+    
+    useEffect(()=>{
+        const interval = window.setInterval(rollingCallback, 3000);
+        return()=>clearInterval(interval)
+    },[])
 
     return(
         <HomeContainer>
@@ -160,20 +161,18 @@ const Home =()=>{
                 </div>
             </nav>
             <main>
-                 <div class="container">
-                    <div class="rollingbanner">
-                        <div class="wrap">
+                 <div className="container">
+                    <div className="rollingbanner">
+                        <div className="wrap">
                             <ul>
-                                <li><a href="#">안녕하세요. </a></li>
-                                <li class="next"><a href="#">OJT_ITOMS 백오피스개발 과제 진행중입니다.</a></li>
-                                <li class="current"><a href="#">아자!</a></li>
-                                <li><a href="#">"공법변경 구조검토 요구, 현산 측이 묵살했다"</a></li>
-                                <li class="prev"><a href="#">12월 주담대 금리 연 3.63%…7년7개월 만에 최고</a></li>
+                                <li className="next"><a href="#">OJT_ITOMS 백오피스개발 과제 진행중입니다.</a></li>
+                                <li className="prev"><a href="#">GraphQL을 학습합니다. </a></li>
+                                <li className="current"><a href="#">안녕하세요</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <h1>안녕하세요. OJT_ITOMS 백오피스개발 과제 진행중입니다.</h1>
+                {/* <h1>안녕하세요. OJT_ITOMS 백오피스개발 과제 진행중입니다.</h1> */}
             </main>
         </HomeContainer>
     )

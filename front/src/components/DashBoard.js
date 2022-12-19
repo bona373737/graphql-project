@@ -1,7 +1,12 @@
 import { useQuery } from "@apollo/client";
-import styled from "styled-components";
+import { useEffect } from "react";
 import {getAllDeviceByCompany} from "../graphql/query";
+//style
+import styled from "styled-components";
+//components
 import DeviceCard from "../elements/DeviceCard";
+import LineChart from "./LineChart";
+
 
 const DashBoardContainer=styled.div`
     color: var(--mainColor);
@@ -42,6 +47,9 @@ const DashBoard =()=>{
     return(        
         <DashBoardContainer>
             <h1 className="title"> ITOMS 운영현황 </h1>
+
+            <LineChart></LineChart>
+
             {data && 
             <>
                 {

@@ -237,6 +237,28 @@ export default {
             return err;
         }   
     },
+    getDviceCountByDateExe:async()=>{
+        try{
+            let queryString = "select date_format(reg_date,'%Y-%m-%d') as date, count(device_no) as count from devices group by date;"
+            let result = await db.exe(queryString);
+            delete result.meta
+            // console.log(result)
+            let dateArr=[];
+            let countArr=[];
+
+            result.forEach(item => {
+                dateArr.push(item.date);
+                countArr.push(item.count);
+                
+            });
+            // console.log(dateArr);
+            // console.log(countArr);
+            return {date:dateArr, count:countArr} 
+        }catch(err){
+            console.error("getDviceCountByDateExe 오류");
+            return err;
+        }   
+    },
 
 
     // Mutation-----------------------------------------------------

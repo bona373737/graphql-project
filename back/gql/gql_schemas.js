@@ -18,6 +18,7 @@ const typeDefs = gql`
         getAllMemberByRoleAndCorp(role:Int!,companyName:String!): [Member]
         getAllMemberByRoleAndCorpNo(role:Int!,companyNo:Int!): [Member]
         getDeviceByCompany: [Device]
+        getDviceCountByDate : DviceCount
         
         # #####사용안함
         # getCompanyByCompanyNo(companyNo:Int!) : Company
@@ -103,6 +104,11 @@ const typeDefs = gql`
         company_name:String!
         business_number:String!
         company_no: [Device]
+    }
+
+    type DviceCount {
+        date:[String]
+        count:[Int]
     }
 
     input Params{
