@@ -18,7 +18,6 @@ const context = ({req})=>{
     
     // console.log(req.body)
     if(req.body.operationName !== "loginMember" && req.body.operationName !== 'getDviceCountByDate' ){
-        //sampleData.py에서 query operationName지정 없이 호출된 api건.....
         // if(req.body.operationName !== 'getDviceCountByDate'){
             // console.log(req.body.variables)
             

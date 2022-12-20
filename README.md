@@ -227,21 +227,32 @@ Login ─ Home ──────── LoginMember
 ---
 
 ## TensorFlow
+- 사이트의 장비등록 추이 데이터를 학습 및 예측하여 그래프로 표출 하기
+- Simple Linear Regression_독립변수 X값이 하나
+- 선형회귀모델 
+    ```
+    Y = WX + B
+    X축데이터 : 장비등록일
+    Y축데이터 : 해당 날짜의 등록장비 총계 
+
+    최적의 W,B값 찾기
+    ```
+- 
 
 
 ---
 ## 수정사항 체크리스트
 ### BackEnd
-- [ ] 로그인페이지 에러처리
+- [ ] 에러처리
 - [ ] 쿼리에 order by reg_date desc 추가
+- [ ] 목록조회 query 페이징처리
+- [ ] 사이트관리자 ITOMS운영현황페이지_담당자 번호->담당자이름 으로 표출되도록 백엔드 수정
 - [ ] 
 ### FrontEnd
-- [ ] 사이트관리자 ITOMS운영현황페이지_담당자 번호->담당자이름 으로 표출되도록 백엔드 수정
 - [ ] 
 ### ReactNative
 - [ ] 
 ---
-
 
 ## Error Note
 ```javaScript

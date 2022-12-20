@@ -38,7 +38,7 @@ const LineChart=()=>{
         }
     })
 
-    //flask api_입력된 날짜에 예상되는 등록장비개수 
+    //flask api_입력된 날짜에 예상되는 등록장비개수 반환
     const getData =(e)=>{
         // console.log(e.target.value);
         const selectedDate = e.target.value;

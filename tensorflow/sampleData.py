@@ -84,22 +84,45 @@ print(count)
 # main()
 
 #################################################################### 준비된 x축데이터(date), y축데이터(count)로 학습시키기 
+# https://ebbnflow.tistory.com/120#recentComments
+
 tf.model = tf.keras.Sequential()
 
 tf.model.add(tf.keras.layers.Dense(units=1, input_dim=1, activation='sigmoid'))
 # tf.model.add(tf.keras.layers.Activation('linear'))
 tf.model.summary()
 
-tf.model.compile(loss='mse', optimizer=tf.keras.optimizers.SGD(learning_rate=1e-5))
+#Stochastic gradient descent - 확률적 경사 하강법
+tf.model.compile(loss='mse', optimizer=tf.keras.optimizers.SGD(learning_rate=0.1))
 
 #tensorboard --logdir=./logs/fit
 log_dir = os.path.join(".", "logs", "fit", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir,histogram_freq=0, write_graph=True, write_images=True)
-tf.model.fit(date, count, epochs=2000, callbacks=[tensorboard_callback])
+hist = tf.model.fit(date, count, epochs=100, callbacks=[tensorboard_callback], verbose=0)
 
 tf.model.save_weights('./weights')
-print("검증!! ", tf.model.predict([[20221230.0]]))
+print("검증!! ", tf.model.predict([[20221215.0]]))
 # print(tf.model.get_weights())
 
-plt.plot(date,count,'b.-')
-plt.show()
+# plt.plot(date,count,'b.-')
+# plt.show()
+
+# 훈련과정 시각화
+# plt.plot(hist.history['loss'])
+# plt.title('loss')
+# plt.xlabel('Epoch')
+# plt.ylabel('Loss')
+# plt.show()
+
+# 모델 시각화
+line_x = date
+line_y = tf.model.predict(line_x)
+print(line_y)
+
+# plt.plot(line_x, line_y, 'r-')
+# plt.plot(date, count, 'bo')
+# plt.title('Model')
+# plt.xlabel('date')
+# plt.ylabel('deviceCount')
+# plt.legend(['predict', 'train'], loc='upper left')
+# plt.show()
