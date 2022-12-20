@@ -17,23 +17,26 @@ const context = ({req})=>{
     // }
     
     // console.log(req.body)
-    if(req.body.operationName !== "loginMember"){
-        // console.log(req.body.variables)
-        
-        //token이 없는 경우
-        if (!req.headers.authorization){
-            throw new AuthenticationError("mssing token");
-        }
-        
-        //token이 유효하지 않은 경우
-        const token = req.headers.authorization; 
-        let nowLoginMember = login.checkAuth(token);
-        // console.log(nowLoginMember)
-        //nowLoginMember데이터 형태(복호화된 token정보)
-        //Promise {
-        //    { id: 'ruru123', name: '이루루', iat: 1669445668, exp: 1670050468 }
-        //  }
-        return nowLoginMember 
+    if(req.body.operationName !== "loginMember" && req.body.operationName !== 'getDviceCountByDate' ){
+        //sampleData.py에서 query operationName지정 없이 호출된 api건.....
+        // if(req.body.operationName !== 'getDviceCountByDate'){
+            // console.log(req.body.variables)
+            
+            //token이 없는 경우
+            if (!req.headers.authorization){
+                throw new AuthenticationError("mssing token");
+            }
+            
+            //token이 유효하지 않은 경우
+            const token = req.headers.authorization; 
+            let nowLoginMember = login.checkAuth(token);
+            // console.log(nowLoginMember)
+            //nowLoginMember데이터 형태(복호화된 token정보)
+            //Promise {
+                //    { id: 'ruru123', name: '이루루', iat: 1669445668, exp: 1670050468 }
+                //  }
+                return nowLoginMember 
+        // }
     }
 }
 export default context;

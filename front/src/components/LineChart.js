@@ -57,6 +57,7 @@ const LineChart=()=>{
 
     //그래프 기본 dataset : db
     //flask api에서 장비등록일, 해당날짜 등록장비 총계 값 받아오기?
+    //https://jsfiddle.net/4m5dp17x/
     const chartData = {
         labels:labels,
         datasets:[{

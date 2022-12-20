@@ -140,17 +140,17 @@ mobile : reactNative
     }
   ```
 
-
-
 <div>
 <img src="./front/src/assets/img/home_image.jpg" width="300">
 <img src="./front/src/assets/img/login.jpg" width="300">
 </div>
 ---
+
 ## FrontEnd
 - 사이트관리자계정
 <div>
 <img src="./front/src/assets/img/itoms.png" width="300">
+<img src="./front/src/assets/img/super_predict.png" width="300">
 <img src="./front/src/assets/img/super_membermager.png" width="300">
 <img src="./front/src/assets/img/super_memberadd.png" width="300">
 </div>
@@ -199,7 +199,7 @@ index.js ─ GlobalStyles.js
 ```
        (Tab Navigatior) (Stack.Navigator)
 Login ─ Home ─────────── LoginMember 
-      ─ DashboardStack ─ Dashboard
+      ─ DashboardStack ─ Dashboard 
                        ─ AddCompany
                        ─ DeviceManager 
                        ─ AddDevice
@@ -223,6 +223,11 @@ Login ─ Home ──────── LoginMember
 Login ─ Home ──────── LoginMember 
       ─ DeviceManager 
 ```
+
+---
+
+## TensorFlow
+
 
 ---
 ## 수정사항 체크리스트
