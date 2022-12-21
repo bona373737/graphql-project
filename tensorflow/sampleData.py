@@ -1,5 +1,6 @@
-import tensorflow as tf;
-import numpy as np;
+import tensorflow as tf
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 import datetime
 import os
@@ -8,7 +9,6 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 ################################################################### 테스트데이터_GraphQL API 호출하기
 # graphql api호출시 서버측에서 authorize token 없이 해당 api요청 받을 수 있도록 수정필요.
 # https://me2nuk.com/Python-requests-module-example/
-# operationName지정 추가 필요
 import requests
 query = """
 query getDviceCountByDate{
@@ -24,13 +24,30 @@ response = requests.post(uri,json={'query':query, 'operationName':'getDviceCount
 print(response.status_code)
 
 jsonData = response.json()
-count = jsonData['data']['getDviceCountByDate']['count']
+countInt = jsonData['data']['getDviceCountByDate']['count']
 dateStr = jsonData['data']['getDviceCountByDate']['date'] 
 date=[]
+count=[]
 for item in dateStr:
     date.append(float(item.replace('-','')))
+for item in countInt:
+    count.append(float(item))
+
 print(date)
+# print(np.array(date).dtype)
 print(count)
+# print(np.array(count).dtype)
+
+# 데이터셋의 값이 들쑥날쑥하거나, 매우 큰 경우에는 cost의 값이 발산하여 정상적인 학습이 이루어지지 않습니다.==> 스케일링(scaling)으로 해결합니다
+# https://m.blog.naver.com/wideeyed/221614354947
+
+date_=np.expand_dims(np.array(date), axis=1)
+scaler = MinMaxScaler(feature_range=(0,1))
+date__= scaler.fit(date_)
+date__= scaler.transform(date_)
+print(date__)
+
+
 
 
 ################################################################## 테스트데이터 CSV 파일 로드하기
@@ -86,39 +103,40 @@ print(count)
 #################################################################### 준비된 x축데이터(date), y축데이터(count)로 학습시키기 
 # https://ebbnflow.tistory.com/120#recentComments
 
-tf.model = tf.keras.Sequential()
+# tf.model = tf.keras.Sequential()
 
-tf.model.add(tf.keras.layers.Dense(units=1, input_dim=1, activation='sigmoid'))
-# tf.model.add(tf.keras.layers.Activation('linear'))
-tf.model.summary()
+# # unit = output shape
+# # input_dim = input shape
+# tf.model.add(tf.keras.layers.Dense(units=1, input_dim=1, activation='sigmoid'))
+# # tf.model.add(tf.keras.layers.Activation('linear'))
+# tf.model.summary()
 
-#Stochastic gradient descent - 확률적 경사 하강법
-tf.model.compile(loss='mse', optimizer=tf.keras.optimizers.SGD(learning_rate=0.1))
+# #Stochastic gradient descent - 확률적 경사 하강법
+# # tf.model.compile(loss='mse', optimizer=tf.keras.optimizers.SGD(learning_rate=0.1))
+# tf.model.compile(loss='mse', optimizer='adam')
 
-#tensorboard --logdir=./logs/fit
-log_dir = os.path.join(".", "logs", "fit", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir,histogram_freq=0, write_graph=True, write_images=True)
-hist = tf.model.fit(date, count, epochs=100, callbacks=[tensorboard_callback], verbose=0)
+# #tensorboard --logdir=./logs/fit
+# log_dir = os.path.join(".", "logs", "fit", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+# tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir,histogram_freq=1)
+# hist = tf.model.fit(date,count, epochs=100, callbacks=[tensorboard_callback], verbose=1)
 
-tf.model.save_weights('./weights')
-print("검증!! ", tf.model.predict([[20221215.0]]))
-# print(tf.model.get_weights())
+# tf.model.save_weights('./weights')
+# print("검증!! ", tf.model.predict([[20221215.0]]))
+# weights = (tf.model.get_weights())
+# print(weights)
 
-# plt.plot(date,count,'b.-')
-# plt.show()
+# # print(tf.model.get_config())
 
-# 훈련과정 시각화
-# plt.plot(hist.history['loss'])
-# plt.title('loss')
-# plt.xlabel('Epoch')
-# plt.ylabel('Loss')
-# plt.show()
+# # 훈련과정 시각화
+# # plt.plot(hist.history['loss'])
+# # plt.title('loss')
+# # plt.xlabel('Epoch')
+# # plt.ylabel('Loss')
+# # plt.show()
 
-# 모델 시각화
-line_x = date
-line_y = tf.model.predict(line_x)
-print(line_y)
-
+# # 모델 시각화
+# line_x = np.array(date)
+# line_y = tf.model.predict([line_x])
 # plt.plot(line_x, line_y, 'r-')
 # plt.plot(date, count, 'bo')
 # plt.title('Model')
