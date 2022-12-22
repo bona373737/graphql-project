@@ -23,7 +23,7 @@ const MainContainer = styled.div`
     background-color: var(--subColor);
     
     aside{
-        width: 220px;
+        width: 260px;
         min-width: 220px;
         background-color: var(--mainColor); 
         .logo{
@@ -40,14 +40,14 @@ const MainContainer = styled.div`
         .user_info_wrap{
             width: 100%;
             .now_user_info{
+                background-color: var(--subColor);
                 margin: 40px auto;
                 margin-bottom: 20px;
-                font-size: 12px;
-                line-height: 18px;
-                width: 200px;
+                font-size: 14px;
+                line-height: 22px;
+                width: 220px;
                 height: 100px;
                 border-radius: 5px;
-                background-color: white;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -56,14 +56,16 @@ const MainContainer = styled.div`
         }
         .sidebar{
             display: flex;
-            flex:1;
+            /* flex:1; */
             flex-direction: column;
             justify-content: space-between;
+            font-size: 16px;
+            margin-left: 8px;
 
             .menu_list{
                 text-align: center;
                 li{
-                    margin: 20px 0;
+                    margin: 20px auto;
                     text-align: left;
                     
                     a{
@@ -72,24 +74,33 @@ const MainContainer = styled.div`
                         width: 100%;
                         line-height: 40px;
                         &:hover{
-                            background-image: linear-gradient(to left, var(--pointColor),10%, var(--mainColor));
+                            background-color: var(--subColor);
+                            color: var(--mainColor);
+                            border-radius: 10px 0 0 10px;
+                            /* background-image: linear-gradient(to left, var(--pointColor),10%, var(--mainColor)); */
                         }
                         svg{
-                            padding: 0 8px;
+                            padding: 0 12px;
                         }
                     }
                     .active{
-                        color: var(--fontMainColor);
-                        background-image: linear-gradient(to left, var(--pointColor),10%, rgba(255, 255, 255, .1), 60%, #00ff0000)
+                        background-color: var(--subColor);
+                        color: var(--mainColor);
+                        border-radius: 10px 0 0 10px;
+                        /* background-image: linear-gradient(to left, var(--pointColor),10%, rgba(255, 255, 255, .1), 60%, #00ff0000) */
                     }
                 }
             }
             .logout{
                 button{
+                    text-align: left;
+                    width: 100%;
+                    font-size: 16px;
                     background-color: var(--mainColor);
                     color: var(--fontMainColor);
                     svg{
-                        padding: 0 5px;
+                        font-size: 16px;
+                        padding: 0 12px;
                     }
                 }
                 

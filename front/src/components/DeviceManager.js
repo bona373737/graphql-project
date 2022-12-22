@@ -54,11 +54,11 @@ const DeviceManagerContainer = styled.div`
 
 const AddDeviceCard = styled.div`
         box-sizing: border-box;
-        border-radius: 5px;
+        border-radius: 10px;
         padding: 10px;
         margin: 10px;
-        width: 200px;
-        height: 120px;
+        width: 240px;
+        height: 160px;
         box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
 
         /* background-color: white; */
@@ -66,7 +66,7 @@ const AddDeviceCard = styled.div`
         color: var(--mainColor);
 
         font-size: 26px;
-        line-height: 100px;
+        line-height: 150px;
         text-align: center;
 `;
 

@@ -38,17 +38,14 @@ print(date)
 print(count)
 # print(np.array(count).dtype)
 
+
+
+
 # 데이터셋의 값이 들쑥날쑥하거나, 매우 큰 경우에는 cost의 값이 발산하여 정상적인 학습이 이루어지지 않습니다.==> 스케일링(scaling)으로 해결합니다
 # https://m.blog.naver.com/wideeyed/221614354947
-
-date_=np.expand_dims(np.array(date), axis=1)
-scaler = MinMaxScaler(feature_range=(0,1))
-date__= scaler.fit(date_)
-date__= scaler.transform(date_)
-print(date__)
-
-
-
+# date_=np.expand_dims(np.array(date), axis=1)
+# scaler = MinMaxScaler(feature_range=(0,1))
+# date__= scaler.fit(date_)
 
 ################################################################## 테스트데이터 CSV 파일 로드하기
 # rowData = np.loadtxt('./originData.csv',delimiter=',',dtype=np.float64, encoding='utf-8')
@@ -103,27 +100,27 @@ print(date__)
 #################################################################### 준비된 x축데이터(date), y축데이터(count)로 학습시키기 
 # https://ebbnflow.tistory.com/120#recentComments
 
-# tf.model = tf.keras.Sequential()
+tf.model = tf.keras.Sequential()
 
-# # unit = output shape
-# # input_dim = input shape
-# tf.model.add(tf.keras.layers.Dense(units=1, input_dim=1, activation='sigmoid'))
-# # tf.model.add(tf.keras.layers.Activation('linear'))
-# tf.model.summary()
+# unit = output shape
+# input_dim = input shape
+tf.model.add(tf.keras.layers.Dense(units=1, input_dim=1, activation='sigmoid'))
+# tf.model.add(tf.keras.layers.Activation('linear'))
+tf.model.summary()
 
-# #Stochastic gradient descent - 확률적 경사 하강법
-# # tf.model.compile(loss='mse', optimizer=tf.keras.optimizers.SGD(learning_rate=0.1))
-# tf.model.compile(loss='mse', optimizer='adam')
+#Stochastic gradient descent - 확률적 경사 하강법
+# tf.model.compile(loss='mse', optimizer=tf.keras.optimizers.SGD(learning_rate=0.1))
+tf.model.compile(loss='mse', optimizer='adam')
 
-# #tensorboard --logdir=./logs/fit
-# log_dir = os.path.join(".", "logs", "fit", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
-# tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir,histogram_freq=1)
-# hist = tf.model.fit(date,count, epochs=100, callbacks=[tensorboard_callback], verbose=1)
+#tensorboard --logdir=./logs/fit
+log_dir = os.path.join(".", "logs", "fit", datetime.datetime.now().strftime("%Y%m%d-%H%M%S"))
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir,histogram_freq=1)
+hist = tf.model.fit(date,count, epochs=100, callbacks=[tensorboard_callback], verbose=1)
 
-# tf.model.save_weights('./weights')
-# print("검증!! ", tf.model.predict([[20221215.0]]))
-# weights = (tf.model.get_weights())
-# print(weights)
+tf.model.save_weights('./weights')
+print("검증!! ", tf.model.predict([[20221215.0]]))
+weights = (tf.model.get_weights())
+print(weights)
 
 # # print(tf.model.get_config())
 
@@ -135,12 +132,12 @@ print(date__)
 # # plt.show()
 
 # # 모델 시각화
-# line_x = np.array(date)
-# line_y = tf.model.predict([line_x])
-# plt.plot(line_x, line_y, 'r-')
-# plt.plot(date, count, 'bo')
-# plt.title('Model')
-# plt.xlabel('date')
-# plt.ylabel('deviceCount')
-# plt.legend(['predict', 'train'], loc='upper left')
-# plt.show()
+line_x = np.array(date)
+line_y = tf.model.predict([line_x])
+plt.plot(line_x, line_y, 'r-')
+plt.plot(date, count, 'bo')
+plt.title('Model')
+plt.xlabel('date')
+plt.ylabel('deviceCount')
+plt.legend(['predict', 'train'], loc='upper left')
+plt.show()

@@ -45,7 +45,7 @@ const LineChart=()=>{
         const selectedDateInt = selectedDate.replaceAll('-','');
 
         // console.log(selectedDate)
-        fetch(`http://10.90.100.200:8000/result?date=${selectedDateInt}`)
+        fetch(`http://10.90.100.141:8000/result?date=${selectedDateInt}`)
         .then((response) => response.json())
         .then((data) =>{
             // console.log(data)

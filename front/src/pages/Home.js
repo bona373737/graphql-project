@@ -57,9 +57,9 @@ const HomeContainer=styled.div`
         /* 배너 컨테이너 */
         .rollingbanner{
             position: relative;
-            width: 380px;
-            height: 32px;
-            font-size: 1rem;
+            width: 500px;
+            height: 48px;
+            font-size: 1.5rem;
             letter-spacing: -1px;
             padding: 7px 15px;
             box-sizing: border-box;
@@ -78,13 +78,14 @@ const HomeContainer=styled.div`
             height: 100%;
             box-sizing: border-box;
             overflow: hidden;
+            box-shadow: inset 0 -1px rgba(23, 32, 63, 0.1);
         }        
         .rollingbanner ul{
             list-style: none;
         }
         .rollingbanner li{
             position: absolute;
-            top: -36px;
+            top: -50px;
             left: 0;
         }
         /* 이전, 현재, 다음 롤링 배너 표시 */
@@ -97,7 +98,7 @@ const HomeContainer=styled.div`
             transition: top 0.5s ease;
         }
         .rollingbanner li.next{
-            top: -36px;
+            top: -50px;
         }
         .rollingbanner a{
             display: block;
@@ -107,6 +108,7 @@ const HomeContainer=styled.div`
             -webkit-box-orient:vertical;
             overflow: hidden;
             color: #000;
+            font-weight: bold;
         }
         /* 반대 방향으로 진행 */
         .rollingbanner.reverse li.prev{
@@ -145,7 +147,7 @@ const Home =()=>{
     }
     
     useEffect(()=>{
-        const interval = window.setInterval(rollingCallback, 3000);
+        const interval = window.setInterval(rollingCallback, 2000);
         return()=>clearInterval(interval)
     },[])
 
@@ -167,12 +169,11 @@ const Home =()=>{
                             <ul>
                                 <li className="next"><a href="#">OJT_ITOMS 백오피스개발 과제 진행중입니다.</a></li>
                                 <li className="prev"><a href="#">GraphQL을 학습합니다. </a></li>
-                                <li className="current"><a href="#">안녕하세요</a></li>
+                                <li className="current"><a href="#">안녕하세요.</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                {/* <h1>안녕하세요. OJT_ITOMS 백오피스개발 과제 진행중입니다.</h1> */}
             </main>
         </HomeContainer>
     )

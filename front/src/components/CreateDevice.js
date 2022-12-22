@@ -14,82 +14,97 @@ const CreateDeviceContainer=styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
-    height: 500px;
+    width: 580px;
+    height: 650px;
     margin: auto;
-    background-color: var(--mainColor);
-    border-radius: 5px;
+    background-color: var(--subColor);
+    border-radius: 15px;
 
-    .close_button{
-        box-sizing: border-box;
+    .modal_header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         background-color: var(--mainColor);
-        border: none;
-        width: 100%;
-        font-size: 20px;
-        text-align: right;
-        padding: 10px;
+        border-radius: 15px 15px 0 0 ;
+        .close_button{
+            box-sizing: border-box;
+            background-color: var(--mainColor);
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            padding: 20px;
+            border-radius: 15px;
+        }
+        h1{
+            margin-left: 20px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
     }
 
-    h1{
-        color: var(--pointColor);
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 5px; 
-        text-align: center;
-        letter-spacing: 5px;
-    }
     form{
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: white;
+        justify-content: center;
+        margin-top: 60px;
+        font-size: 16px;
         /* color: white; */
         .input_wrap{
             margin: 20px 0;
             label{
-                color: var(--pointColor);
+                color: var(--mainColor);
                 font-weight: bold;
                 display: inline-block;
-                margin: 0 5px;
-                width: 120px;
+                width: 98px;
             }
             input{
+                background-color: var(--subColor);
                 width: 300px;
-                height: 30px;
+                height: 38px;
                 text-indent: 5px;
-                border: 0.5px solid var(--pointColor);
-                border-radius: 5px;
+                border: none;
+                border-bottom: 0.5px solid var(--mainColor);
+                font-size: 16px;
                 :focus{
                     outline: none;
                 }
                 :disabled{
-                    background-color: rgba(84, 115, 255, 1);
-                    color: white;
+                    color: var(--mainColor);
                 }
             }
             select{
+                font-size: 16px;
+                background-color: var(--subColor);
                 width: 300px;
-                height: 30px;
+                height: 38px;
                 text-indent: 5px;
-                border: 0.5px solid var(--pointColor);
-                border-radius: 5px;
+                border: none;
+                border-bottom: 0.5px solid var(--mainColor);
                 line-height: 50px;
                 :focus{
                     outline: none;
                 }
-                option{
-                    padding: 5px 0;
+           
+                li{
+                    height: 20px;
+                    padding: 15px 0;
                 }
+            
             }
             span{
-                color: red;
+                color: var(--pointColor);
                 margin: 0 5px;
             }
         }
         button{
-            margin-top: 20px;
-            width: 80px;
-            height: 30px;
+            background-color: var(--mainColor);
+            margin-top: 40px;
+            width: 120px;
+            height: 40px;
         }
     }
 `;
@@ -158,12 +173,13 @@ const CreateDevice=({setModalOpen})=>{
 
     return(
         <CreateDeviceContainer>
+                <div className="modal_header">
+                <h1>장비 등록</h1>
                 <button className="close_button" onClick={()=>{setModalOpen(false)}}>
                     <FontAwesomeIcon icon={faX} />
                 </button>
-                <h1>장비 등록</h1>
+                </div>
                 <form onSubmit={onSubmit}>
-                    <div className="input_container">
                         <div className="input_wrap">
                             <label htmlFor="company_no"><span>*</span>기업번호</label>
                             <input id="company_no" type="text" defaultValue={companyNo} disabled></input>
@@ -187,7 +203,7 @@ const CreateDevice=({setModalOpen})=>{
                         <div className="input_wrap">
                             <label htmlFor="device_user">담당사용자</label>
                             <select id="device_user" onChange={(e)=>{setSelectedUserNo(e.target.value)}}>
-                            <option value="">사용자미정</option>
+                            <option value=""><li>사용자미정</li></option>
                             {
                                 userData?.getAllMemberByRoleAndCorpNo.length>0 &&
                                 userData.getAllMemberByRoleAndCorpNo.map((item,index)=>{
@@ -197,7 +213,6 @@ const CreateDevice=({setModalOpen})=>{
                             </select>
                         </div>  
                     <button>등록</button>
-                    </div>
                 </form>
         </CreateDeviceContainer>
     )
