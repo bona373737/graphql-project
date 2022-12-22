@@ -6,10 +6,11 @@ const DeviceCardContainer = styled.div`
     
     .card_wrap{
         font-size: 14px;
-        line-height: 18px;
+        line-height: 20px;
         box-sizing: border-box;
         border-radius: 10px;
-        padding: 10px;
+        padding-left: 24px;
+        padding-top: 32px;
         margin: 10px;
         width: 240px;
         height: 160px;
@@ -18,13 +19,14 @@ const DeviceCardContainer = styled.div`
         box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
         :hover{
             margin-top: 6px;
-            transition: all 0.5s ;
+            transition: all 0.5s;
             box-shadow: rgba(17, 17, 26, 0.05) 2px 2px 2px, rgba(17, 17, 26, 0.1) 2px 2px 2px;
         }
         .device_name{
-            margin: 10px 0;
+            margin-bottom: 10px;
             font-size: 18px;
             color: var(--mainColor);
+            font-weight: bold;
         }
     }
 `;

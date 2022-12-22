@@ -15,7 +15,7 @@ const CreateDeviceContainer=styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     width: 580px;
-    height: 650px;
+    height: 600px;
     margin: auto;
     background-color: var(--subColor);
     border-radius: 15px;
@@ -37,11 +37,12 @@ const CreateDeviceContainer=styled.div`
             border-radius: 15px;
         }
         h1{
-            margin-left: 20px;
+            width: 100%;
+            text-align: center;
+            margin-left: 40px;
             color: white;
             font-size: 20px;
             font-weight: bold;
-            letter-spacing: 5px;
         }
     }
 
@@ -50,9 +51,8 @@ const CreateDeviceContainer=styled.div`
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-top: 60px;
+        margin-top: 30px;
         font-size: 16px;
-        /* color: white; */
         .input_wrap{
             margin: 20px 0;
             label{
@@ -62,12 +62,12 @@ const CreateDeviceContainer=styled.div`
                 width: 98px;
             }
             input{
-                background-color: var(--subColor);
                 width: 300px;
                 height: 38px;
                 text-indent: 5px;
                 border: none;
-                border-bottom: 0.5px solid var(--mainColor);
+                border-bottom: 0.3px solid rgba(23, 32, 63, .1);
+                background-color: var(--subColor);
                 font-size: 16px;
                 :focus{
                     outline: none;
@@ -83,17 +83,15 @@ const CreateDeviceContainer=styled.div`
                 height: 38px;
                 text-indent: 5px;
                 border: none;
-                border-bottom: 0.5px solid var(--mainColor);
+                border-bottom: 0.3px solid rgba(23, 32, 63, .1);
                 line-height: 50px;
                 :focus{
                     outline: none;
                 }
-           
                 li{
                     height: 20px;
                     padding: 15px 0;
                 }
-            
             }
             span{
                 color: var(--pointColor);
