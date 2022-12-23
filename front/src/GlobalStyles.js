@@ -22,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     html { 
-        font-family: ‘SUIT’, sans-serif;
+        font-family: 'Nanum Gothic Coding', monospace;
     }
     body{
         font-size: 14px;

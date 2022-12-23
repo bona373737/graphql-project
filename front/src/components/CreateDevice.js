@@ -38,10 +38,9 @@ const CreateDeviceContainer=styled.div`
         }
         h1{
             width: 100%;
-            text-align: center;
             margin-left: 40px;
             color: white;
-            font-size: 20px;
+            font-size: 24px;
             font-weight: bold;
         }
     }
@@ -52,14 +51,14 @@ const CreateDeviceContainer=styled.div`
         align-items: center;
         justify-content: center;
         margin-top: 30px;
-        font-size: 16px;
+        font-size: 24px;
         .input_wrap{
             margin: 20px 0;
             label{
                 color: var(--mainColor);
                 font-weight: bold;
                 display: inline-block;
-                width: 98px;
+                width: 140px;
             }
             input{
                 width: 300px;
@@ -68,7 +67,7 @@ const CreateDeviceContainer=styled.div`
                 border: none;
                 border-bottom: 0.3px solid rgba(23, 32, 63, .1);
                 background-color: var(--subColor);
-                font-size: 16px;
+                font-size: 20px;
                 :focus{
                     outline: none;
                 }
@@ -77,7 +76,7 @@ const CreateDeviceContainer=styled.div`
                 }
             }
             select{
-                font-size: 16px;
+                font-size: 20px;
                 background-color: var(--subColor);
                 width: 300px;
                 height: 38px;
@@ -103,6 +102,7 @@ const CreateDeviceContainer=styled.div`
             margin-top: 40px;
             width: 120px;
             height: 40px;
+            font-size: 20px;
         }
     }
 `;
