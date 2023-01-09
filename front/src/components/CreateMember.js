@@ -21,12 +21,12 @@ const CreateMemberContainer=styled.div`
     margin: auto;
     background-color: var(--mainColor);
     color: white;
-    border-radius: 5px;
+    border-radius: 20px;
 
     .close_button{
         box-sizing: border-box;
         background-color: var(--mainColor);
-        border: none;
+        border-radius: 20px;
         width: 100%;
         font-size: 20px;
         text-align: right;

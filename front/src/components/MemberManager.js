@@ -2,6 +2,12 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import MemberTr from "../elements/MemberTr";
 import CreateMember from "./CreateMember";
+import { BiSearchAlt } from 'react-icons/bi';
+import { BsPlusLg } from 'react-icons/bs';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
+
+
+
 
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { GET_ALLMEMBERBYROLE } from "../graphql/query";
@@ -21,9 +27,9 @@ const MemberManagerContainer=styled.div`
         justify-content: center;
 
         .title{
-            text-align: center;
             color: var(--mainColor);
             margin: 40px 0;
+            margin-top: 15px;
             font-size: 20px;
             font-weight: bold;
         }   
@@ -33,33 +39,57 @@ const MemberManagerContainer=styled.div`
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 16px;
+            padding: 12px 0;
             width: 100%;
             margin: auto;
-            margin-bottom: 20px;
-            background-color: var(--mainColor);
+            /* margin-bottom: 20px; */
+            /* background-color: var(--mainColor); */
             border-radius: 5px;
             label{
-                color: white;
+                color: var(--mainColor);
             }
             input{
+                width: 200px;
                 height: 28px;
-                border: none;
-                border-radius: 3px;
-                border-bottom: 1px solid var(--gray);
+                background-color: var(--subColor);
+                border-radius: 20px;
+                border: 0.2px solid var(--pointColor);
                 margin: 0 5px;
+                text-indent: 5px;
                 &:focus{
                     outline: none;
                 }
-    
+                &::placeholder{
+                    text-indent: 5px;
+                    color: var(--pointColor);
+                }
             }
-            button{
-                width: 80px;
+            svg{
+                position: relative;
+                right: 32px;
+                color: var(--pointColor);
+                font-size: 20px;
+                vertical-align: middle;
+                cursor: pointer;
+                
+            }
+            .create_member_btn{
+                padding: 0 10px;
                 height: 30px;
                 border: none;
+                border-radius: 20px;
                 cursor: pointer;
                 &:hover{
-                    background-color: white;
+                    background-color: var(--pointColor);
+                    color: white;
+                }
+                svg{
+                    margin-right: 5px;
+                    position: relative;
+                    left:0px;
+                    color: white;
+                    font-size: 14px;
+                    vertical-align: middle;
                 }
             }
         }
@@ -176,17 +206,18 @@ const MemberManager=()=>{
 
             <div className="menu">
             <form onSubmit={handleSearch}>
-                {loginMemberData?.role_no === 1?(
+                {/* {loginMemberData?.role_no === 1?(
                     <label htmlFor="search_input">기업명</label>
                     ):(
                     <label htmlFor="search_input">사용자명</label>
                     )
-                }
-                <input id="search_input"></input>
-                <button>검색</button>
+                } */}
+                <input id="search_input" placeholder={loginMemberData?.role_no === 1? "기업 검색":"사용자 검색"}></input>
+                <BiSearchAlt/>
+                {/* <button>검색</button> */}
             </form>
             {loginMemberData?.role_no === 2 || loginMemberData?.role_no === 1?(
-                <button className="create_member_btn" onClick={()=>{setModalOpen(true)}}>계정등록</button>
+                <button className="create_member_btn" onClick={()=>{setModalOpen(true)}}><AiOutlinePlusCircle/>계정등록</button>
             ):(
                 ""
             )}

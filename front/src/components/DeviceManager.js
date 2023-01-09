@@ -23,13 +23,15 @@ const DeviceManagerContainer = styled.div`
 
 .title{
     color: var(--mainColor);
-    margin: 30px 20px;
+    margin: 40px 0;
+    margin-top: 15px;
     font-size: 20px;
     font-weight: bold;
  
 }
 .device_wrap{
-    margin: 20px 10px;
+    /* margin-bottom: 5px; */
+    /* margin: 20px 0; */
     display: flex;
     flex-wrap: wrap;
 
@@ -56,7 +58,8 @@ const AddDeviceCard = styled.div`
         box-sizing: border-box;
         border-radius: 10px;
         padding: 10px;
-        margin: 10px;
+        margin-right: 10px;
+        margin-bottom: 5px;
         width: 240px;
         height: 160px;
         box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;

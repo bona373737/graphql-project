@@ -8,7 +8,8 @@ const ContentsContainer =styled.div`
     width: 100%;
     box-sizing: border-box;
     padding: 20px 80px;
-    border-radius: 24px 0 0 24px ;
+    padding-top: 0;
+    /* border-radius: 24px 0 0 24px ; */
     background-color: var(--subColor);
     display: flex;
     flex-direction: column;

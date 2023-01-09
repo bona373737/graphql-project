@@ -18,7 +18,7 @@ const CreateDeviceContainer=styled.div`
     height: 600px;
     margin: auto;
     background-color: var(--subColor);
-    border-radius: 15px;
+    border-radius: 20px;
 
     .modal_header{
         display: flex;
@@ -34,7 +34,7 @@ const CreateDeviceContainer=styled.div`
             font-weight: bold;
             text-align: right;
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 20px;
         }
         h1{
             width: 100%;
@@ -50,7 +50,7 @@ const CreateDeviceContainer=styled.div`
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-top: 30px;
+        margin:30px 40px 0 0;
         font-size: 24px;
         .input_wrap{
             margin: 20px 0;
@@ -103,6 +103,7 @@ const CreateDeviceContainer=styled.div`
             width: 120px;
             height: 40px;
             font-size: 20px;
+            border-radius: 20px;
         }
     }
 `;

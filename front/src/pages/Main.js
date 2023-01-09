@@ -10,6 +10,7 @@ import Contents from "../components/Contents";
 //style
 import styled from "styled-components"
 import { FiLogOut } from 'react-icons/fi';
+import { CgHello } from 'react-icons/cg';
 import { MdDashboard } from 'react-icons/md';
 import { FaUsers } from 'react-icons/fa';
 import { MdOutlineRouter } from 'react-icons/md';
@@ -23,6 +24,7 @@ const MainContainer = styled.div`
     background-color: var(--subColor);
     
     aside{
+        height: 100%;
         width: 260px;
         min-width: 220px;
         background-color: var(--mainColor); 
@@ -37,30 +39,13 @@ const MainContainer = styled.div`
                 padding: 0 4px;
             }
         }
-        .user_info_wrap{
-            width: 100%;
-            .now_user_info{
-                background-color: var(--subColor);
-                margin: 40px auto;
-                margin-bottom: 20px;
-                font-size: 14px;
-                line-height: 22px;
-                width: 220px;
-                height: 100px;
-                border-radius: 5px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-        }
         .sidebar{
+            height: 65%;
             display: flex;
             /* flex:1; */
             flex-direction: column;
             justify-content: space-between;
             font-size: 16px;
-            margin-left: 8px;
 
             .menu_list{
                 text-align: center;
@@ -76,17 +61,19 @@ const MainContainer = styled.div`
                         &:hover{
                             background-color: var(--subColor);
                             color: var(--mainColor);
-                            border-radius: 10px 0 0 10px;
+                            border-radius: 20px;
                             /* background-image: linear-gradient(to left, var(--pointColor),10%, var(--mainColor)); */
                         }
                         svg{
                             padding: 0 12px;
+                            font-size: 22px;
+                            vertical-align: middle;
                         }
                     }
                     .active{
                         background-color: var(--subColor);
                         color: var(--mainColor);
-                        border-radius: 10px 0 0 10px;
+                        border-radius: 20px;
                         /* background-image: linear-gradient(to left, var(--pointColor),10%, rgba(255, 255, 255, .1), 60%, #00ff0000) */
                     }
                 }
@@ -99,8 +86,9 @@ const MainContainer = styled.div`
                     background-color: var(--mainColor);
                     color: var(--fontMainColor);
                     svg{
-                        font-size: 16px;
                         padding: 0 12px;
+                        font-size: 20px;
+                        vertical-align: middle;
                     }
                 }
                 
@@ -115,6 +103,34 @@ const MainContainer = styled.div`
         overflow-y: auto;
         ::-webkit-scrollbar{
             display: none;
+        }
+
+        .user_info_wrap{
+            background-color: var(--subColor);
+            .now_user_info{
+                margin: 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                svg{
+                    font-size: 15px;
+                    margin: 0 2px;
+                    vertical-align: middle;
+                }
+            }
+            .logout{
+                button{
+                    text-align: left;
+                    width: 100%;
+                    /* font-size: 16px; */
+                    background-color: var(--subColor);
+                    color: var(--pointColor);
+                    svg{
+                        vertical-align: middle;
+                    }
+                }
+                
+            }
         }
         
     }
@@ -144,7 +160,7 @@ const Main =()=>{
             <MainContainer>
                 <aside>
                     <h1 className='logo'><img src={logoImg}/>OJT_ITOMS</h1>
-                    <section className='user_info_wrap'>
+                    {/* <section className='user_info_wrap'>
                         {
                             loginUser &&
                             <>
@@ -157,7 +173,7 @@ const Main =()=>{
                             </div>
                             </>
                         }
-                    </section>
+                    </section> */}
                     <section className='sidebar'>
                         <ul className='menu_list'>
                             { role &&
@@ -184,12 +200,29 @@ const Main =()=>{
                                     // location.state.loginMember && <li><Link to="dashboard" state={location.state}>ITOMS 운영현황 (사이트관리자) </Link></li>
                                 }                            
                         </ul>
-                        <div className='logout'>
+                        {/* <div className='logout'>
                             <button><FiLogOut/>logout</button>
-                        </div>
+                        </div> */}
                     </section>
                 </aside>
                 <main >
+                    <section className='user_info_wrap'>
+                        {
+                            loginUser &&
+                            <>
+                            <div className='now_user_info'>
+                                <div><CgHello/>안녕하세요. {loginUser.name}님!</div>
+                                {/* <div>접속아이디 : {loginUser.id}</div> */}
+                                {/* { loginUser?.company_no?.company_no && */}
+                                {/* <div>기업명 : {loginUser.company_no.company_name}</div> */}
+                                {/* } */}
+                                {/* <div className='logout'>
+                                    <button><FiLogOut/>logout</button>
+                                </div> */}
+                            </div>
+                            </>
+                        }
+                    </section>
                     <Contents/>
                 </main>
             </MainContainer>

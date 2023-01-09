@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { MdNetworkCheck } from 'react-icons/md';
+
 
 
 const DeviceCardContainer = styled.div`
@@ -11,7 +13,7 @@ const DeviceCardContainer = styled.div`
         border-radius: 10px;
         padding-left: 24px;
         padding-top: 32px;
-        margin: 10px;
+        margin-right: 10px;
         width: 240px;
         height: 160px;
         background-color: white;
@@ -26,7 +28,20 @@ const DeviceCardContainer = styled.div`
             margin-bottom: 10px;
             font-size: 18px;
             color: var(--mainColor);
-            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            svg{
+                vertical-align: middle;
+                font-size: 20px;
+                position: relative;
+                right: 25px;
+                color: var(--pointColor);
+            }
+        }
+        .division_line{
+            border-top: 1px solid var(--gray);
+            margin-bottom: 5px;
+            width: 200px;     
         }
     }
 `;
@@ -37,7 +52,8 @@ const DeviceCard =({device})=>{
             {
                 device && (
                     <div className="card_wrap" >
-                        <h1 className="device_name">{device.device_name}</h1>
+                        <h1 className="device_name">{device.device_name}<MdNetworkCheck/></h1>
+                        <div class="division_line"></div>
                         <h1>장비번호 : {device.device_no}</h1>
                         <h1>OS : {device.os}</h1>
                         <h1>담당자 : {device.member_no? device.member_no:"담당자 미정" }</h1>
