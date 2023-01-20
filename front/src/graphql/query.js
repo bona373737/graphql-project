@@ -170,6 +170,18 @@ query getAllCompany {
 }
 `;
 
+// 파라미터  company_name:String / business_number:String
+export const GET_getCompanyByParams=gql`
+query GetCompanyByParams($params: CorpParams) {
+  getCompanyByParams(params: $params) {
+    business_number
+    company_name
+    company_no
+    device_total
+  }
+}
+`;
+
 export const GET_AllRole=gql`
 query getAllRole {
   getAllRole{

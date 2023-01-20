@@ -49,18 +49,19 @@ const MemberManagerContainer=styled.div`
                 color: var(--mainColor);
             }
             input{
-                width: 200px;
+                width: 250px;
                 height: 28px;
-                background-color: var(--subColor);
                 border-radius: 20px;
                 border: 0.2px solid var(--pointColor);
                 margin: 0 5px;
-                text-indent: 5px;
+                text-indent: 15px;
                 &:focus{
                     outline: none;
+                    border: 1px solid var(--pointColor);
+
                 }
                 &::placeholder{
-                    text-indent: 5px;
+                    text-indent: 15px;
                     color: var(--pointColor);
                 }
             }
@@ -74,21 +75,24 @@ const MemberManagerContainer=styled.div`
                 
             }
             .create_member_btn{
-                padding: 0 10px;
+                padding: 4px 15px;
                 height: 30px;
                 border: none;
                 border-radius: 20px;
+                background-color: var(--pointColor);
+                color: white;
+
                 cursor: pointer;
                 &:hover{
-                    background-color: var(--pointColor);
-                    color: white;
+                    /* background-color: var(--pointColor); */
+                    /* color: white; */
                 }
                 svg{
+                    color: white;
                     margin-right: 5px;
                     position: relative;
                     left:0px;
-                    color: white;
-                    font-size: 14px;
+                    font-size: 16px;
                     vertical-align: middle;
                 }
             }
@@ -97,7 +101,8 @@ const MemberManagerContainer=styled.div`
             box-sizing: border-box;
             text-align: center;
             .colum_tr{
-                border-bottom: 1px solid var(--gray);
+                /* border-bottom: 1px solid var(--gray); */
+                background-color: #FAFBFF;
             }
             tr{
                 line-height: 40px;
@@ -126,7 +131,7 @@ const MemberManager=()=>{
     const [modalOpen, setModalOpen] = useState(false);
     const [loginMemberData, setLoginMemberData] = useState();
     const [roleParam, setRoleParam] = useState();
-    const column = ['계정번호','기업명','아이디','이름','계정생성일','계정유효상태'];
+    const column = ['계정번호','기업명','아이디','이름','계정생성일','계정상태'];
 
     const [getMemberByParams,{loading,data,error}] = useLazyQuery(GET_getMemberByParams,{
         fetchPolicy:'network-only',
@@ -198,23 +203,16 @@ const MemberManager=()=>{
         <MemberManagerContainer>
             <section className="contents_wrap">
             {loginMemberData?.role_no === 1?(
-                <h1 className="title"> 기업관리자 계정 관리</h1>
+                <h1 className="title"> 기업관리자 계정관리</h1>
                 ):(
-                    <h1 className="title"> 사용자 계정 관리 </h1>
+                    <h1 className="title"> 사용자 계정관리 </h1>
                 )
             }
 
             <div className="menu">
             <form onSubmit={handleSearch}>
-                {/* {loginMemberData?.role_no === 1?(
-                    <label htmlFor="search_input">기업명</label>
-                    ):(
-                    <label htmlFor="search_input">사용자명</label>
-                    )
-                } */}
                 <input id="search_input" placeholder={loginMemberData?.role_no === 1? "기업 검색":"사용자 검색"}></input>
                 <BiSearchAlt/>
-                {/* <button>검색</button> */}
             </form>
             {loginMemberData?.role_no === 2 || loginMemberData?.role_no === 1?(
                 <button className="create_member_btn" onClick={()=>{setModalOpen(true)}}><AiOutlinePlusCircle/>계정등록</button>
@@ -265,6 +263,5 @@ const MemberManager=()=>{
             }
         </MemberManagerContainer>
     )  
-
 }
 export default MemberManager;

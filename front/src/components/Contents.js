@@ -6,11 +6,13 @@ import styled from 'styled-components';
 
 const ContentsContainer =styled.div`
     width: 100%;
+    max-width: 1400px;
+    margin-top: 70px;
     box-sizing: border-box;
     padding: 20px 80px;
     padding-top: 0;
     /* border-radius: 24px 0 0 24px ; */
-    background-color: var(--subColor);
+    /* background-color: var(--subColor); */
     display: flex;
     flex-direction: column;
     flex: 1;

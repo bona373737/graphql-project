@@ -12,11 +12,38 @@ const MemberListContainer=styled.tr`
         vertical-align: bottom;
     }
     button{
-        width: 80px;
+        padding: 2px 8px;
+        border-radius: 8px;
+        color: var(--fontblack);
+        border: 1px solid var(--gray);
+        background-color: white;
+        .btn_text_wrap{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .dot{
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: #3DCB91;
+                margin-right: 4px;
+            }
+        }
+        
         &.btn_invalid{
             color: var(--gray);
-            border: 1px solid var(--gray);
-            background-color: #ffffff;
+            .btn_text_wrap{
+            display: flex;
+            align-items: center;
+            .dot{
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: var(--gray);
+                margin-right: 3px;
+                }
+            }
         }
     }
 `;
@@ -44,7 +71,8 @@ const MemberTr=({memberData})=>{
                 <td>{memberData.name}</td>
                 <td>{memberData.reg_date}</td>
                 <td><button onClick={handleAvailability} className={availability!==true? "btn_invalid":""}>
-                    {availability===true? "valid":"invalid"}</button>
+                    <div className="btn_text_wrap"><div className="dot"></div>{availability===true? "Active":"Inactive"}</div>
+                    </button>
                 </td>
             </MemberListContainer> 
     )
