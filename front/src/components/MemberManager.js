@@ -4,7 +4,7 @@ import MemberTr from "../elements/MemberTr";
 import CreateMember from "./CreateMember";
 import { BiSearchAlt } from 'react-icons/bi';
 import { BsPlusLg } from 'react-icons/bs';
-import { AiFillCheckCircle } from 'react-icons/ai';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 
 
@@ -45,20 +45,6 @@ const MemberManagerContainer=styled.div`
             /* margin-bottom: 20px; */
             /* background-color: var(--mainColor); */
             border-radius: 5px;
-            .filter_wrap{
-                width: 300px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                select{
-                    width: 200px;
-                    height: 28px;
-                    border: 0.2px solid var(--pointColor);
-                    border-radius: 20px;
-                    text-indent: 15px;
-                    color: var(--pointColor);
-                }
-            }
             label{
                 color: var(--mainColor);
             }
@@ -115,6 +101,7 @@ const MemberManagerContainer=styled.div`
             box-sizing: border-box;
             text-align: center;
             .colum_tr{
+                /* border-bottom: 1px solid var(--gray); */
                 background-color: #FAFBFF;
             }
             tr{
@@ -216,93 +203,44 @@ const MemberManager=()=>{
         <MemberManagerContainer>
             <section className="contents_wrap">
             {loginMemberData?.role_no === 1?(
-                <h1 className="title"> 장비목록 </h1>
+                <h1 className="title"> 기업관리자 계정관리</h1>
                 ):(
                     <h1 className="title"> 사용자 계정관리 </h1>
                 )
             }
 
             <div className="menu">
-            <div className="filter_wrap">
-            <select>
-                <option>전체</option>
-                <option>free_samsung@samsung.com</option>
-                <option>free_sinhan@sinhan.com</option>
-                <option>free_nana@nana.com</option>
-                <option>free_haha@haha.com</option>
-            </select>
-            <div>
-                장비총계 4
-            </div>
-            {/* <form onSubmit={handleSearch}>
+            <form onSubmit={handleSearch}>
                 <input id="search_input" placeholder={loginMemberData?.role_no === 1? "기업 검색":"사용자 검색"}></input>
                 <BiSearchAlt/>
-            </form> */}
-            </div>
-            {/* {loginMemberData?.role_no === 2 || loginMemberData?.role_no === 1?(
+            </form>
+            {loginMemberData?.role_no === 2 || loginMemberData?.role_no === 1?(
                 <button className="create_member_btn" onClick={()=>{setModalOpen(true)}}><AiOutlinePlusCircle/>계정등록</button>
             ):(
                 ""
-            )} */}
+            )}
             </div>
             {
                 <table>
                     <colgroup>
-                        <col width="20%" ></col>
-                        <col width="10%"></col>
-                        <col width="8%"></col>
-                        <col width="10%"></col>
+                        <col width="10%" ></col>
+                        <col width="15%"></col>
                         <col width="20%"></col>
-                        <col width="10%"></col>
+                        <col width="0%"></col>
+                        <col width="20%"></col>
+                        <col width="15%"></col>
                     </colgroup>
                     <thead>
                         <tr className="colum_tr">
-                            <th rowSpan={2}>기업아이디</th>
-                            <th colSpan={3}>서비스</th>
-                            <th rowSpan={2}>장비명</th>
-                            <th rowSpan={2}>장비아이디</th>
-                            <th rowSpan={2}>장비IP</th>
-                            <th rowSpan={2}>OS</th>
-                        </tr>
-                        <tr className="colum_tr">
-                            <th>헬스체크</th>
-                            <th>비밀번호관리</th>
-                            <th>웹장애모니터링</th>
-                        </tr>
-                        {/* <tr className="colum_tr">
                             {
                                 column.map((item,index)=>{
                                     return <th key={index}>{item}</th>
                                 })
                             }
-                        </tr> */}
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>free_samsung@samsung.com</td>
-                            <td><AiFillCheckCircle/></td>
-                            <td><AiFillCheckCircle/></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>free_sinhan@sinhan.com</td>
-                            <td><AiFillCheckCircle/></td>
-                            <td><AiFillCheckCircle/></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>free_nana@nana.com</td>
-                            <td></td>
-                            <td></td>
-                            <td><AiFillCheckCircle/></td>
-                        </tr>
-                        <tr>
-                            <td>free_haha@haha.com</td>
-                            <td></td>
-                            <td></td>
-                            <td><AiFillCheckCircle/></td>
-                        </tr>
-                            {/* {data?.getMemberByParams.length>0 ? (
+                            {data?.getMemberByParams.length>0 ? (
                                 data.getMemberByParams.map((item,index)=>{ 
                                     return <MemberTr key={index} memberData={item}></MemberTr>
                                 })
@@ -311,7 +249,7 @@ const MemberManager=()=>{
                                     <td colSpan="6">등록된 계정이 없습니다.</td>
                                 </tr>
                             ) 
-                            } */}
+                            }
                     </tbody>
                 </table>
                 }
