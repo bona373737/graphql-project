@@ -146,6 +146,20 @@ mobile : reactNative
 </div>
 ---
 
+```
+app.js
+auth ── login.js
+db ───┬─ dbConfig.js
+      ├─ dbCreate.js  
+      └─ dbEde.js
+gql ──┬─ context.js
+      ├─ gql_schemas.js 
+      └─ resolver.js
+
+
+```
+
+
 ## FrontEnd
 - 사이트관리자계정
 <div>
